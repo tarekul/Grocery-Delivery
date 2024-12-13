@@ -35,28 +35,71 @@ const App = () => {
   }
 
   const addToCart = (itemId) => {
-    const item = inventory.find(item => item.id === itemId)
+    const item = inventory.find(item => item.id === itemId);
+  
     if (item) {
-      cart.findIndex(item => item.id === itemId) === -1
-      ? setCart([...cart, { item, quantity: 1 }])
-      : setCart([...cart.map(item => item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item)]);
+      setCart(prevCart => {
+        if (!Array.isArray(prevCart)) {
+          console.error('Cart state is not valid.');
+          return prevCart;
+        }
+  
+        const itemExists = prevCart.some(cartItem => cartItem.item.id === item.id);
 
-      localStorage.setItem('cart', JSON.stringify(cart));
+        const updatedCart = itemExists
+          ? prevCart.map(cartItem =>
+              cartItem.item.id === item.id
+                ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                : cartItem
+            )
+          : [...prevCart, { item, quantity: 1 }];
+  
+        // Save the updated cart to localStorage
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+  
+        return updatedCart;
+      });
+    } else {
+      console.error('Item not found in inventory.');
     }
-    
   };
+  
+  
 
   const removeFromCart = (itemId) => {
-    const item = inventory.find(item => item.id === itemId)
+    const item = inventory.find(item => item.id === itemId);
+  
     if (item) {
-        cart.findIndex(item => item.id === itemId) !== -1
-      ? setCart([...cart.map(item => item.id === itemId ? { ...item, quantity: item.quantity - 1 } : item)])
-      : setCart([...cart.filter(item => item.id !== itemId)]);
-
-      localStorage.setItem('cart', JSON.stringify(cart));
+      setCart(prevCart => {
+        if (!Array.isArray(prevCart)) {
+          console.error('Cart state is not valid.');
+          return prevCart;
+        }
+  
+        const itemExists = prevCart.some(cartItem => cartItem.item.id === item.id);
+  
+        if (!itemExists) {
+          console.error('Item not found in the cart.');
+          return prevCart;
+        }
+  
+        const updatedCart = prevCart
+          .map(cartItem =>
+            cartItem.item.id === item.id
+              ? { ...cartItem, quantity: cartItem.quantity - 1 }
+              : cartItem
+          )
+          .filter(cartItem => cartItem.quantity > 0); // Remove items with quantity 0
+  
+        // Save the updated cart to localStorage
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+  
+        return updatedCart;
+      });
+    } else {
+      console.error('Item not found in inventory.');
     }
-  }
-    
+  };  
 
   const handleFormChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });

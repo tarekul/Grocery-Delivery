@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CartItem from "../card-item/card-item";
+import CartItem from "../cart-item/cart-item";
 
 const Cart = ({ cart, addToCart, removeFromCart }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -21,9 +21,10 @@ const Cart = ({ cart, addToCart, removeFromCart }) => {
                     <h2>Your Cart</h2>
                     {cart.length > 0 ? (
                         <div className="cart-items">
-                            {cart.map((item) => (
-                                <CartItem
-                                    item={item}
+                            {cart.map((cartItem) => (
+                                <CartItem 
+                                    key={cartItem.item.id}
+                                    cartItem={cartItem}
                                     addToCart={addToCart}
                                     removeFromCart={removeFromCart}
                                 />
