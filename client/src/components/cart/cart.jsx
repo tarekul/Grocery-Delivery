@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CartItem from "../cart-item/cart-item";
+import "./cart.styles.css";
 
 const Cart = ({ cart, addToCart, removeFromCart }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -29,6 +30,7 @@ const Cart = ({ cart, addToCart, removeFromCart }) => {
                                     removeFromCart={removeFromCart}
                                 />
                             ))}
+                            <button className="checkout-button">Checkout</button>
                         </div>
                     ) : (
                         <p>Your cart is empty</p>

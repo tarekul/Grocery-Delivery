@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './App.css';
 
 import Title from './components/title/title.jsx';
+import DropdownContainer from './components/dropdown-container/dropdown-container.jsx';
 import Collection from './components/collection/collection.jsx';
 import CardItems from './components/card-items/card-items.jsx';
 import Cart from './components/cart/cart.jsx';
@@ -119,10 +121,12 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="App">
       <Title />
-      <Collection getInventoryByCategory={getInventoryByCategory} />
-      <Cart cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} />
+      <DropdownContainer>
+        <Collection getInventoryByCategory={getInventoryByCategory} />
+        <Cart cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} />
+      </DropdownContainer>
       <CardItems inventory={filteredInventory} addToCart={addToCart} removeFromCart={removeFromCart} />
     </div>
   )

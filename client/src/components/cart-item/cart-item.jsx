@@ -1,11 +1,15 @@
+import './cart-item.styles.css';
+
 const CartItem = ({cartItem, addToCart, removeFromCart}) => {
     const {item, quantity} = cartItem
     return (
         <div className="cart-item">
-            <img src={item.image} alt={item.name} />
-            <div className="item-details">
-                <h3>{item.name}</h3>
-                <p>Price: ${item.price}</p>
+            <div className="cart-details">
+                <img src={item.image} alt={item.name} />
+                <div className="item-details">
+                    <h4>{item.name}</h4>
+                    <p>Price: ${item.price}</p>
+            </div>
             </div>
             <div className="item-quantity">
                 <button onClick={() => removeFromCart(item.id)}>-</button>
