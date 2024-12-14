@@ -20,6 +20,7 @@ const Cart = ({ cart, addToCart, removeFromCart }) => {
             {isDropdownOpen && (
                 <div className="cart-dropdown">
                     <h2>Your Cart</h2>
+                    <button className="close-button" onClick={toggleDropdown}>X</button>
                     {cart.length > 0 ? (
                         <div className="cart-items">
                             {cart.map((cartItem) => (

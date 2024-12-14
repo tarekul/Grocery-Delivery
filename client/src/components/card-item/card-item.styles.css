@@ -8,5 +8,18 @@
     padding: 10px;
     margin: 10px;
     border-radius: 5px;
-    background-color:aliceblue;
+    background-color:#FFFFFF;
+    border: 1px solid #E0E0E0;
+}
+
+.card-item h3 {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #343A40;
+}
+
+.card-item p {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #17A2B8;
 }
