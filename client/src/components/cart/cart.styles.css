@@ -23,14 +23,18 @@
     align-items: center;
     position: absolute;
     background-color: #E6F5FA;
-    top: 100%; /* Position dropdown just below the trigger element */
+    top: 100%;
     left: -118px;
-    height: 85vh;  
     overflow-y: auto;   
     z-index: 1000;  
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); 
     border-radius: 5px;
     padding: 0.3rem;
+    width: 330px;
+}
+
+.has-items {
+    height: 85vh;
 }
 
 .close-button {

@@ -29,7 +29,7 @@ const Cart = ({ cart, addToCart, removeFromCart }) => {
 
             {/* Dropdown Menu */}
             {isDropdownOpen && (
-                <div className="cart-dropdown">
+                <div className="cart-dropdown {cart.length > 0 ? 'has-items' : ''}">
                     <h2>Your Cart</h2>
                     <button className="close-button" onClick={toggleDropdown}>X</button>
                     {cart.length > 0 ? (
