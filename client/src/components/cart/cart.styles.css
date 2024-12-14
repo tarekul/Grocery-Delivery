@@ -17,6 +17,11 @@
     background-color: #0056b3;
 }
 
+.cart-button:active {
+    background-color: #00439c;
+    transform: scale(0.95);
+}
+
 .cart-dropdown {
     display: flex;
     flex-direction: column;

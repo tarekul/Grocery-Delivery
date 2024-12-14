@@ -40,6 +40,16 @@
     border-radius: 5px;
     padding: 5px 10px;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.item-quantity button:hover {
+    background-color: #0056b3;
+}
+
+.item-quantity button:active {
+    background-color: #004085;
+    transform: scale(0.95);
 }
 
 /* Mobile styles */
