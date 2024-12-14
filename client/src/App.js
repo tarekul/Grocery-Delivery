@@ -13,6 +13,7 @@ const App = () => {
   const [filteredInventory, setFilteredInventory] = useState([]);
   const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []);
   const [form, setForm] = useState({ name: '', phone: '', address: '' });
+  const [isCartActive, setIsCartActive] = useState(false);
 
   useEffect(() => {
     axios.get('http://localhost:5001/inventory')

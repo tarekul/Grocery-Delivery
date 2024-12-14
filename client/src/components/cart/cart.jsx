@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CartItem from "../cart-item/cart-item";
 import "./cart.styles.css";
 
@@ -6,8 +6,19 @@ const Cart = ({ cart, addToCart, removeFromCart }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const toggleDropdown = () => {
+        if (!isDropdownOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
         setIsDropdownOpen(!isDropdownOpen);
     };
+
+    useEffect(() => {
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
 
     return (
         <div className="cart-container">

@@ -1,5 +1,5 @@
 .card-item {
-    width: 200px;
+    width: 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,13 +13,32 @@
 }
 
 .card-item h3 {
-    font-size: 16px;
+    font-size: 18px;
     margin: 5px 0;
     color: #343A40;
 }
 
 .card-item p {
-    font-size: 14px;
+    font-size: 16px;
     margin: 5px 0;
     color: #17A2B8;
+}
+
+.card-item img {
+    width: 75%; /* Fixed width for all images */
+    height: auto; /* Fixed height for all images */
+    object-fit: cover; /* Ensure images fit within the specified dimensions */
+}
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+    .card-item {
+        width:  300px;
+    }
+
+    .card-item img {
+        width: 70%; /* Fixed width for all images */
+        height: auto; /* Fixed height for all images */
+        object-fit: cover; /* Ensure images fit within the specified dimensions */
+    }
 }

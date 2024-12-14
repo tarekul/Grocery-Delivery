@@ -23,7 +23,7 @@
     position: absolute;
     background-color: #E6F5FA;
     top: 100%; /* Position dropdown just below the trigger element */
-    left: 0; /* Align dropdown to the left */
+    left: -118px;
     height: 85vh;  
     overflow-y: auto;   
     z-index: 1000;  
