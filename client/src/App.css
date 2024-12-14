@@ -5,7 +5,6 @@ html, body {
 
 .App {
     text-align: center;
-    background-color: #F8FAFC;
+    background-color: #F7F9F4;  /* Light sage background */
     height: 100vh;
-
 }

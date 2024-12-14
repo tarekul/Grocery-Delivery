@@ -1,16 +1,17 @@
 .cart-item {
     width: 300px;
-    background-color: #F0F4F8;
+    box-sizing: border-box;
+    background-color: #F7F9F4;  /* Light sage */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: normal;
-    border: 1px solid #ccc;
+    border: 1px solid #E3EBD9;  /* Light green border */
     padding: 10px;
     margin: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     height: 150px;
-    color: #343A40;
+    color: #2C5818;  /* Dark green text */
 }
 
 .cart-details {
@@ -21,9 +22,10 @@
 }
 
 .cart-item img {
-    width: 100px; /* Fixed width for all images */
-    height: 100px; /* Fixed height for all images */
-    object-fit: cover; /* Ensure images fit within the specified dimensions */
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
 }
 
 .item-quantity {
@@ -31,30 +33,36 @@
     flex-direction: row;
     justify-content: center;
     gap: 1rem;
+    align-items: center;
 }
 
 .item-quantity button {
-    background-color: #007bff;
+    background-color: #4A9C2D;  /* Fresh green */
     color: #fff;
     border: none;
     border-radius: 5px;
     padding: 5px 10px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .item-quantity button:hover {
-    background-color: #0056b3;
+    background-color: #3E8424;  /* Darker green */
 }
 
 .item-quantity button:active {
-    background-color: #004085;
+    background-color: #327A1B;  /* Even darker green */
     transform: scale(0.95);
+}
+
+.item-quantity span {
+    color: #2C5818;  /* Dark green text */
+    font-weight: 500;
 }
 
 /* Mobile styles */
 @media screen and (max-width: 768px) {
     .cart-item {
-        width:  300px; 
+        width: 300px;
     }
 }
