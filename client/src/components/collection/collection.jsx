@@ -1,3 +1,5 @@
+import './collection.styles.css';
+
 const collection = ({ getInventoryByCategory }) => {
     return (
     <select id="category-filter" onChange={e => getInventoryByCategory(e.target.value)}>
