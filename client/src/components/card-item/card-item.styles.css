@@ -74,6 +74,22 @@
     margin: 5px;
 }
 
+.quantity-button.red {
+    background-color: #FF9F1C;  /* Warm orange */
+}
+
+.quantity-button.green {
+    background-color: #5B6BBF;  /* Keep base purple-blue */
+}
+
+.quantity-button.red:hover {
+    background-color: #E88E0C;  /* Darker orange */
+}
+
+.quantity-button.green:hover {
+    background-color: #4A5AA8;  /* Darker purple-blue */
+}
+
 .quantity-button:hover {
     opacity: 0.9;
 }
