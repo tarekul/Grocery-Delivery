@@ -2,7 +2,7 @@ import './collection.styles.css';
 
 const collection = ({ getInventoryByCategory }) => {
     return (
-    <select id="category-filter" onChange={e => getInventoryByCategory(e.target.value)}>
+    <select className="category-filter" onChange={e => getInventoryByCategory(e.target.value)}>
         <option value="all">All</option>
         <option value="grains">Grains</option>
         <option value="lentils">Lentils</option>
