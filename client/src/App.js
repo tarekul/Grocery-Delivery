@@ -42,7 +42,7 @@ const App = () => {
     setFilteredInventory(filtered);
   }
 
-  const addToCart = (itemId) => {
+  const addToCart = (itemId, source='card') => {
     const item = inventory.find(item => item.id === itemId);
   
     if (item) {
@@ -69,14 +69,16 @@ const App = () => {
         // Save the updated cart to localStorage
         localStorage.setItem('cart', JSON.stringify(updatedCart));
         
-        // Reset toast before showing it again
-        setShowToast(false);
-        setToastColor('');
-        setTimeout(() => {
-          setToastMessage(`${item.name} added to cart!`);
-          setShowToast(true);
-          setToastColor('green');
-        }, 100);
+        if(source === 'card') {
+          setShowToast(false);
+          setToastColor('');
+          setTimeout(() => {
+            setToastMessage(`${item.name} added to cart!`);
+            setShowToast(true);
+            setToastColor('green');
+          }, 100);
+        }
+        
   
         return updatedCart;
       });
@@ -85,7 +87,7 @@ const App = () => {
     }
   };
   
-  const removeFromCart = (itemId) => {
+  const removeFromCart = (itemId, source='card') => {
     const item = inventory.find(item => item.id === itemId);
   
     if (item) {
@@ -113,12 +115,15 @@ const App = () => {
         // Save the updated cart to localStorage
         localStorage.setItem('cart', JSON.stringify(updatedCart));
 
-        setShowToast(false);
-        setTimeout(() => {
-          setToastMessage(`${item.name} removed from cart!`);
-          setShowToast(true);
-          setToastColor('red');
-        }, 100);
+        if(source === 'card') {
+          setShowToast(false);
+          setToastColor('');
+          setTimeout(() => {
+            setToastMessage(`${item.name} removed from cart!`);
+            setShowToast(true);
+            setToastColor('red');
+          }, 100);
+        }
   
         return updatedCart;
       });
