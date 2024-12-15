@@ -7,14 +7,18 @@ import DropdownContainer from './components/dropdown-container/dropdown-containe
 import Collection from './components/collection/collection.jsx';
 import CardItems from './components/card-items/card-items.jsx';
 import Cart from './components/cart/cart.jsx';
+import Toast from './components/toast/toast.jsx';
 
-const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const apiUrl =  'http://localhost:5001';
 
 const App = () => {
   const [inventory, setInventory] = useState([]);
   const [filteredInventory, setFilteredInventory] = useState([]);
   const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []);
   const [form, setForm] = useState({ name: '', phone: '', address: '' });
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastColor, setToastColor] = useState('');
 
   useEffect(() => {
     axios.get(`${apiUrl}/inventory`)
@@ -60,6 +64,14 @@ const App = () => {
   
         // Save the updated cart to localStorage
         localStorage.setItem('cart', JSON.stringify(updatedCart));
+        
+        // Reset toast before showing it again
+        setShowToast(false);
+        setTimeout(() => {
+          setToastMessage(`${item.name} added to cart!`);
+          setShowToast(true);
+          setToastColor('green');
+        }, 100);
   
         return updatedCart;
       });
@@ -68,8 +80,6 @@ const App = () => {
     }
   };
   
-  
-
   const removeFromCart = (itemId) => {
     const item = inventory.find(item => item.id === itemId);
   
@@ -97,6 +107,13 @@ const App = () => {
   
         // Save the updated cart to localStorage
         localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+        setShowToast(false);
+        setTimeout(() => {
+          setToastMessage(`${item.name} removed from cart!`);
+          setShowToast(true);
+          setToastColor('red');
+        }, 100);
   
         return updatedCart;
       });
@@ -130,6 +147,13 @@ const App = () => {
         <Cart cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} />
       </DropdownContainer>
       <CardItems inventory={filteredInventory} addToCart={addToCart} removeFromCart={removeFromCart} />
+      {showToast && (
+        <Toast 
+          message={toastMessage} 
+          onClose={() => setShowToast(false)}
+          color={toastColor}
+        />
+      )}
     </div>
   )
 };

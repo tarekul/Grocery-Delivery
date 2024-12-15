@@ -59,15 +59,16 @@
 
 .close-button {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 25px;
+    top: 22px;
     background: none;
-    border: none;
     font-size: 18px;
     color: #5B6BBF;  /* Soft purple-blue */
     cursor: pointer;
     padding: 5px 10px;
     border-radius: 4px;
+    border: 2px solid #5B6BBF;  /* Soft purple-blue */
+    transition: all 0.2s ease-in-out;
 }
 
 .close-button:hover {
