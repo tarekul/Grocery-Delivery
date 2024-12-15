@@ -4,12 +4,10 @@ const CartItem = ({cartItem, addToCart, removeFromCart}) => {
     const {item, quantity} = cartItem
     return (
         <div className="cart-item">
-            <div className="cart-details">
-                <img src={item.image} alt={item.name} />
-                <div className="item-details">
-                    <h4>{item.name}</h4>
-                    <p>${item.price}</p>
-            </div>
+            <img src={item.image} alt={item.name} />
+            <div className="item-details">
+                <h4>{item.name}</h4>
+                <p>${item.price}</p>
             </div>
             <div className="item-quantity">
                 <button className="quantity-button red" onClick={() => removeFromCart(item.id, 'cart')}>-</button>
