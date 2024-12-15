@@ -52,7 +52,11 @@ const App = () => {
           return prevCart;
         }
   
-        const itemExists = prevCart.some(cartItem => cartItem.item.id === item.id);
+        const itemExists = prevCart.find(cartItem => cartItem.item.id === item.id);
+
+        if (itemExists && itemExists.quantity >= 20) {
+          return prevCart;
+        }
 
         const updatedCart = itemExists
           ? prevCart.map(cartItem =>
@@ -67,6 +71,7 @@ const App = () => {
         
         // Reset toast before showing it again
         setShowToast(false);
+        setToastColor('');
         setTimeout(() => {
           setToastMessage(`${item.name} added to cart!`);
           setShowToast(true);

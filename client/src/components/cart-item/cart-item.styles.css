@@ -58,8 +58,9 @@
 }
 
 .item-quantity span {
-    color: #2D3748;  /* Dark gray text */
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 600;
+    color: #5B6BBF;  /* Soft purple-blue */
 }
 
 .quantity-button {
