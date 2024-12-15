@@ -17,7 +17,6 @@ const App = () => {
   const [form, setForm] = useState({ name: '', phone: '', address: '' });
 
   useEffect(() => {
-    console.log(apiUrl);
     axios.get(`${apiUrl}/inventory`)
     .then(res => {
       setInventory(res.data.data);
