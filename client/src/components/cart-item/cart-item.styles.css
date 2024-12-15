@@ -21,9 +21,9 @@
 
 .cart-item p {
     font-size: 20px;
-    margin: 5px 0;
-    color: #E53935;  /* Vibrant red that attracts attention */
-    font-weight: 600;  /* Made slightly bolder */
+    margin: 0;
+    color: #4A5568;  /* Slate blue-gray */
+    font-weight: 600;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -73,6 +73,19 @@
     transition: all 0.2s ease;
     font-size: 20px;
     margin: 5px;
+    width: 40px;
+}
+
+.quantity-button.red {
+    background-color: #FF9F1C;  /* Warm orange */
+}
+
+.quantity-button.green {
+    background-color: #5B6BBF;  /* Keep base purple-blue */
+}
+
+.quantity-button:hover {
+    opacity: 0.9;
 }
 
 /* Mobile styles */

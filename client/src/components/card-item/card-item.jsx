@@ -9,8 +9,8 @@ const CardItem = ({item, addToCart, removeFromCart}) => {
                 <p>${item.price}</p>
             </div>
             <div className="item-quantity">
-                <button className="quantity-button" onClick={() => removeFromCart(item.id)}>-</button>
-                <button className="quantity-button" onClick={() => addToCart(item.id)}>+</button>
+                <button className="quantity-button red" onClick={() => removeFromCart(item.id)}>-</button>
+                <button className="quantity-button green" onClick={() => addToCart(item.id)}>+</button>
             </div>
         </div>
     )
