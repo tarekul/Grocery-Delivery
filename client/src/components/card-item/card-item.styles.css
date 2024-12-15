@@ -94,6 +94,22 @@
     opacity: 0.9;
 }
 
+.item-details h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #2D3748;
+    margin: 8px 0 4px 0;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+}
+
+.item-details p {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4A5568;
+    margin: 0;
+}
+
 /* Mobile styles */
 @media screen and (max-width: 768px) {
     .card-item {
