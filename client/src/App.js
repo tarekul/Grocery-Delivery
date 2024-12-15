@@ -9,7 +9,7 @@ import CardItems from './components/card-items/card-items.jsx';
 import Cart from './components/cart/cart.jsx';
 import Toast from './components/toast/toast.jsx';
 
-const apiUrl =  'http://localhost:5001';
+const apiUrl =  process.env.REACT_APP_API_URL || 'http://localhost:5001';
 
 const App = () => {
   const [inventory, setInventory] = useState([]);
