@@ -5,6 +5,7 @@ html, body {
 
 .App {
     text-align: center;
-    background-color: #F7F9F4;  /* Light sage background */
-    height: 100vh;
+    min-height: 100vh;
+    background-color: #F0F2F9;  /* Light purple-blue tint */
+    padding: 20px;
 }

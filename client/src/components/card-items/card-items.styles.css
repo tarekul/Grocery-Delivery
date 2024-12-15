@@ -20,3 +20,9 @@
         transform: scale(1);
     }
 }
+
+@media screen and (max-width: 768px) {
+    .card-items.hide {
+        display: none;
+    }
+}

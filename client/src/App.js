@@ -15,6 +15,7 @@ const App = () => {
   const [inventory, setInventory] = useState([]);
   const [filteredInventory, setFilteredInventory] = useState([]);
   const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', address: '' });
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
@@ -154,9 +155,9 @@ const App = () => {
       <Title />
       <DropdownContainer>
         <Collection getInventoryByCategory={getInventoryByCategory} />
-        <Cart cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} />
+        <Cart cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} setIsDropdownOpen={setIsDropdownOpen} isDropdownOpen={isDropdownOpen} />
       </DropdownContainer>
-      <CardItems inventory={filteredInventory} addToCart={addToCart} removeFromCart={removeFromCart} />
+      <CardItems inventory={filteredInventory} addToCart={addToCart} removeFromCart={removeFromCart} isDropdownOpen={isDropdownOpen} />
       {showToast && (
         <Toast 
           message={toastMessage} 

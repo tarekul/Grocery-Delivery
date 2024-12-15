@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import CartItem from "../cart-item/cart-item";
 import "./cart.styles.css";
 
-const Cart = ({ cart, addToCart, removeFromCart }) => {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+const Cart = ({ cart, addToCart, removeFromCart, isDropdownOpen, setIsDropdownOpen }) => {
 
     const toggleDropdown = () => {
         if (!isDropdownOpen) {
