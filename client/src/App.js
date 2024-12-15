@@ -8,6 +8,8 @@ import Collection from './components/collection/collection.jsx';
 import CardItems from './components/card-items/card-items.jsx';
 import Cart from './components/cart/cart.jsx';
 
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 const App = () => {
   const [inventory, setInventory] = useState([]);
   const [filteredInventory, setFilteredInventory] = useState([]);
@@ -15,7 +17,8 @@ const App = () => {
   const [form, setForm] = useState({ name: '', phone: '', address: '' });
 
   useEffect(() => {
-    axios.get('http://localhost:5001/inventory')
+    console.log(apiUrl);
+    axios.get(`${apiUrl}/inventory`)
     .then(res => {
       setInventory(res.data.data);
       setFilteredInventory(res.data.data);
@@ -109,7 +112,7 @@ const App = () => {
 
   const handleOrderSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5001/order', { ...form, items: cart })
+    axios.post(`${apiUrl}/order`, { ...form, items: cart })
     .then(res => {
       console.log(res.data);
       setCart([]);
