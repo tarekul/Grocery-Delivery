@@ -1,5 +1,7 @@
-const title = () => {
-    return <h1>Local Grocery Delivery</h1>
+import './title.styles.css'
+
+const Title = () => {
+    return <h1 className="title">Local Grocery Delivery</h1>
 }
 
-export default title
+export default Title

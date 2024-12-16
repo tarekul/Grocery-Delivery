@@ -30,13 +30,19 @@ function App() {
     axios.get(`${apiUrl}/inventory`)
       .then(res => {
         const inventoryData = Array.isArray(res.data) ? res.data : res.data.data;
+        localStorage.setItem('inventory', JSON.stringify(inventoryData));
         setInventory(inventoryData);
         setFilteredInventory(inventoryData);
       })
       .catch(err => {
         console.error('Error fetching inventory:', err);
-        setInventory([]);
-        setFilteredInventory([]);
+        if (localStorage.getItem('inventory')) {
+          setInventory(JSON.parse(localStorage.getItem('inventory')));
+          setFilteredInventory(JSON.parse(localStorage.getItem('inventory')));
+        } else {
+          setInventory([]);
+          setFilteredInventory([]);
+        }
       });
   }, []);
 
