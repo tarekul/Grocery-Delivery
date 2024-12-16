@@ -5,29 +5,29 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--light-border);  
+    border: 1px solid var(--border);  
     padding: 10px;
     margin: 10px;
     border-radius: 8px;
-    background-color: var(--light-background-white);
+    background-color: var(--background-white);
     box-shadow: 0 2px 4px rgba(91, 107, 191, 0.1);  
 }
 
 .card-item h3 {
     font-size: 18px;
     margin: 5px 0;
-    color: var(--light-text-primary);  
+    color: var(--text-primary);  
 }
 
 .card-item p {
     font-size: 20px;
     margin: 0;
-    color: var(--light-text-secondary);  
+    color: var(--text-secondary);  
     font-weight: 600;  
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: var(--light-background-card);  
+    background-color: var(--background-card);  
     padding: 5px 10px;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);  
@@ -49,22 +49,22 @@
 }
 
 .item-quantity button:hover {
-    background-color: var(--light-primary-dark);  
+    background-color: var(--primary-dark);  
 }
 
 .item-quantity button:active {
-    background-color: var(--light-primary-darker);  
+    background-color: var(--primary-darker);  
     transform: scale(0.95);
 }
 
 .item-quantity span {
-    color: var(--light-text-primary);  
+    color: var(--text-primary);  
     font-weight: 500;
 }
 
 .quantity-button {
-    background-color: var(--light-primary);  
-    color: var(--light-text-white);
+    background-color: var(--primary);  
+    color: var(--text-white);
     border: none;
     border-radius: 5px;
     padding: 5px 10px;
@@ -75,19 +75,19 @@
 }
 
 .quantity-button.red {
-    background-color: var(--light-action-orange);  
+    background-color: var(--action-orange);  
 }
 
 .quantity-button.green {
-    background-color: var(--light-primary);  
+    background-color: var(--primary);  
 }
 
 .quantity-button.red:hover {
-    background-color: var(--light-action-orange-dark);  
+    background-color: var(--action-orange-dark);  
 }
 
 .quantity-button.green:hover {
-    background-color: var(--light-primary-darkest);  
+    background-color: var(--primary-darkest);  
 }
 
 .quantity-button:hover {
@@ -97,7 +97,7 @@
 .item-details h3 {
     font-size: 16px;
     font-weight: 500;
-    color: var(--light-text-primary);
+    color: var(--text-primary);
     margin: 8px 0 4px 0;
     letter-spacing: -0.01em;
     line-height: 1.4;
@@ -106,7 +106,7 @@
 .item-details p {
     font-size: 16px;
     font-weight: 600;
-    color: var(--light-text-secondary);
+    color: var(--text-secondary);
     margin: 0;
 }
 

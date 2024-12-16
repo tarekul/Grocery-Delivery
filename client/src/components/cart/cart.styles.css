@@ -1,24 +1,29 @@
 .cart-container {
-    position: relative;
+    position: fixed;
+    top: 20px;
+    right: 12px;    
+    cursor: pointer;
+    z-index: 1000;
 }
 
 .cart-button {
-    padding: 10px 20px;
+    padding: 10px 6px;
     border: none;
     border-radius: 5px;
     font-weight: bold;
-    background-color: var(--light-primary);
-    color: var(--light-text-white);
+    background-color: var(--primary);
+    color: var(--text-white);
     cursor: pointer;
     transition: background-color 0.2s;
+    font-size: 15px;
 }
 
 .cart-button:hover {
-    background-color: var(--light-primary-dark);
+    background-color: var(--primary-dark);
 }
 
 .cart-button:active {
-    background-color: var(--light-primary-darker);
+    background-color: var(--primary-darker);
 }
 
 .cart-dropdown {
@@ -26,9 +31,9 @@
     flex-direction: column;
     align-items: center;
     position: absolute;
-    background-color: var(--light-background-cart);
+    background-color: var(--background-cart);
     top: 100%;
-    left: -118px;
+    right: 0;
     overflow-y: auto;   
     z-index: 1000;  
     box-shadow: 0 4px 12px rgba(91, 107, 191, 0.15);  /* Purple-tinted shadow */
@@ -37,18 +42,33 @@
     width: 330px;
 }
 
-.cart-dropdown > * {
-    animation: fadeIn 0.3s ease-in-out;
+.cart-dropdown.closing {
+    animation: slideOut 0.5s ease-in-out;
 }
 
-@keyframes fadeIn {
+.cart-dropdown > * {
+    animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
     from {
+        transform: translateX(100%);
         opacity: 0;
-        transform: scale(0.95);
     }
     to {
+        transform: translateX(0);
         opacity: 1;
-        transform: scale(1);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
     }
 }
 
@@ -62,20 +82,26 @@
     top: 22px;
     background: none;
     font-size: 18px;
-    color: var(--light-primary);
+    color: var(--primary);
     cursor: pointer;
     padding: 5px 10px;
     border-radius: 4px;
-    border: 2px solid var(--light-primary);
+    border: 2px solid var(--primary);
     transition: all 0.2s ease-in-out;
 }
 
 .close-button:hover {
-    background-color: var(--light-background-hover);
+    background-color: var(--background-hover);
+}
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .checkout-button {
-    background-color: var(--light-action-orange-darker);
+    background-color: var(--action-orange-darker);
     color: white;
     border: none;
     padding: 12px 24px;
@@ -89,11 +115,11 @@
 }
 
 .checkout-button:hover {
-    background-color: var(--light-action-orange-darkest);
+    background-color: var(--action-orange-darkest);
 }
 
 .checkout-button:active {
-    background-color: var(--light-action-orange-deep);
+    background-color: var(--action-orange-deep);
     transform: scale(0.98);
 }
 
@@ -101,7 +127,7 @@
     font-size: 20px;
     font-weight: 600;
     margin: 10px 0;
-    color: var(--light-primary);
+    color: var(--primary);
     font-family: 'Inter', sans-serif
 }
 

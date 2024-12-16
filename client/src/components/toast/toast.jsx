@@ -11,7 +11,7 @@ const Toast = ({ message, onClose, color }) => {
     }, [onClose]);
 
     return (
-        <div className={`toast ${color}`}>
+        <div className={`toast ${color === 'green' ? 'success' : 'error'}`}>
             {message}
         </div>
     );

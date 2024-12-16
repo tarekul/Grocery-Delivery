@@ -1,8 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBasketShopping } from '@fortawesome/free-solid-svg-icons';
 import CartItem from "../cart-item/cart-item";
 import "./cart.styles.css";
 
 const Cart = ({ cart, editCart, isDropdownOpen, setIsDropdownOpen, setIsCheckoutOpen }) => {
+    const [isClosing, setIsClosing] = useState(false);
+    
     const totalPrice = cart.reduce(
         (totalPrice, cartItem) => (totalPrice += cartItem.quantity * cartItem.item.price),
         0
@@ -11,12 +15,17 @@ const Cart = ({ cart, editCart, isDropdownOpen, setIsDropdownOpen, setIsCheckout
     const hasItems = cart.length > 0 ? 'has-items' : '';
 
     const toggleDropdown = () => {
-        if (!isDropdownOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
+        if (isDropdownOpen) {
+            setIsClosing(true);
             document.body.style.overflow = 'unset';
+            setTimeout(() => {
+                setIsClosing(false);
+                setIsDropdownOpen(false);
+            }, 500);
+        } else {
+            setIsDropdownOpen(true);
+            document.body.style.overflow = 'hidden';
         }
-        setIsDropdownOpen(!isDropdownOpen);
     };
 
     const toggleCheckout = () => {
@@ -31,21 +40,19 @@ const Cart = ({ cart, editCart, isDropdownOpen, setIsDropdownOpen, setIsCheckout
 
     return (
         <div className="cart-container">
-            {/* Cart Icon/Button */}
             <button className="cart-button" onClick={toggleDropdown}>
-                Cart ({cart.length})
+                <FontAwesomeIcon icon={faBasketShopping} /> ({cart.length})
             </button>
 
-            {/* Dropdown Menu */}
             {isDropdownOpen && (
-                <div className={`cart-dropdown ${hasItems}`}>
+                <div className={`cart-dropdown ${isClosing ? 'closing' : ''} ${hasItems}`}>
                     <h2>Your Cart</h2>
                     <button className="close-button" onClick={toggleDropdown}>X</button>
                     <p className="total-price">Total: ${totalPrice.toFixed(2)}</p>
                     {cart.length > 0 ? (
                         <div className="cart-items">
                             {cart.map((cartItem) => (
-                                <CartItem 
+                                <CartItem
                                     key={cartItem.item.id}
                                     cartItem={cartItem}
                                     editCart={editCart}

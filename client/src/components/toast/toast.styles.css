@@ -13,11 +13,11 @@
 }
 
 .toast.success {
-    background-color: var(--light-success);
+    background-color: var(--success);
 }
 
 .toast.error {
-    background-color: var(--light-error);
+    background-color: var(--error);
 }
 
 @keyframes slideIn {

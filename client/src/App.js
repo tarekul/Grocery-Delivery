@@ -6,8 +6,7 @@ import { handleOrderSubmit } from './functions/handleOrderSubmit';
 import './App.css';
 
 import Title from './components/title/title.jsx';
-import DropdownContainer from './components/dropdown-container/dropdown-container.jsx';
-import Collection from './components/collection/collection.jsx';
+import CategorySelector from './components/category-selector/category-selector.jsx';
 import CardItems from './components/card-items/card-items.jsx';
 import Cart from './components/cart/cart.jsx';
 import Toast from './components/toast/toast.jsx';
@@ -42,7 +41,7 @@ function App() {
   }, []);
 
   const getInventoryByCategory = (category) => {
-    if (!category || category === 'all') {
+    if (!category || category === 'All') {
       setFilteredInventory(inventory);
       return;
     }
@@ -83,8 +82,6 @@ function App() {
         />
       ) : (
         <>
-          <DropdownContainer>
-            <Collection getInventoryByCategory={getInventoryByCategory} />
             <Cart 
               cart={cart} 
               editCart={cartEditor} 
@@ -92,7 +89,7 @@ function App() {
               isDropdownOpen={isDropdownOpen} 
               setIsCheckoutOpen={setIsCheckoutOpen} 
             />
-          </DropdownContainer>
+          <CategorySelector getInventoryByCategory={getInventoryByCategory} />
           <CardItems 
             inventory={filteredInventory} 
             editCart={cartEditor} 
