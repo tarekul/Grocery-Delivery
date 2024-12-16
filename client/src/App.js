@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
+import { editCart } from './functions/editCart';
+import { handleFormChange } from './functions/handleFormChange';
+import { handleOrderSubmit } from './functions/handleOrderSubmit';
 import './App.css';
 
 import Title from './components/title/title.jsx';
@@ -10,9 +13,9 @@ import Cart from './components/cart/cart.jsx';
 import Toast from './components/toast/toast.jsx';
 import CheckoutContainer from './components/checkout-container/checkout-container.jsx';
 
-const apiUrl =  process.env.REACT_APP_API_URL || 'http://localhost:5001';
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
 
-const App = () => {
+function App() {
   const [inventory, setInventory] = useState([]);
   const [filteredInventory, setFilteredInventory] = useState([]);
   const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []);
@@ -25,101 +28,74 @@ const App = () => {
 
   useEffect(() => {
     axios.get(`${apiUrl}/inventory`)
-    .then(res => {
-      setInventory(res.data.data);
-      setFilteredInventory(res.data.data);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      .then(res => {
+        const inventoryData = Array.isArray(res.data) ? res.data : res.data.data;
+        setInventory(inventoryData);
+        setFilteredInventory(inventoryData);
+      })
+      .catch(err => {
+        console.error('Error fetching inventory:', err);
+        setInventory([]);
+        setFilteredInventory([]);
+      });
   }, []);
 
   const getInventoryByCategory = (category) => {
-    if (category === 'all') {
+    if (!category || category === 'all') {
       setFilteredInventory(inventory);
       return;
     }
-    const filtered = inventory.filter(item => 
-      item.category.toLowerCase() === category.toLowerCase()
-    );
+    const filtered = inventory.filter(item => item.category.toLowerCase() === category.toLowerCase());
     setFilteredInventory(filtered);
-  }
-
-  const editCart = (itemId, source='card', operation='add') => {
-    const item = inventory.find(item => item.id === itemId);
-  
-    if (item) {
-      setCart(prevCart => {
-        if (!Array.isArray(prevCart)) {
-          console.error('Cart state is not valid.');
-          return prevCart;
-        }
-  
-        const itemExists = prevCart.find(cartItem => cartItem.item.id === item.id);
-
-        if (itemExists && itemExists.quantity >= 20 && operation === 'add') {
-          return prevCart;
-        }
-
-        // Update the quantity of the item
-        let updatedCart = itemExists
-          ? prevCart.map(cartItem =>
-              cartItem.item.id === item.id
-                ? { ...cartItem, quantity: cartItem.quantity + (operation === 'add' ? 1 : -1) }
-                : cartItem
-            )
-          : [...prevCart, { item, quantity: 1 }];
-
-        // Remove cart items with quantity 0
-        updatedCart = updatedCart.filter(cartItem => cartItem.quantity > 0);
-  
-        // Save the updated cart to localStorage
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
-        
-        if(source === 'card') {
-          setShowToast(false);
-          setToastColor('');
-          setTimeout(() => {
-            setToastMessage(`${item.name} ${operation === 'add' ? 'added to cart!' : 'removed from cart!'}`);
-            setShowToast(true);
-            setToastColor(operation === 'add' ? 'green' : 'red');
-          }, 100);
-        }
-        
-        return updatedCart;
-      });
-    } else {
-      console.error('Item not found in inventory.');
-    }
-  }; 
-
-  const handleFormChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleOrderSubmit = (e) => {
-    e.preventDefault();
-    axios.post(`${apiUrl}/order`, { ...form, items: cart })
-    .then(res => {
-      console.log(res.data);
-      setCart([]);
-      setForm({ name: '', phone: '', address: '' });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  };
+  const formHandler = useMemo(() => handleFormChange({ 
+    setForm, 
+    form 
+  }), [form]);
+
+  const orderSubmitHandler = useMemo(() => handleOrderSubmit({
+    cart,
+    form,
+    setCart,
+    setForm
+  }), [cart, form]);
+
+  const cartEditor = useMemo(() => editCart({
+    inventory,
+    setCart,
+    setShowToast,
+    setToastMessage,
+    setToastColor
+  }), [inventory]);
 
   return (
     <div className="App">
       <Title />
-      {isCheckoutOpen ? (<CheckoutContainer setIsCheckoutOpen={setIsCheckoutOpen}/>) : (
+      {isCheckoutOpen ? (
+        <CheckoutContainer 
+          setIsCheckoutOpen={setIsCheckoutOpen}
+          form={form}
+          handleFormChange={formHandler}
+          handleOrderSubmit={orderSubmitHandler}
+        />
+      ) : (
         <>
           <DropdownContainer>
             <Collection getInventoryByCategory={getInventoryByCategory} />
-            <Cart cart={cart} editCart={editCart} setIsDropdownOpen={setIsDropdownOpen} isDropdownOpen={isDropdownOpen} setIsCheckoutOpen={setIsCheckoutOpen} />
+            <Cart 
+              cart={cart} 
+              editCart={cartEditor} 
+              setIsDropdownOpen={setIsDropdownOpen} 
+              isDropdownOpen={isDropdownOpen} 
+              setIsCheckoutOpen={setIsCheckoutOpen} 
+            />
           </DropdownContainer>
-          <CardItems inventory={filteredInventory} editCart={editCart} isDropdownOpen={isDropdownOpen} />
+          <CardItems 
+            inventory={filteredInventory} 
+            editCart={cartEditor} 
+            isDropdownOpen={isDropdownOpen} 
+          />
           {showToast && (
             <Toast 
               message={toastMessage} 
@@ -130,7 +106,7 @@ const App = () => {
         </>
       )}
     </div>
-  )
-};
+  );
+}
 
 export default App;

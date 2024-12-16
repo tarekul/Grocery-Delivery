@@ -81,11 +81,7 @@ app.get('/', (req, res) => {
 
 app.get('/inventory', (req, res) => {
     try {
-        res.json({
-            success: true,
-            data: inventory,
-            count: inventory.length
-        });
+        res.json(inventory);
     } catch (error) {
         res.status(500).json({ success: false, error: 'Internal server error' });
     }
