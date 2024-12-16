@@ -1,6 +1,6 @@
 import "./card-item.styles.css";
 
-const CardItem = ({item, addToCart, removeFromCart}) => {
+const CardItem = ({item, editCart}) => {
     return (
         <div className="card-item">
             <img src={item.image} alt={item.name} />
@@ -9,8 +9,8 @@ const CardItem = ({item, addToCart, removeFromCart}) => {
                 <p>${item.price}</p>
             </div>
             <div className="item-quantity">
-                <button className="quantity-button red" onClick={() => removeFromCart(item.id)}>-</button>
-                <button className="quantity-button green" onClick={() => addToCart(item.id)}>+</button>
+                <button className="quantity-button red" onClick={() => editCart(item.id, 'card', 'remove')}>-</button>
+                <button className="quantity-button green" onClick={() => editCart(item.id)}>+</button>
             </div>
         </div>
     )

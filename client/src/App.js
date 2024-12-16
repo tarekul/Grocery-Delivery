@@ -8,6 +8,7 @@ import Collection from './components/collection/collection.jsx';
 import CardItems from './components/card-items/card-items.jsx';
 import Cart from './components/cart/cart.jsx';
 import Toast from './components/toast/toast.jsx';
+import CheckoutContainer from './components/checkout-container/checkout-container.jsx';
 
 const apiUrl =  process.env.REACT_APP_API_URL || 'http://localhost:5001';
 
@@ -16,6 +17,7 @@ const App = () => {
   const [filteredInventory, setFilteredInventory] = useState([]);
   const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', address: '' });
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
@@ -43,7 +45,7 @@ const App = () => {
     setFilteredInventory(filtered);
   }
 
-  const addToCart = (itemId, source='card') => {
+  const editCart = (itemId, source='card', operation='add') => {
     const item = inventory.find(item => item.id === itemId);
   
     if (item) {
@@ -55,83 +57,41 @@ const App = () => {
   
         const itemExists = prevCart.find(cartItem => cartItem.item.id === item.id);
 
-        if (itemExists && itemExists.quantity >= 20) {
+        if (itemExists && itemExists.quantity >= 20 && operation === 'add') {
           return prevCart;
         }
 
-        const updatedCart = itemExists
+        // Update the quantity of the item
+        let updatedCart = itemExists
           ? prevCart.map(cartItem =>
               cartItem.item.id === item.id
-                ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                ? { ...cartItem, quantity: cartItem.quantity + (operation === 'add' ? 1 : -1) }
                 : cartItem
             )
           : [...prevCart, { item, quantity: 1 }];
-  
-        // Save the updated cart to localStorage
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
-        
-        if(source === 'card') {
-          setShowToast(false);
-          setToastColor('');
-          setTimeout(() => {
-            setToastMessage(`${item.name} added to cart!`);
-            setShowToast(true);
-            setToastColor('green');
-          }, 100);
-        }
-        
-  
-        return updatedCart;
-      });
-    } else {
-      console.error('Item not found in inventory.');
-    }
-  };
-  
-  const removeFromCart = (itemId, source='card') => {
-    const item = inventory.find(item => item.id === itemId);
-  
-    if (item) {
-      setCart(prevCart => {
-        if (!Array.isArray(prevCart)) {
-          console.error('Cart state is not valid.');
-          return prevCart;
-        }
-  
-        const itemExists = prevCart.some(cartItem => cartItem.item.id === item.id);
-  
-        if (!itemExists) {
-          console.error('Item not found in the cart.');
-          return prevCart;
-        }
-  
-        const updatedCart = prevCart
-          .map(cartItem =>
-            cartItem.item.id === item.id
-              ? { ...cartItem, quantity: cartItem.quantity - 1 }
-              : cartItem
-          )
-          .filter(cartItem => cartItem.quantity > 0); // Remove items with quantity 0
-  
-        // Save the updated cart to localStorage
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
 
+        // Remove cart items with quantity 0
+        updatedCart = updatedCart.filter(cartItem => cartItem.quantity > 0);
+  
+        // Save the updated cart to localStorage
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+        
         if(source === 'card') {
           setShowToast(false);
           setToastColor('');
           setTimeout(() => {
-            setToastMessage(`${item.name} removed from cart!`);
+            setToastMessage(`${item.name} ${operation === 'add' ? 'added to cart!' : 'removed from cart!'}`);
             setShowToast(true);
-            setToastColor('red');
+            setToastColor(operation === 'add' ? 'green' : 'red');
           }, 100);
         }
-  
+        
         return updatedCart;
       });
     } else {
       console.error('Item not found in inventory.');
     }
-  };  
+  }; 
 
   const handleFormChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -153,17 +113,21 @@ const App = () => {
   return (
     <div className="App">
       <Title />
-      <DropdownContainer>
-        <Collection getInventoryByCategory={getInventoryByCategory} />
-        <Cart cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} setIsDropdownOpen={setIsDropdownOpen} isDropdownOpen={isDropdownOpen} />
-      </DropdownContainer>
-      <CardItems inventory={filteredInventory} addToCart={addToCart} removeFromCart={removeFromCart} isDropdownOpen={isDropdownOpen} />
-      {showToast && (
-        <Toast 
-          message={toastMessage} 
-          onClose={() => setShowToast(false)}
-          color={toastColor}
-        />
+      {isCheckoutOpen ? (<CheckoutContainer setIsCheckoutOpen={setIsCheckoutOpen}/>) : (
+        <>
+          <DropdownContainer>
+            <Collection getInventoryByCategory={getInventoryByCategory} />
+            <Cart cart={cart} editCart={editCart} setIsDropdownOpen={setIsDropdownOpen} isDropdownOpen={isDropdownOpen} setIsCheckoutOpen={setIsCheckoutOpen} />
+          </DropdownContainer>
+          <CardItems inventory={filteredInventory} editCart={editCart} isDropdownOpen={isDropdownOpen} />
+          {showToast && (
+            <Toast 
+              message={toastMessage} 
+              onClose={() => setShowToast(false)}
+              color={toastColor}
+            />
+          )}
+        </>
       )}
     </div>
   )

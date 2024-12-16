@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CartItem from "../cart-item/cart-item";
 import "./cart.styles.css";
 
-const Cart = ({ cart, addToCart, removeFromCart, isDropdownOpen, setIsDropdownOpen }) => {
+const Cart = ({ cart, editCart, isDropdownOpen, setIsDropdownOpen, setIsCheckoutOpen }) => {
     const totalPrice = cart.reduce(
         (totalPrice, cartItem) => (totalPrice += cartItem.quantity * cartItem.item.price),
         0
@@ -17,6 +17,10 @@ const Cart = ({ cart, addToCart, removeFromCart, isDropdownOpen, setIsDropdownOp
             document.body.style.overflow = 'unset';
         }
         setIsDropdownOpen(!isDropdownOpen);
+    };
+
+    const toggleCheckout = () => {
+        setIsCheckoutOpen(true);
     };
 
     useEffect(() => {
@@ -44,11 +48,10 @@ const Cart = ({ cart, addToCart, removeFromCart, isDropdownOpen, setIsDropdownOp
                                 <CartItem 
                                     key={cartItem.item.id}
                                     cartItem={cartItem}
-                                    addToCart={addToCart}
-                                    removeFromCart={removeFromCart}
+                                    editCart={editCart}
                                 />
                             ))}
-                            <button className="checkout-button">Checkout</button>
+                            <button className="checkout-button" onClick={toggleCheckout}>Checkout</button>
                         </div>
                     ) : (
                         <p>Your cart is empty</p>
