@@ -12,6 +12,7 @@ import CardItems from './components/card-items/card-items.jsx';
 import Cart from './components/cart/cart.jsx';
 import Toast from './components/toast/toast.jsx';
 import CheckoutContainer from './components/checkout-container/checkout-container.jsx';
+import DarkMode from './components/toggle-theme/toggle-theme.jsx';
 
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
 
@@ -72,6 +73,7 @@ function App() {
   return (
     <div className="App">
       <Title />
+      <DarkMode />
       {isCheckoutOpen ? (
         <CheckoutContainer 
           setIsCheckoutOpen={setIsCheckoutOpen}

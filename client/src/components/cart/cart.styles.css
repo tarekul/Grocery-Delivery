@@ -3,23 +3,22 @@
 }
 
 .cart-button {
-    background-color: #5B6BBF;  /* Soft purple-blue */
-    color: #fff;
-    border: none;
     padding: 10px 20px;
+    border: none;
     border-radius: 5px;
+    font-weight: bold;
+    background-color: var(--light-primary);
+    color: var(--light-text-white);
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    font-size: 16px;
+    transition: background-color 0.2s;
 }
 
 .cart-button:hover {
-    background-color: #4A59A9;  /* Darker purple-blue */
+    background-color: var(--light-primary-dark);
 }
 
 .cart-button:active {
-    background-color: #3B4787;  /* Even darker purple-blue */
-    transform: scale(0.95);
+    background-color: var(--light-primary-darker);
 }
 
 .cart-dropdown {
@@ -27,7 +26,7 @@
     flex-direction: column;
     align-items: center;
     position: absolute;
-    background-color: #E5E9FF;
+    background-color: var(--light-background-cart);
     top: 100%;
     left: -118px;
     overflow-y: auto;   
@@ -63,20 +62,20 @@
     top: 22px;
     background: none;
     font-size: 18px;
-    color: #5B6BBF;  /* Soft purple-blue */
+    color: var(--light-primary);
     cursor: pointer;
     padding: 5px 10px;
     border-radius: 4px;
-    border: 2px solid #5B6BBF;  /* Soft purple-blue */
+    border: 2px solid var(--light-primary);
     transition: all 0.2s ease-in-out;
 }
 
 .close-button:hover {
-    background-color: #F0F1F9;  /* Very light purple */
+    background-color: var(--light-background-hover);
 }
 
 .checkout-button {
-    background-color: #E67E22;  /* Warm orange */
+    background-color: var(--light-action-orange-darker);
     color: white;
     border: none;
     padding: 12px 24px;
@@ -90,11 +89,11 @@
 }
 
 .checkout-button:hover {
-    background-color: #D35400;  /* Darker orange */
+    background-color: var(--light-action-orange-darkest);
 }
 
 .checkout-button:active {
-    background-color: #BA4A00;  /* Even darker orange */
+    background-color: var(--light-action-orange-deep);
     transform: scale(0.98);
 }
 
@@ -102,7 +101,7 @@
     font-size: 20px;
     font-weight: 600;
     margin: 10px 0;
-    color: #5B6BBF;  /* Soft purple-blue */
+    color: var(--light-primary);
     font-family: 'Inter', sans-serif
 }
 

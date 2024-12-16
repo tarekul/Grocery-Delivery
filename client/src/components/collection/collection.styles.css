@@ -6,32 +6,48 @@
     gap: 20px;
 }
 
+.collection-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.collection-title {
+    color: var(--light-text-primary);
+    margin-bottom: 20px;
+}
+
 .category-filter {
-    padding: 5px 10px;
-    font-size: 16px;
-    border: 2px solid #5B6BBF;  /* Soft purple-blue */
-    border-radius: 8px;
-    background-color: white;
-    color: #2D3748;  /* Dark gray text */
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 500;
+    border: 2px solid var(--light-primary);
+    background: transparent;
+    color: var(--light-text-primary);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     outline: none;
-    min-width: 200px;
+    min-width: 140px;
 }
 
 .category-filter:hover {
-    border-color: #4A59A9;  /* Darker purple-blue */
-    background-color: #F8F9FC;  /* Light blue-gray */
+    border-color: var(--light-primary-dark);
+    background-color: var(--light-background-card);
 }
 
-.category-filter:focus {
-    border-color: #3B4787;  /* Even darker purple-blue */
-    box-shadow: 0 0 0 3px rgba(91, 107, 191, 0.2);  /* Soft purple focus ring */
+.category-filter:active {
+    border-color: var(--light-primary-darker);
 }
 
 /* Style for the dropdown options */
 .category-filter option {
     padding: 10px;
     background-color: white;
-    color: #2D3748;  /* Dark gray text */
+    color: var(--light-text-primary);
 }

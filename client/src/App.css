@@ -1,3 +1,5 @@
+@import './variables.css';
+
 html, body {
     margin: 0;
     padding: 0;
@@ -6,6 +8,6 @@ html, body {
 .App {
     text-align: center;
     min-height: 100vh;
-    background-color: #F0F2F9;  /* Light purple-blue tint */
+    background-color: var(--light-background-main);
     padding: 20px;
 }

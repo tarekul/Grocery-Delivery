@@ -1,0 +1,33 @@
+:root {
+    /* Background Colors */
+    --light-background-main: #F0F2F9;
+    --light-background-white: #FFFFFF;
+    --light-background-card: #F8F9FC;
+    --light-background-cart: #E5E9FF;
+    --light-background-hover: #F0F1F9;
+
+    /* Text Colors */
+    --light-text-primary: #2D3748;
+    --light-text-secondary: #4A5568;
+    --light-text-white: #fff;
+
+    /* Primary Colors */
+    --light-primary: #5B6BBF;
+    --light-primary-dark: #4A59A9;
+    --light-primary-darker: #3B4787;
+    --light-primary-darkest: #4A5AA8;
+
+    /* Border Colors */
+    --light-border: #E6E9F4;
+
+    /* Action Colors */
+    --light-action-orange: #FF9F1C;
+    --light-action-orange-dark: #E88E0C;
+    --light-action-orange-darker: #E67E22;
+    --light-action-orange-darkest: #D35400;
+    --light-action-orange-deep: #BA4A00;
+
+    /* Status Colors */
+    --light-success: #4CAF50;
+    --light-error: #f44336;
+}
