@@ -40,6 +40,17 @@ const Cart = ({ cart, editCart, isDropdownOpen, setIsDropdownOpen, setIsCheckout
         };
     }, []);
 
+    useEffect(() => {
+        if (cart.length > 0) {
+            const badge = document.querySelector('.cart-badge');
+            badge.style.animation = 'none';
+
+            // Force a reflow to trigger the animation
+            void badge.offsetWidth;
+            badge.style.animation = 'badgeBounce 0.3s ease-in-out';
+        }
+    }, [cart.length]);
+
     return (
         <div className="cart-container">
             <CartButton cart={cart} toggleDropdown={toggleDropdown} />

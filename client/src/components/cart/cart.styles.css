@@ -1,29 +1,9 @@
 .cart-container {
     position: fixed;
     top: 20px;
-    right: 12px;    
+    right: 17px;    
     cursor: pointer;
     z-index: 1000;
-}
-
-.cart-button {
-    padding: 10px 6px;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    background-color: var(--primary);
-    color: var(--text-white);
-    cursor: pointer;
-    transition: background-color 0.2s;
-    font-size: 15px;
-}
-
-.cart-button:hover {
-    background-color: var(--primary-dark);
-}
-
-.cart-button:active {
-    background-color: var(--primary-darker);
 }
 
 .cart-dropdown {
