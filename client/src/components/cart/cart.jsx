@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBasketShopping } from '@fortawesome/free-solid-svg-icons';
 import CartItem from "../cart-item/cart-item";
 
 import "./cart.styles.css";
