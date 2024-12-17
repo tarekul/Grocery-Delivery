@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBasketShopping } from '@fortawesome/free-solid-svg-icons';
 import CartItem from "../cart-item/cart-item";
+
 import "./cart.styles.css";
+import CartButton from "../card-button/cart-button";
 
 const Cart = ({ cart, editCart, isDropdownOpen, setIsDropdownOpen, setIsCheckoutOpen }) => {
     const [isClosing, setIsClosing] = useState(false);
@@ -40,9 +42,7 @@ const Cart = ({ cart, editCart, isDropdownOpen, setIsDropdownOpen, setIsCheckout
 
     return (
         <div className="cart-container">
-            <button className="cart-button" onClick={toggleDropdown}>
-                <FontAwesomeIcon icon={faBasketShopping} /> ({cart.length})
-            </button>
+            <CartButton cart={cart} toggleDropdown={toggleDropdown} />
 
             {isDropdownOpen && (
                 <div className={`cart-dropdown ${isClosing ? 'closing' : ''} ${hasItems}`}>
