@@ -12,13 +12,12 @@ import Cart from './components/cart/cart.jsx';
 import Toast from './components/toast/toast.jsx';
 import CheckoutContainer from './components/checkout-container/checkout-container.jsx';
 import DarkMode from './components/toggle-theme/toggle-theme.jsx';
-import CardItemCarousel from './components/card-item-carousel/card-items-carousel.jsx';
+import CategoryCarousel from './components/category-carousel/category-carousel.jsx';
 
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
 
 function App() {
   const [inventory, setInventory] = useState([]);
-  const [filteredInventory, setFilteredInventory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -31,31 +30,25 @@ function App() {
   useEffect(() => {
     axios.get(`${apiUrl}/inventory`)
       .then(res => {
-        const inventoryData = Array.isArray(res.data) ? res.data : res.data.data;
+        console.log(res.data);
+        const inventoryData = res.data
         localStorage.setItem('inventory', JSON.stringify(inventoryData));
         setInventory(inventoryData);
-        setFilteredInventory(inventoryData);
       })
       .catch(err => {
         console.error('Error fetching inventory:', err);
         if (localStorage.getItem('inventory')) {
           setInventory(JSON.parse(localStorage.getItem('inventory')));
-          setFilteredInventory(JSON.parse(localStorage.getItem('inventory')));
-        } else {
-          setInventory([]);
-          setFilteredInventory([]);
-        }
+        } 
       });
   }, []);
 
   const getInventoryByCategory = (category) => {
     if (!category || category === 'All') {
-      setFilteredInventory(inventory);
       setSelectedCategory('All');
       return;
     }
     const filtered = inventory.filter(item => item.category.toLowerCase() === category.toLowerCase());
-    setFilteredInventory(filtered);
     setSelectedCategory(category);
   };
 
@@ -100,12 +93,7 @@ function App() {
               setIsCheckoutOpen={setIsCheckoutOpen} 
             />
           <CategorySelector getInventoryByCategory={getInventoryByCategory} />
-          <CardItemCarousel 
-            filteredinventory={filteredInventory} 
-            editCart={cartEditor} 
-            isDropdownOpen={isDropdownOpen} 
-            category={selectedCategory}
-          />
+          <CategoryCarousel inventory={inventory} editCart={cartEditor} isDropdownOpen={isDropdownOpen} />
           {/* <CardItems 
             inventory={filteredInventory} 
             editCart={cartEditor} 
