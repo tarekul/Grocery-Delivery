@@ -6,7 +6,6 @@ html, body {
 }
 
 .App {
-    text-align: center;
     min-height: 100vh;
     background-color: var(--background-main);
     color: var(--text-primary);

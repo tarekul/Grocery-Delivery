@@ -12,12 +12,14 @@ import Cart from './components/cart/cart.jsx';
 import Toast from './components/toast/toast.jsx';
 import CheckoutContainer from './components/checkout-container/checkout-container.jsx';
 import DarkMode from './components/toggle-theme/toggle-theme.jsx';
+import CardItemCarousel from './components/card-item-carousel/card-items-carousel.jsx';
 
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
 
 function App() {
   const [inventory, setInventory] = useState([]);
   const [filteredInventory, setFilteredInventory] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -49,10 +51,12 @@ function App() {
   const getInventoryByCategory = (category) => {
     if (!category || category === 'All') {
       setFilteredInventory(inventory);
+      setSelectedCategory('All');
       return;
     }
     const filtered = inventory.filter(item => item.category.toLowerCase() === category.toLowerCase());
     setFilteredInventory(filtered);
+    setSelectedCategory(category);
   };
 
   const formHandler = useMemo(() => handleFormChange({ 
@@ -96,11 +100,17 @@ function App() {
               setIsCheckoutOpen={setIsCheckoutOpen} 
             />
           <CategorySelector getInventoryByCategory={getInventoryByCategory} />
-          <CardItems 
+          <CardItemCarousel 
+            filteredinventory={filteredInventory} 
+            editCart={cartEditor} 
+            isDropdownOpen={isDropdownOpen} 
+            category={selectedCategory}
+          />
+          {/* <CardItems 
             inventory={filteredInventory} 
             editCart={cartEditor} 
             isDropdownOpen={isDropdownOpen} 
-          />
+          /> */}
           {showToast && (
             <Toast 
               message={toastMessage} 

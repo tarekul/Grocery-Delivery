@@ -1,0 +1,23 @@
+.card-items-carousel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 10px auto;  /* Center the container */
+    padding: 10px;
+    border-radius: 8px;
+    background-color: var(--background-card);
+    box-shadow: 0 2px 4px rgba(91, 107, 191, 0.1);
+}
+
+.carousel-items {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.carousel-items > * {
+    flex: 0 0 auto;
+    margin-right: 10px;
+}
+
