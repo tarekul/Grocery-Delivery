@@ -1,6 +1,6 @@
 import './cart-item.styles.css';
 
-const CartItem = ({cartItem, editCart, removeFromCart}) => {
+const CartItem = ({cartItem, editCart}) => {
     const {item, quantity} = cartItem
     return (
         <div className="cart-item">

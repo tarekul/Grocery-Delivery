@@ -2,11 +2,19 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    margin: 10px auto;  /* Center the container */
-    padding: 10px;
+    margin: 5px;
     border-radius: 8px;
-    background-color: var(--background-card);
-    box-shadow: 0 2px 4px rgba(91, 107, 191, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.category-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 8px 0 4px 0;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
 }
 
 .carousel-items {

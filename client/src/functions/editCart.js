@@ -2,7 +2,8 @@ export const editCart = (dependencies) => {
     const { inventory, setCart, setShowToast, setToastMessage, setToastColor } = dependencies;
     
     return (itemId, source='card', operation='add') => {
-        const item = inventory.find(item => item.id === itemId);
+        console.log('here')
+        const item = Object.values(inventory).flat().find(item => item.id === itemId);
     
         if (item) {
             setCart(prevCart => {

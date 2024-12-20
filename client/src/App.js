@@ -6,13 +6,12 @@ import { handleOrderSubmit } from './functions/handleOrderSubmit';
 import './App.css';
 
 import Title from './components/title/title.jsx';
-import CategorySelector from './components/category-selector/category-selector.jsx';
 import CardItems from './components/card-items/card-items.jsx';
 import Cart from './components/cart/cart.jsx';
 import Toast from './components/toast/toast.jsx';
 import CheckoutContainer from './components/checkout-container/checkout-container.jsx';
 import DarkMode from './components/toggle-theme/toggle-theme.jsx';
-import CategoryCarousel from './components/category-carousel/category-carousel.jsx';
+import CategoryCarousel from './components/carousel-container/carousel-container.jsx';
 
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
 
@@ -30,7 +29,6 @@ function App() {
   useEffect(() => {
     axios.get(`${apiUrl}/inventory`)
       .then(res => {
-        console.log(res.data);
         const inventoryData = res.data
         localStorage.setItem('inventory', JSON.stringify(inventoryData));
         setInventory(inventoryData);
@@ -92,7 +90,6 @@ function App() {
               isDropdownOpen={isDropdownOpen} 
               setIsCheckoutOpen={setIsCheckoutOpen} 
             />
-          <CategorySelector getInventoryByCategory={getInventoryByCategory} />
           <CategoryCarousel inventory={inventory} editCart={cartEditor} isDropdownOpen={isDropdownOpen} />
           {/* <CardItems 
             inventory={filteredInventory} 

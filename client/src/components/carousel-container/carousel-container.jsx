@@ -1,8 +1,10 @@
-const { default: CardItemsCarousel } = require("../card-item-carousel/card-items-carousel")
+import React from 'react';
+import CardItemsCarousel from '../card-item-carousel/card-items-carousel';
+import './carousel-container.styles.css';
 
-const CategoryCarousel = ({inventory, editCart, isDropdownOpen}) => {
+const CarouselContainer = ({inventory, editCart, isDropdownOpen}) => {
     return (
-        <div className="category-carousel">
+        <div className="carousel-container">
             {
                 Object.entries(inventory).map(([category, items]) => (
                     <CardItemsCarousel 
@@ -10,7 +12,7 @@ const CategoryCarousel = ({inventory, editCart, isDropdownOpen}) => {
                         inventory={items} 
                         category={category} 
                         editCart={editCart} 
-                        isDropdownOpen={isDropdownOpen} 
+                        isDropdownOpen={isDropdownOpen}
                     />
                 ))
             }
@@ -18,4 +20,4 @@ const CategoryCarousel = ({inventory, editCart, isDropdownOpen}) => {
     )
 }
 
-export default CategoryCarousel;
+export default CarouselContainer;
