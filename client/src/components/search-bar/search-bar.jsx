@@ -36,7 +36,7 @@ const SearchBar = ({inventory, editCart, setIsSearchBarActive, isSearchBarActive
     return (
         <>
             {isSearchBarActive && <div className="overlay" onClick={closeSearchBar} />}
-            <div className="search-container">
+            <div className={`search-container ${isSearchBarActive ? 'active' : ''}`}>
                 <div className="search">
                     <FontAwesomeIcon icon={isSearchBarActive ? faArrowLeft : faSearch} className="search-icon" onClick={closeSearchBar} />
                     <input 
