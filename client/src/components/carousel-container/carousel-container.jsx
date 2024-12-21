@@ -2,7 +2,7 @@ import React from 'react';
 import CardItemsCarousel from '../card-item-carousel/card-items-carousel';
 import './carousel-container.styles.css';
 
-const CarouselContainer = ({inventory, editCart, isDropdownOpen}) => {
+const CarouselContainer = ({inventory, editCart}) => {
     return (
         <div className="carousel-container">
             {
@@ -12,7 +12,6 @@ const CarouselContainer = ({inventory, editCart, isDropdownOpen}) => {
                         inventory={items} 
                         category={category} 
                         editCart={editCart} 
-                        isDropdownOpen={isDropdownOpen}
                     />
                 ))
             }

@@ -1,0 +1,90 @@
+.search-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    margin: 6px;
+    border-radius: 8px;
+    background-color: var(--light-background-white);
+    border: 1px solid var(--light-border);
+    box-shadow: 0 2px 4px rgba(91, 107, 191, 0.1);
+}
+
+.search-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 8px;
+}
+
+.search-item-details {
+    flex: 1;
+    min-width: 0;
+    padding-right: 8px;
+}
+
+.search-item h4 {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--light-text-primary);
+    margin: 0 0 2px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+}
+
+.search-item-price {
+    font-size: 14px;
+    margin: 0;
+    color: var(--light-text-secondary);
+    font-weight: 600;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--light-background-card);
+    padding: 5px 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1)
+}
+
+.search-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+}
+
+.search-item-quantity-button {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light-primary);
+    color: var(--light-text-white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 16px;
+}
+
+.search-item-quantity-button.red {
+    background-color: var(--light-action-orange);
+}
+
+.search-item-quantity-button.green {
+    background-color: var(--light-primary);
+}
+
+.search-item-quantity-button.red:hover {
+    background-color: var(--light-action-orange-dark);
+}
+
+.search-item-quantity-button.green:hover {
+    background-color: var(--light-primary-darkest);
+}

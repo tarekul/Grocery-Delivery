@@ -4,7 +4,7 @@ import CartItem from "../cart-item/cart-item";
 import "./cart.styles.css";
 import CartButton from "../card-button/cart-button";
 
-const Cart = ({ cart, editCart, isDropdownOpen, setIsDropdownOpen, setIsCheckoutOpen }) => {
+const Cart = ({ cart, editCart, isDropdownOpen, setIsDropdownOpen, setIsCheckoutOpen, isSearchBarOpen }) => {
     const [isClosing, setIsClosing] = useState(false);
     
     const totalPrice = cart.reduce(
@@ -51,7 +51,7 @@ const Cart = ({ cart, editCart, isDropdownOpen, setIsDropdownOpen, setIsCheckout
 
     return (
         <div className="cart-container">
-            <CartButton cart={cart} toggleDropdown={toggleDropdown} />
+            <CartButton cart={cart} toggleDropdown={toggleDropdown} isSearchBarOpen={isSearchBarOpen} />
 
             {isDropdownOpen && (
                 <div className={`cart-dropdown ${isClosing ? 'closing' : ''} ${hasItems}`}>

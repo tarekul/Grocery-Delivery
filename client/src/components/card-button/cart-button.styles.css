@@ -11,6 +11,11 @@
     font-size: 20px;
 }
 
+.cart-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .cart-button:hover {
     background-color: var(--primary-dark);
     transform: scale(1.1);
