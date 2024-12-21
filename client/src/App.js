@@ -79,6 +79,7 @@ function App() {
         editCart={cartEditor} 
         setIsSearchBarActive={setIsSearchBarActive}
         isSearchBarActive={isSearchBarActive}
+        cart={cart}
       />
       <DarkMode />
       {isCheckoutOpen ? (
@@ -98,7 +99,7 @@ function App() {
               setIsCheckoutOpen={setIsCheckoutOpen} 
               isSearchBarActive={isSearchBarActive}
             />
-          <CategoryCarousel inventory={inventory} editCart={cartEditor} />
+          <CategoryCarousel inventory={inventory} cart={cart} editCart={cartEditor} />
           {showToast && (
             <Toast 
               message={toastMessage} 

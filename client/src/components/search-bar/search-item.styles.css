@@ -77,6 +77,10 @@
     background-color: var(--light-action-orange);
 }
 
+.search-item-quantity-button.red.disabled {
+    opacity: 0.5;
+}
+
 .search-item-quantity-button.green {
     background-color: var(--light-primary);
 }

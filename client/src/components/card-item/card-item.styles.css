@@ -54,12 +54,21 @@
     background-color: var(--action-orange);  
 }
 
+.quantity-button.disabled { 
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
 .quantity-button.green {
     background-color: var(--primary);  
 }
 
 .quantity-button.red:hover {
     background-color: var(--action-orange-dark);  
+}
+
+.quantity-button.disabled:hover {
+    opacity: 0.5; 
 }
 
 .quantity-button.green:hover {

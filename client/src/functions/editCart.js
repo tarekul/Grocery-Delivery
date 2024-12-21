@@ -2,7 +2,6 @@ export const editCart = (dependencies) => {
     const { inventory, setCart, setShowToast, setToastMessage, setToastColor } = dependencies;
     
     return (itemId, source='card', operation='add') => {
-        console.log('here')
         const item = Object.values(inventory).flat().find(item => item.id === itemId);
     
         if (item) {
@@ -25,7 +24,7 @@ export const editCart = (dependencies) => {
                             ? { ...cartItem, quantity: cartItem.quantity + (operation === 'add' ? 1 : -1) }
                             : cartItem
                     )
-                    : [...prevCart, { item, quantity: 1 }];
+                    : operation === 'add' ? [...prevCart, { item, quantity: 1 }] : prevCart;
 
                 // Remove cart items with quantity 0
                 updatedCart = updatedCart.filter(cartItem => cartItem.quantity > 0);

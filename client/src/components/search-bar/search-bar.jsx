@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const SearchBar = ({inventory, editCart, setIsSearchBarActive, isSearchBarActive }) => {
+const SearchBar = ({inventory, editCart, setIsSearchBarActive, isSearchBarActive, cart }) => {
     const [filteredInventory, setFilteredInventory] = useState([]);
     const inputRef = useRef(null);
 
@@ -51,7 +51,7 @@ const SearchBar = ({inventory, editCart, setIsSearchBarActive, isSearchBarActive
                 </div>
                 <div className= {`search-items ${filteredInventory.length === 0 ? 'hide' : ''}`}>
                     {filteredInventory.map(item => (
-                        <SearchItem key={item.id} item={item} editCart={editCart} />
+                        <SearchItem key={item.id} item={item} editCart={editCart} cart={cart} />
                     ))}
                 </div>
             </div>
