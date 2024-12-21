@@ -3,12 +3,12 @@ import { faBasketShopping } from '@fortawesome/free-solid-svg-icons';
 
 import './cart-button.styles.css'
 
-const CartButton = ({cart, toggleDropdown, isSearchBarOpen}) => {
+const CartButton = ({cart, toggleDropdown, isSearchBarActive}) => {
     return (
         <button 
-            className={`cart-button ${isSearchBarOpen ? 'disabled' : ''}`} 
+            className={`cart-button ${isSearchBarActive ? 'disabled' : ''}`} 
             onClick={toggleDropdown}
-            disabled={isSearchBarOpen}
+            disabled={isSearchBarActive}
         >
             <FontAwesomeIcon icon={faBasketShopping} />
             {cart.length > 0 && <span className="cart-badge">{cart.length}</span>}

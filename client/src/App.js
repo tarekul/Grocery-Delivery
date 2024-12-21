@@ -20,7 +20,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
+  const [isSearchBarActive, setIsSearchBarActive] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', address: '' });
   const [showToast, setShowToast] = useState(false);
@@ -74,7 +74,12 @@ function App() {
   return (
     <div className="App">
       <Title />
-      <SearchBar inventory={Object.values(inventory).flat()} editCart={cartEditor} setIsSearchBarOpen={setIsSearchBarOpen} />
+      <SearchBar 
+        inventory={Object.values(inventory).flat()} 
+        editCart={cartEditor} 
+        setIsSearchBarActive={setIsSearchBarActive}
+        isSearchBarActive={isSearchBarActive}
+      />
       <DarkMode />
       {isCheckoutOpen ? (
         <CheckoutContainer 
@@ -91,7 +96,7 @@ function App() {
               setIsDropdownOpen={setIsDropdownOpen} 
               isDropdownOpen={isDropdownOpen} 
               setIsCheckoutOpen={setIsCheckoutOpen} 
-              isSearchBarOpen={isSearchBarOpen}
+              isSearchBarActive={isSearchBarActive}
             />
           <CategoryCarousel inventory={inventory} editCart={cartEditor} />
           {showToast && (
