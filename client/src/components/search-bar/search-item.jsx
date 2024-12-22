@@ -4,7 +4,7 @@ const SearchItem = ({item, editCart, cart}) => {
     const enableButton = cart.find(cartItem => cartItem.item.id === item.id);
     return (
         <div className="search-item">
-            <img src={item.image} alt={item.name} />
+            <img src= {process.env.REACT_APP_API_URL + item.image} alt={item.name} />
             <div className="search-item-details">
                 <h4 className="search-item-name">{item.name}</h4>
                 <p className="search-item-price">${item.price}</p>
