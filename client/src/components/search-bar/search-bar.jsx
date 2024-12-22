@@ -12,6 +12,7 @@ const SearchBar = ({inventory, editCart, setIsSearchBarActive, isSearchBarActive
         if (!e.target.value) {
             setFilteredInventory([]);
             setIsSearchBarActive(false);
+            document.body.style.overflow = 'unset';
             return;
         }
         setIsSearchBarActive(true);
