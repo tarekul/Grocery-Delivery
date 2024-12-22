@@ -32,58 +32,158 @@ db.run(`
 // Inventory
 const inventory = {
     Grains: [
-        { id: 1, name: 'Rice (Basmati)', price: 10, image: 'https://imgs.search.brave.com/fnuk3MWnUede8LbArSs_K6dudhDXXkyV0FOkykk7s8Y/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAxLzYyLzIwLzQ3/LzM2MF9GXzE2MjIw/NDc2MF9IeUJMRncx/akpQbTN1Q0FlQkc3/cmJYSWZxbDFiT0Ry/Vy5qcGc', category: 'Grains' },
-        { id: 2, name: 'Rice (Gobindobhog)', price: 12, image: 'https://www.grainka.com/wp-content/uploads/images/Gobindobhog-Rice-aQV.jpeg', category: 'Grains' },
+        { id: 1, name: 'Royal Basmati Rice', price: 10, image: '/inventory_images/RoyalBasmatiRice.webp', category: 'Grains' },
+        { id: 2, name: 'Rice (Gobindobhog)', price: 12, image: '/inventory_images/GrihikaGobingobhogRice.webp', category: 'Grains' },
         { id: 3, name: 'Rice (Miniket)', price: 11, image: 'https://www.goodfoodbar.com/cdn/shop/files/minikit-rice-500x500.webp?v=1694594976&width=1445', category: 'Grains' },
-        { id: 4, name: 'Flattened Rice (Chire/Poha)', price: 5, image: 'https://m.media-amazon.com/images/I/91mBGUHA+LL.jpg', category: 'Grains' },
-        { id: 5, name: 'Puffed Rice (Muri)', price: 4, image: 'https://api.c2k2y3nvy0-heuschena1-p1-public.model-t.cc.commerce.ondemand.com/medias/625Wx625H-recipe-272.jpg?context=bWFzdGVyfHJvb3R8NjM5NTV8aW1hZ2UvanBlZ3xhR1l3TDJnME1DODRPRGd5TWpBMU1qWXhPRFUwTHpZeU5WZDROakkxU0Y5eVpXTnBjR1V0TWpjeUxtcHdad3xiYzQxYThiNmUxNDJiMzcyMmY0ZTU3OTM0NDQ5YzVjY2Q0NzgxOTRhNjFjMDQwOGE3OTk2MjRlZmRkMmE1Mzkx', category: 'Grains' },
-        { id: 6, name: 'Wheat Flour (Atta)', price: 8, image: 'https://myfavouritepastime.com/wp-content/uploads/2019/07/img_9226.jpg?w=730', category: 'Grains' },
-        { id: 7, name: 'Semolina (Suji)', price: 6, image: 'https://cdnimg.webstaurantstore.com/uploads/blog/2019/6/blog-semolina_in-blog3.jpg', category: 'Grains' }
+        { id: 4, name: 'Rice (Kataribhog)', price: 13, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 5, name: 'Rice (Kalijira)', price: 14, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 6, name: 'Rice (Tulaipanji)', price: 12, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 7, name: 'Flattened Rice (Chire/Poha)', price: 5, image: 'https://m.media-amazon.com/images/I/91mBGUHA+LL.jpg', category: 'Grains' },
+        { id: 8, name: 'Puffed Rice (Muri)', price: 4, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 9, name: 'Puffed Rice Premium (Jhuri Muri)', price: 5, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 10, name: 'Wheat Flour (Atta)', price: 8, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 11, name: 'All Purpose Flour (Maida)', price: 7, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 12, name: 'Semolina (Suji)', price: 6, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 13, name: 'Vermicelli (Semai)', price: 5, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 14, name: 'Puffed Rice Cakes (Khoi)', price: 4, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 68, name: 'Rice (Chinigura)', price: 15, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 69, name: 'Rice (Paijam)', price: 11, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 70, name: 'Rice (Najirshail)', price: 13, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 71, name: 'Panta Bhat Mix', price: 6, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 72, name: 'Muri (Kalo Bhaja)', price: 5, image: 'placeholder.jpg', category: 'Grains' },
+        { id: 73, name: 'Khichuri Mix', price: 7, image: 'placeholder.jpg', category: 'Grains' }
     ],
     Lentils: [
-        { id: 8, name: 'Red Lentils (Masoor Dal)', price: 5, image: 'https://www.curiouscuisiniere.com/wp-content/uploads/2020/12/Masoor-Dal-Red-Lentils-Dry-14.680.jpg', category: 'Lentils' },
-        { id: 9, name: 'Split Pigeon Peas (Arhar/Tur Dal)', price: 7, image: 'https://upload.wikimedia.org/wikipedia/commons/b/bc/Split_pea.jpg', category: 'Lentils' },
-        { id: 10, name: 'Split Green Gram (Moong Dal)', price: 6, image: 'https://m.media-amazon.com/images/I/41r6UnzyZ9L.jpg', category: 'Lentils' },
-        { id: 11, name: 'Black Gram (Urad Dal)', price: 7, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Black_gram.jpg/512px-Black_gram.jpg', category: 'Lentils' },
-        { id: 12, name: 'Split Chickpeas (Chana Dal)', price: 6, image: 'https://m.media-amazon.com/images/I/51iO2Sphg2L.jpg', category: 'Lentils' },
-        { id: 13, name: 'Yellow Lentils (Matar Dal)', price: 5, image: 'https://cdn.loveandlemons.com/wp-content/uploads/2019/12/lentils.jpg', category: 'Lentils' }
+        { id: 15, name: 'Red Lentils (Masoor Dal)', price: 5, image: 'placeholder.jpg', category: 'Lentils' },
+        { id: 16, name: 'Split Pigeon Peas (Arhar/Tur Dal)', price: 7, image: 'placeholder.jpg', category: 'Lentils' },
+        { id: 17, name: 'Split Green Gram (Moong Dal)', price: 6, image: 'placeholder.jpg', category: 'Lentils' },
+        { id: 18, name: 'Black Gram (Urad Dal)', price: 7, image: 'placeholder.jpg', category: 'Lentils' },
+        { id: 19, name: 'Split Chickpeas (Chana Dal)', price: 6, image: 'placeholder.jpg', category: 'Lentils' },
+        { id: 20, name: 'Yellow Peas (Matar Dal)', price: 5, image: 'placeholder.jpg', category: 'Lentils' },
+        { id: 21, name: 'Whole Masoor Dal', price: 6, image: 'placeholder.jpg', category: 'Lentils' },
+        { id: 22, name: 'Khesari Dal', price: 5, image: 'placeholder.jpg', category: 'Lentils' },
+        { id: 23, name: 'Whole Mung Beans (Sabut Moong)', price: 7, image: 'placeholder.jpg', category: 'Lentils' },
+        { id: 74, name: 'Motor Dal (Whole)', price: 6, image: 'placeholder.jpg', category: 'Lentils' },
+        { id: 75, name: 'Boot Dal', price: 5, image: 'placeholder.jpg', category: 'Lentils' },
+        { id: 76, name: 'Mixed Dal Pack', price: 8, image: 'placeholder.jpg', category: 'Lentils' }
     ],
     Spices: [
-        { id: 14, name: 'Turmeric Powder (Haldi)', price: 2, image: 'https://upload.wikimedia.org/wikipedia/commons/0/0a/Turmeric-powder.jpg', category: 'Spices' },
-        { id: 15, name: 'Red Chili Powder', price: 2, image: 'https://via.placeholder.com/100', category: 'Spices' },
-        { id: 16, name: 'Cumin Seeds (Jeera)', price: 3, image: 'https://via.placeholder.com/100', category: 'Spices' },
-        { id: 17, name: 'Coriander Powder', price: 3, image: 'https://via.placeholder.com/100', category: 'Spices' },
-        { id: 18, name: 'Mustard Seeds (Shorshe)', price: 2, image: 'https://via.placeholder.com/100', category: 'Spices' },
-        { id: 19, name: 'Bay Leaves (Tejpatta)', price: 1, image: 'https://via.placeholder.com/100', category: 'Spices' },
-        { id: 20, name: 'Cloves (Lavang)', price: 4, image: 'https://via.placeholder.com/100', category: 'Spices' },
-        { id: 21, name: 'Cinnamon (Daruchini)', price: 5, image: 'https://via.placeholder.com/100', category: 'Spices' },
-        { id: 22, name: 'Cardamom (Elaichi)', price: 6, image: 'https://via.placeholder.com/100', category: 'Spices' },
-        { id: 23, name: 'Nigella Seeds (Kalo Jeera)', price: 3, image: 'https://via.placeholder.com/100', category: 'Spices' },
-        { id: 24, name: 'Fenugreek Seeds (Methi)', price: 2, image: 'https://via.placeholder.com/100', category: 'Spices' },
-        { id: 25, name: 'Asafoetida (Hing)', price: 7, image: 'https://via.placeholder.com/100', category: 'Spices' },
-        { id: 26, name: 'Panch Phoron', price: 4, image: 'https://via.placeholder.com/100', category: 'Spices' }
+        { id: 24, name: 'Turmeric Powder (Holud)', price: 3, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 25, name: 'Red Chili Powder (Morich)', price: 3, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 26, name: 'Cumin Seeds (Jeera)', price: 4, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 27, name: 'Cumin Powder (Jeera Gura)', price: 4, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 28, name: 'Coriander Powder (Dhonia Gura)', price: 3, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 29, name: 'Mustard Seeds (Shorshe)', price: 2, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 30, name: 'Bay Leaves (Tejpata)', price: 2, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 31, name: 'Cloves (Lobongo)', price: 5, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 32, name: 'Cinnamon (Daruchini)', price: 5, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 33, name: 'Green Cardamom (Elach)', price: 6, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 34, name: 'Black Cardamom (Boro Elach)', price: 7, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 35, name: 'Nigella Seeds (Kalojeera)', price: 3, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 36, name: 'Fenugreek Seeds (Methi)', price: 2, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 37, name: 'Panch Phoron', price: 4, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 38, name: 'Radhuni', price: 4, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 39, name: 'Dried Red Chilies (Shukna Morich)', price: 3, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 40, name: 'Poppy Seeds (Posto)', price: 8, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 41, name: 'Dried Mango Powder (Amchur)', price: 4, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 77, name: 'Kalo Jire Gura (Ground Nigella)', price: 4, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 78, name: 'Shorisher Gura (Ground Mustard)', price: 3, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 79, name: 'Golmorich Gura (Black Pepper)', price: 5, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 80, name: 'Tej Pata Gura (Ground Bay Leaf)', price: 3, image: 'placeholder.jpg', category: 'Spices' },
+        { id: 81, name: 'Kashundi (Mustard Sauce)', price: 4, image: 'placeholder.jpg', category: 'Spices' }
     ],
-    Vegetables: [
-        { id: 27, name: 'Potato (Aloo)', price: 1, image: 'https://m.media-amazon.com/images/I/61yXL70-RaL._SL1500_.jpg', category: 'Vegetables' },
-        { id: 28, name: 'Onion (Peyaj)', price: 2, image: 'https://via.placeholder.com/100', category: 'Vegetables' },
-        { id: 29, name: 'Tomato', price: 3, image: 'https://via.placeholder.com/100', category: 'Vegetables' },
-        { id: 30, name: 'Eggplant (Begun)', price: 3, image: 'https://via.placeholder.com/100', category: 'Vegetables' },
-        { id: 31, name: 'Bottle Gourd (Lau)', price: 4, image: 'https://via.placeholder.com/100', category: 'Vegetables' },
-        { id: 32, name: 'Pointed Gourd (Patal)', price: 4, image: 'https://via.placeholder.com/100', category: 'Vegetables' },
-        { id: 33, name: 'Ridge Gourd (Jhinge)', price: 4, image: 'https://via.placeholder.com/100', category: 'Vegetables' },
-        { id: 34, name: 'Spinach (Palong Shaak)', price: 2, image: 'https://via.placeholder.com/100', category: 'Vegetables' }
+    Snacks: [
+        { id: 42, name: 'Chanachur', price: 4, image: 'placeholder.jpg', category: 'Snacks' },
+        { id: 43, name: 'Jhalmuri Mix', price: 3, image: 'placeholder.jpg', category: 'Snacks' },
+        { id: 44, name: 'Bhaja Moshla', price: 5, image: 'placeholder.jpg', category: 'Snacks' },
+        { id: 45, name: 'Daler Bora Mix', price: 4, image: 'placeholder.jpg', category: 'Snacks' },
+        { id: 46, name: 'Nimki', price: 4, image: 'placeholder.jpg', category: 'Snacks' },
+        { id: 47, name: 'Muri Mixture', price: 3, image: 'placeholder.jpg', category: 'Snacks' },
+        { id: 48, name: 'Chaler Bora Mix', price: 4, image: 'placeholder.jpg', category: 'Snacks' },
+        { id: 82, name: 'Moa', price: 5, image: 'placeholder.jpg', category: 'Snacks' },
+        { id: 83, name: 'Batasa', price: 3, image: 'placeholder.jpg', category: 'Snacks' },
+        { id: 84, name: 'Murki', price: 4, image: 'placeholder.jpg', category: 'Snacks' },
+        { id: 85, name: 'Kodma', price: 4, image: 'placeholder.jpg', category: 'Snacks' },
+        { id: 86, name: 'Teler Pitha Mix', price: 6, image: 'placeholder.jpg', category: 'Snacks' },
+        { id: 87, name: 'Bhapa Pitha Mix', price: 6, image: 'placeholder.jpg', category: 'Snacks' },
+        { id: 88, name: 'Patishapta Mix', price: 6, image: 'placeholder.jpg', category: 'Snacks' }
     ],
-    Dairy: [
-        { id: 35, name: 'Milk (Dudh)', price: 2, image: 'https://via.placeholder.com/100', category: 'Dairy' },
-        { id: 36, name: 'Curd/Yogurt (Doi)', price: 3, image: 'https://via.placeholder.com/100', category: 'Dairy' }
+    Pickles: [
+        { id: 49, name: 'Mango Pickle (Amer Achar)', price: 5, image: 'placeholder.jpg', category: 'Pickles' },
+        { id: 50, name: 'Olive Pickle (Jolpaier Achar)', price: 6, image: 'placeholder.jpg', category: 'Pickles' },
+        { id: 51, name: 'Chili Pickle (Morich Achar)', price: 4, image: 'placeholder.jpg', category: 'Pickles' },
+        { id: 52, name: 'Lemon Pickle (Lebur Achar)', price: 4, image: 'placeholder.jpg', category: 'Pickles' },
+        { id: 53, name: 'Tetul Achar', price: 5, image: 'placeholder.jpg', category: 'Pickles' },
+        { id: 54, name: 'Mixed Pickle (Mix Achar)', price: 5, image: 'placeholder.jpg', category: 'Pickles' },
+        { id: 89, name: 'Dried Mango Pickle (Amshotto)', price: 6, image: 'placeholder.jpg', category: 'Pickles' },
+        { id: 90, name: 'Chalta Pickle', price: 5, image: 'placeholder.jpg', category: 'Pickles' },
+        { id: 91, name: 'Karela Pickle (Ucche)', price: 5, image: 'placeholder.jpg', category: 'Pickles' },
+        { id: 92, name: 'Ada Pickle (Ginger)', price: 5, image: 'placeholder.jpg', category: 'Pickles' }
     ],
-    Fruits: [
-        { id: 37, name: 'Banana (Kola)', price: 1, image: 'https://m.media-amazon.com/images/I/61fZ+YAYGaL._SL1500_.jpg', category: 'Fruits' },
-        { id: 38, name: 'Mango (Aam)', price: 5, image: 'https://via.placeholder.com/100', category: 'Fruits' }
+    'Sweets & Ingredients': [
+        { id: 55, name: 'Date Palm Jaggery (Khejur Gur)', price: 8, image: 'placeholder.jpg', category: 'Sweets & Ingredients' },
+        { id: 56, name: 'Nolen Gur', price: 10, image: 'placeholder.jpg', category: 'Sweets & Ingredients' },
+        { id: 57, name: 'Chhana (For Sweets)', price: 6, image: 'placeholder.jpg', category: 'Sweets & Ingredients' },
+        { id: 58, name: 'Khoya/Mawa', price: 7, image: 'placeholder.jpg', category: 'Sweets & Ingredients' },
+        { id: 59, name: 'Coconut Powder (Narkel Kora)', price: 4, image: 'placeholder.jpg', category: 'Sweets & Ingredients' },
+        { id: 93, name: 'Patali Gur', price: 7, image: 'placeholder.jpg', category: 'Sweets & Ingredients' },
+        { id: 94, name: 'Roshogolla Mix', price: 8, image: 'placeholder.jpg', category: 'Sweets & Ingredients' },
+        { id: 95, name: 'Mishti Doi Mix', price: 6, image: 'placeholder.jpg', category: 'Sweets & Ingredients' },
+        { id: 96, name: 'Sandesh Mix', price: 7, image: 'placeholder.jpg', category: 'Sweets & Ingredients' },
+        { id: 97, name: 'Chamcham Mix', price: 7, image: 'placeholder.jpg', category: 'Sweets & Ingredients' }
     ],
-    Miscellaneous: [
-        { id: 39, name: 'Mustard Oil (Shorsher Tel)', price: 7, image: 'https://via.placeholder.com/100', category: 'Miscellaneous' },
-        { id: 40, name: 'Jaggery (Gur)', price: 4, image: 'https://via.placeholder.com/100', category: 'Miscellaneous' }
+    'Fish Products': [
+        { id: 60, name: 'Dried Fish (Shutki Mach)', price: 8, image: 'placeholder.jpg', category: 'Fish Products' },
+        { id: 61, name: 'Dried Shrimp (Chingri Shutki)', price: 10, image: 'placeholder.jpg', category: 'Fish Products' },
+        { id: 62, name: 'Fish Masala Mix', price: 4, image: 'placeholder.jpg', category: 'Fish Products' },
+        { id: 98, name: 'Loitta Shutki', price: 9, image: 'placeholder.jpg', category: 'Fish Products' },
+        { id: 99, name: 'Churi Shutki', price: 8, image: 'placeholder.jpg', category: 'Fish Products' },
+        { id: 100, name: 'Kachki Shutki', price: 7, image: 'placeholder.jpg', category: 'Fish Products' },
+        { id: 101, name: 'Dried Fish Powder (Shutki Gura)', price: 6, image: 'placeholder.jpg', category: 'Fish Products' }
+    ],
+    'Cooking Essentials': [
+        { id: 63, name: 'Mustard Oil (Shorsher Tel)', price: 8, image: 'placeholder.jpg', category: 'Cooking Essentials' },
+        { id: 64, name: 'Ghee', price: 12, image: 'placeholder.jpg', category: 'Cooking Essentials' },
+        { id: 65, name: 'Coconut Oil (Narkel Tel)', price: 7, image: 'placeholder.jpg', category: 'Cooking Essentials' },
+        { id: 66, name: 'Panchforan Masala', price: 4, image: 'placeholder.jpg', category: 'Cooking Essentials' },
+        { id: 67, name: 'Garam Masala', price: 5, image: 'placeholder.jpg', category: 'Cooking Essentials' },
+        { id: 102, name: 'Posto Bata Mix', price: 6, image: 'placeholder.jpg', category: 'Cooking Essentials' },
+        { id: 103, name: 'Shorshe Bata Mix', price: 5, image: 'placeholder.jpg', category: 'Cooking Essentials' },
+        { id: 104, name: 'Doi Maach Masala', price: 4, image: 'placeholder.jpg', category: 'Cooking Essentials' },
+        { id: 105, name: 'Bhapa Ilish Masala', price: 5, image: 'placeholder.jpg', category: 'Cooking Essentials' }
+    ],
+    'Ready-to-Cook': [
+        { id: 106, name: 'Biryani Masala (Bengali Style)', price: 6, image: 'placeholder.jpg', category: 'Ready-to-Cook' },
+        { id: 107, name: 'Chingri Malai Curry Mix', price: 7, image: 'placeholder.jpg', category: 'Ready-to-Cook' },
+        { id: 108, name: 'Shorshe Ilish Mix', price: 7, image: 'placeholder.jpg', category: 'Ready-to-Cook' },
+        { id: 109, name: 'Kosha Mangsho Masala', price: 6, image: 'placeholder.jpg', category: 'Ready-to-Cook' },
+        { id: 110, name: 'Dhokar Dalna Mix', price: 5, image: 'placeholder.jpg', category: 'Ready-to-Cook' },
+        { id: 111, name: 'Cholar Dal Mix', price: 5, image: 'placeholder.jpg', category: 'Ready-to-Cook' }
+    ],
+    'Dairy Products': [
+        { id: 112, name: 'Sweet Curd (Mishti Doi)', price: 5, image: 'placeholder.jpg', category: 'Dairy Products' },
+        { id: 113, name: 'Regular Curd (Tok Doi)', price: 4, image: 'placeholder.jpg', category: 'Dairy Products' },
+        { id: 114, name: 'Ghee (Ghritam)', price: 12, image: 'placeholder.jpg', category: 'Dairy Products' },
+        { id: 115, name: 'Butter (Makhan)', price: 8, image: 'placeholder.jpg', category: 'Dairy Products' },
+        { id: 116, name: 'Cottage Cheese (Chhana)', price: 6, image: 'placeholder.jpg', category: 'Dairy Products' },
+        { id: 117, name: 'Kheer Mix', price: 7, image: 'placeholder.jpg', category: 'Dairy Products' },
+        { id: 118, name: 'Rabri Mix', price: 8, image: 'placeholder.jpg', category: 'Dairy Products' },
+        { id: 119, name: 'Paneer', price: 7, image: 'placeholder.jpg', category: 'Dairy Products' },
+        { id: 120, name: 'Lassi Mix', price: 4, image: 'placeholder.jpg', category: 'Dairy Products' }
+    ],
+    'Fruits & Dry Fruits': [
+        { id: 121, name: 'Mango (Himsagar)', price: 8, image: 'placeholder.jpg', category: 'Fruits & Dry Fruits' },
+        { id: 122, name: 'Mango (Langra)', price: 7, image: 'placeholder.jpg', category: 'Fruits & Dry Fruits' },
+        { id: 123, name: 'Mango (Fazli)', price: 7, image: 'placeholder.jpg', category: 'Fruits & Dry Fruits' },
+        { id: 124, name: 'Litchi (Bombai)', price: 6, image: 'placeholder.jpg', category: 'Fruits & Dry Fruits' },
+        { id: 125, name: 'Jackfruit (Kathal) Chips', price: 5, image: 'placeholder.jpg', category: 'Fruits & Dry Fruits' },
+        { id: 126, name: 'Dried Mango (Amshotto)', price: 6, image: 'placeholder.jpg', category: 'Fruits & Dry Fruits' },
+        { id: 127, name: 'Banana (Chompa)', price: 4, image: 'placeholder.jpg', category: 'Fruits & Dry Fruits' },
+        { id: 128, name: 'Banana (Sagar)', price: 4, image: 'placeholder.jpg', category: 'Fruits & Dry Fruits' },
+        { id: 129, name: 'Dried Dates (Khejur)', price: 5, image: 'placeholder.jpg', category: 'Fruits & Dry Fruits' },
+        { id: 130, name: 'Raisins (Kishmish)', price: 6, image: 'placeholder.jpg', category: 'Fruits & Dry Fruits' },
+        { id: 131, name: 'Coconut (Narkel) - Dried', price: 4, image: 'placeholder.jpg', category: 'Fruits & Dry Fruits' },
+        { id: 132, name: 'Palm Fruit (Tal) - Dried', price: 5, image: 'placeholder.jpg', category: 'Fruits & Dry Fruits' }
     ]
 };
 
@@ -99,6 +199,8 @@ app.get('/inventory', (req, res) => {
         res.status(500).json({ success: false, error: 'Internal server error' });
     }
 });
+
+app.use('/inventory_images', express.static('inventory_images'));
 
 app.post('/order', (req, res) => {
     const { name, phone, address, items } = req.body;
