@@ -6,6 +6,7 @@ import { handleOrderSubmit } from './functions/handleOrderSubmit';
 import './App.css';
 
 import Title from './components/title/title.jsx';
+import Mission from './components/mission/mission.jsx';
 import SearchBar from './components/search-bar/search-bar.jsx';
 import Cart from './components/cart/cart.jsx';
 import Toast from './components/toast/toast.jsx';
@@ -16,8 +17,8 @@ import CategoryCarousel from './components/carousel-container/carousel-container
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
 
 function App() {
+  const [showMission, setShowMission] = useState(false);
   const [inventory, setInventory] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('All');
   const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
@@ -42,15 +43,6 @@ function App() {
       });
   }, []);
 
-  const getInventoryByCategory = (category) => {
-    if (!category || category === 'All') {
-      setSelectedCategory('All');
-      return;
-    }
-    const filtered = inventory.filter(item => item.category.toLowerCase() === category.toLowerCase());
-    setSelectedCategory(category);
-  };
-
   const formHandler = useMemo(() => handleFormChange({ 
     setForm, 
     form 
@@ -71,18 +63,22 @@ function App() {
     setToastColor
   }), [inventory]);
 
+  
+
   return (
     <div className="App">
-      <Title />
-      <SearchBar 
-        inventory={Object.values(inventory).flat()} 
-        editCart={cartEditor} 
-        setIsSearchBarActive={setIsSearchBarActive}
-        isSearchBarActive={isSearchBarActive}
-        cart={cart}
-      />
-      <DarkMode />
-      {isCheckoutOpen ? (
+      <Title setShowMission={setShowMission} showMission={showMission}/>
+      {showMission && (<Mission />)}
+      {!showMission && (
+        <>
+          <SearchBar 
+            inventory={Object.values(inventory).flat()} 
+            editCart={cartEditor} 
+            setIsSearchBarActive={setIsSearchBarActive}
+            isSearchBarActive={isSearchBarActive}
+            cart={cart}
+          />
+          {isCheckoutOpen ? (
         <CheckoutContainer 
           setIsCheckoutOpen={setIsCheckoutOpen}
           form={form}
@@ -108,7 +104,10 @@ function App() {
             />
           )}
         </>
+        )}
+      </>
       )}
+      <DarkMode />
     </div>
   );
 }
