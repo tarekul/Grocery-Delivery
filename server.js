@@ -32,9 +32,9 @@ db.run(`
 // Inventory
 const inventory = {
     Grains: [
-        { id: 1, name: 'Royal Basmati Rice (15lb)', price: 10, image: '/inventory_images/royal_basmati_rice-15-lb.webp', category: 'Grains' },
-        { id: 2, name: 'Royal Basmati Rice (20lb)', price: 12, image: '/inventory_images/royal_basmati_rice-20-lb.webp', category: 'Grains' },
-        { id: 3, name: 'Heritage Basmati Rice (11lb)', price: 11, image: '/inventory_images/heritage-basmati-rice-11-lb.webp', category: 'Grains' },
+        { id: 1, name: 'Royal Basmati Rice (15lb)', price: 10, image: '/inventory_images/royal_basmati_rice_15_lb.webp', category: 'Grains' },
+        { id: 2, name: 'Royal Basmati Rice (20lb)', price: 12, image: '/inventory_images/royal_basmati_rice_20_lb.webp', category: 'Grains' },
+        { id: 3, name: 'Heritage Basmati Rice (11lb)', price: 11, image: '/inventory_images/heritage_basmati_rice_11_lb.webp', category: 'Grains' },
         { id: 4, name: 'Rice (Kataribhog)', price: 13, image: '/inventory_images/placeholder.png', category: 'Grains' },
         { id: 5, name: 'Rice (Kalijira)', price: 14, image: '/inventory_images/placeholder.png', category: 'Grains' },
         { id: 6, name: 'Rice (Tulaipanji)', price: 12, image: '/inventory_images/placeholder.png', category: 'Grains' },
