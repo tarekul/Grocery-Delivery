@@ -8,3 +8,8 @@
     text-align: center;
     cursor: pointer;
 }
+
+.title:hover {
+    color: var(--primary);
+    transform: scale(0.99);
+}
