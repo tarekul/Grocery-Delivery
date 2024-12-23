@@ -76,6 +76,7 @@ function App() {
             setIsSearchBarActive={setIsSearchBarActive}
             isSearchBarActive={isSearchBarActive}
             cart={cart}
+            isDropdownOpen={isDropdownOpen}
           />
           {isCheckoutOpen ? (
         <CheckoutContainer 

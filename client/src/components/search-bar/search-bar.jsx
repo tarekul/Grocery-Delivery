@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const SearchBar = ({inventory, editCart, setIsSearchBarActive, isSearchBarActive, cart }) => {
+const SearchBar = ({inventory, editCart, setIsSearchBarActive, isSearchBarActive, cart, isDropdownOpen}) => {
     const [filteredInventory, setFilteredInventory] = useState([]);
     const inputRef = useRef(null);
 
@@ -48,6 +48,7 @@ const SearchBar = ({inventory, editCart, setIsSearchBarActive, isSearchBarActive
                         name="search" 
                         onChange={handleSearchChange}
                         autoComplete="off"
+                        disabled={isDropdownOpen}
                     />
                 </div>
                 <div className= {`search-items ${filteredInventory.length === 0 ? 'hide' : ''}`}>

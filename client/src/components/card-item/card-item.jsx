@@ -7,10 +7,12 @@ const CardItem = ({item, editCart, cart}) => {
 
     const handleImageClick = () => {
         setFullSizeVisible(true);
+        document.body.style.overflow = 'hidden';
     };
 
     const handleOverlayClick = () => {
         setFullSizeVisible(false);
+        document.body.style.overflow = 'unset';
     };
 
     return (
@@ -24,7 +26,7 @@ const CardItem = ({item, editCart, cart}) => {
             </div>
 
             {isFullSizeVisible && (
-                <div className="overlay" onClick={handleOverlayClick}>
+                <div className="card-item-overlay" onClick={handleOverlayClick}>
                     <img src={item.image} alt={item.name} className="full-size-image" />
                 </div>
             )}

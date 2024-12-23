@@ -59,28 +59,13 @@ const inventory = {
         { id: 33, name: 'Whole Black Pepper 7 oz', price: 5.99, image: 'https://www.abanifoods.com/cdn/shop/products/102-21SwadWholeBlackPepper7oz_1024x1024.jpg?v=1589148914', category: 'Spices' },
         { id: 34, name: 'White Sesame Seeds 7 oz', price: 2.99, image: 'https://www.abanifoods.com/cdn/shop/products/102-28ShadWhiteSesameSeeds7oz_1024x1024.jpg?v=1589191996', category: 'Spices' }
     ],
-    Pickles: [
-        { id: 49, name: 'Mango Pickle (Amer Achar)', price: 5, image: '/inventory_images/placeholder.png', category: 'Pickles' },
-        { id: 50, name: 'Olive Pickle (Jolpaier Achar)', price: 6, image: '/inventory_images/placeholder.png', category: 'Pickles' },
-        { id: 51, name: 'Chili Pickle (Morich Achar)', price: 4, image: '/inventory_images/placeholder.png', category: 'Pickles' },
-        { id: 52, name: 'Lemon Pickle (Lebur Achar)', price: 4, image: '/inventory_images/placeholder.png', category: 'Pickles' },
-        { id: 53, name: 'Tetul Achar', price: 5, image: '/inventory_images/placeholder.png', category: 'Pickles' },
-        { id: 54, name: 'Mixed Pickle (Mix Achar)', price: 5, image: '/inventory_images/placeholder.png', category: 'Pickles' },
-        { id: 89, name: 'Dried Mango Pickle (Amshotto)', price: 6, image: '/inventory_images/placeholder.png', category: 'Pickles' },
-        { id: 90, name: 'Chalta Pickle', price: 5, image: '/inventory_images/placeholder.png', category: 'Pickles' },
-        { id: 91, name: 'Karela Pickle (Ucche)', price: 5, image: '/inventory_images/placeholder.png', category: 'Pickles' },
-        { id: 92, name: 'Ada Pickle (Ginger)', price: 5, image: '/inventory_images/placeholder.png', category: 'Pickles' }
-    ],
     'Cooking Essentials': [
-        { id: 63, name: 'Mustard Oil (Shorsher Tel)', price: 8, image: '/inventory_images/placeholder.png', category: 'Cooking Essentials' },
-        { id: 64, name: 'Ghee', price: 12, image: '/inventory_images/placeholder.png', category: 'Cooking Essentials' },
-        { id: 65, name: 'Coconut Oil (Narkel Tel)', price: 7, image: '/inventory_images/placeholder.png', category: 'Cooking Essentials' },
-        { id: 66, name: 'Panchforan Masala', price: 4, image: '/inventory_images/placeholder.png', category: 'Cooking Essentials' },
-        { id: 67, name: 'Garam Masala', price: 5, image: '/inventory_images/placeholder.png', category: 'Cooking Essentials' },
-        { id: 102, name: 'Posto Bata Mix', price: 6, image: '/inventory_images/placeholder.png', category: 'Cooking Essentials' },
-        { id: 103, name: 'Shorshe Bata Mix', price: 5, image: '/inventory_images/placeholder.png', category: 'Cooking Essentials' },
-        { id: 104, name: 'Doi Maach Masala', price: 4, image: '/inventory_images/placeholder.png', category: 'Cooking Essentials' },
-        { id: 105, name: 'Bhapa Ilish Masala', price: 5, image: '/inventory_images/placeholder.png', category: 'Cooking Essentials' }
+        { id: 63, name: 'Pure Mustard Oil - 1 Liter', price: 7.99, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJoZWlnaHQiOjcyMH0sIndlYnAiOnsicXVhbGl0eSI6NjB9fSwia2V5IjoicHJvZHVjdC1pbWFnZXMvN0JyYzJ5UVdVVkV6am5Ka0V1dE01c2pUVE51R01wRGNma2I3bWxuei5qcGcifQ==', category: 'Cooking Essentials' },
+        { id: 64, name: 'Vridavan Pure Cow Ghee 8oz', price: 7.69, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJoZWlnaHQiOjcyMH0sIndlYnAiOnsicXVhbGl0eSI6NjB9fSwia2V5IjoicHJvZHVjdC1pbWFnZXMvM3VjZ2dieEd0ejBXdkd2Q0ZvQ1dqa2xvZ0ZwZ2VJcmJsMldUWmJkWS5qcGcifQ==', category: 'Cooking Essentials' },
+        { id: 65, name: 'Corn Oil 1.42 L', price: 3.49, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJoZWlnaHQiOjcyMH0sIndlYnAiOnsicXVhbGl0eSI6NjB9fSwia2V5IjoicHJvZHVjdC1pbWFnZXMvQjFPdFRtRmo3T2dZNlFtWWV6VklZY0VUMEpKeUE0a3Fmd0RBRGJmQS5qcGcifQ==', category: 'Cooking Essentials' },
+        { id: 66, name: 'Vridavan Pure Cow Ghee 32oz', price: 24.19, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJoZWlnaHQiOjcyMH0sIndlYnAiOnsicXVhbGl0eSI6NjB9fSwia2V5IjoicHJvZHVjdC1pbWFnZXMvaVhXYUw0R1hEM25lamhmUmJPQmFnR1BEc0w1S21tTWdiSDhFaW5uSi5qcGcifQ==', category: 'Cooking Essentials' },
+        { id: 67, name: 'Mazola Corn Oil - 96oz', price: 16.49, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJoZWlnaHQiOjcyMH0sIndlYnAiOnsicXVhbGl0eSI6NjB9fSwia2V5IjoicHJvZHVjdC1pbWFnZXMvUFA3UWphRzJ3YWlnVGx3V0s3d3JyQXFsME12WDBEcnVBZXBwNFZvbS5qcGVnIn0=', category: 'Cooking Essentials' },
+        { id: 67, name: 'Mazola Corn Oil - 40oz', price: 8.02, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJoZWlnaHQiOjcyMH0sIndlYnAiOnsicXVhbGl0eSI6NjB9fSwia2V5IjoicHJvZHVjdC1pbWFnZXMvV1V5NGM5UFdZS1Z2TDVCNlhlMzB2c0VTenBuZDhaemlDd1JOT2xNUC5qcGVnIn0=', category: 'Cooking Essentials' },
     ],
     'Ready-to-Cook': [
         { id: 106, name: 'Beef Masala', price: 1.99, image: 'https://www.abanifoods.com/cdn/shop/products/RADHUNIBeefMasala100g_1024x1024.png?v=1656803675', category: 'Ready-to-Cook' },
@@ -99,19 +84,16 @@ const inventory = {
         { id: 116, name: 'Whole Milk', price: 3.39, image: 'https://www.instacart.com/image-server/932x932/filters:fill(FFF,true):format(webp)/www.instacart.com/assets/domains/product-image/file/large_1dffbc49-4d36-470e-986c-eb200db575d7.jpg', category: 'Dairy Products' },
         { id: 117, name: 'Whole Milk', price: 2.49, image: 'https://d2lnr5mha7bycj.cloudfront.net/product-image/file/large_8ac0e7b7-9611-473a-9149-0761be8edf88.jpg', category: 'Dairy Products' },
     ],
-    'Fruits & Dry Fruits': [
-        { id: 121, name: 'Mango (Himsagar)', price: 8, image: '/inventory_images/placeholder.png', category: 'Fruits & Dry Fruits' },
-        { id: 122, name: 'Mango (Langra)', price: 7, image: '/inventory_images/placeholder.png', category: 'Fruits & Dry Fruits' },
-        { id: 123, name: 'Mango (Fazli)', price: 7, image: '/inventory_images/placeholder.png', category: 'Fruits & Dry Fruits' },
-        { id: 124, name: 'Litchi (Bombai)', price: 6, image: '/inventory_images/placeholder.png', category: 'Fruits & Dry Fruits' },
-        { id: 125, name: 'Jackfruit (Kathal) Chips', price: 5, image: '/inventory_images/placeholder.png', category: 'Fruits & Dry Fruits' },
-        { id: 126, name: 'Dried Mango (Amshotto)', price: 6, image: '/inventory_images/placeholder.png', category: 'Fruits & Dry Fruits' },
-        { id: 127, name: 'Banana (Chompa)', price: 4, image: '/inventory_images/placeholder.png', category: 'Fruits & Dry Fruits' },
-        { id: 128, name: 'Banana (Sagar)', price: 4, image: '/inventory_images/placeholder.png', category: 'Fruits & Dry Fruits' },
-        { id: 129, name: 'Dried Dates (Khejur)', price: 5, image: '/inventory_images/placeholder.png', category: 'Fruits & Dry Fruits' },
-        { id: 130, name: 'Raisins (Kishmish)', price: 6, image: '/inventory_images/placeholder.png', category: 'Fruits & Dry Fruits' },
-        { id: 131, name: 'Coconut (Narkel) - Dried', price: 4, image: '/inventory_images/placeholder.png', category: 'Fruits & Dry Fruits' },
-        { id: 132, name: 'Palm Fruit (Tal) - Dried', price: 5, image: '/inventory_images/placeholder.png', category: 'Fruits & Dry Fruits' }
+    'Fruits & Vegatables': [
+        { id: 121, name: 'Lettuce', price: 2.13, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJoZWlnaHQiOjcyMH0sIndlYnAiOnsicXVhbGl0eSI6NjB9fSwia2V5IjoicHJvZHVjdC1pbWFnZXMvQlVjRkVJdTMzbkxRb1pXZ2d4QzBBcXhPMXByTDlYZjdPUjFtSm1HQy5qcGcifQ==', category: 'Fruits & Dry Fruits' },
+        { id: 122, name: 'Apples 1LB', price: 3.20, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJ3aWR0aCI6MjgwLCJoZWlnaHQiOjE4N319LCJrZXkiOiJwcm9kdWN0LWltYWdlcy95enluZGc0ZjBxbldsWmIxdks4Z3RWNzVPclM0eGdFTlBvanV0Y3BYLmpwZyJ9', category: 'Fruits & Dry Fruits' },
+        { id: 123, name: 'Tomatoes 1LB', price: 5.34, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJ3aWR0aCI6MjgwLCJoZWlnaHQiOjE4N319LCJrZXkiOiJwcm9kdWN0LWltYWdlcy83bVVteE1TYkpNdjViT0tMUEJaRFBmOVc1eVdJWmlFMGluN2l5bTFOLmpwZyJ9', category: 'Fruits & Dry Fruits' },
+        { id: 124, name: 'Carrots 1LB', price: 1.38, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJ3aWR0aCI6MjgwLCJoZWlnaHQiOjE4N319LCJrZXkiOiJwcm9kdWN0LWltYWdlcy8xRGN6Y29GSjQ3VDBRMHVhUlRPVkZBNjN4VWQ2SEh2bmVOYkp4V21tLmpwZyJ9', category: 'Fruits & Dry Fruits' },
+        { id: 125, name: 'Banana 1LB', price: 0.95, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJ3aWR0aCI6MjgwLCJoZWlnaHQiOjE4N319LCJrZXkiOiJwcm9kdWN0LWltYWdlcy9zTjhIUTRYUjJEOEpWd3h0OXZ2UnlUMEdHOEpHSGN4WEhaTVhBZUZGLmpwZyJ9', category: 'Fruits & Dry Fruits' },
+        { id: 126, name: 'Celery', price: 1.59, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJ3aWR0aCI6MjgwLCJoZWlnaHQiOjE4N319LCJrZXkiOiJwcm9kdWN0LWltYWdlcy8zdHFhN2hlbGhzbnZaQXpva2NCNFR1dTNEMXltcExpcGJoZ2ZwM3h6LmpwZyJ9', category: 'Fruits & Dry Fruits' },
+        { id: 127, name: 'Red Onions 1LB', price: 3.20, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJ3aWR0aCI6MjgwLCJoZWlnaHQiOjE4N319LCJrZXkiOiJwcm9kdWN0LWltYWdlcy9wSDE4MmkwQ0RIOXExeFdlMjhNb1lZSUNEOHYwaTRHeFdjTXRxNEFPLmpwZyJ9', category: 'Fruits & Dry Fruits' },
+        { id: 128, name: 'White Onions 1LB', price: 2.66, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJ3aWR0aCI6MjgwLCJoZWlnaHQiOjE4N319LCJrZXkiOiJwcm9kdWN0LWltYWdlcy9yQzFMcTFtMDRNck5TU244d3VDcjJEckpicnBCbGNObFN1d3cxSlFyLmpwZyJ9', category: 'Fruits & Dry Fruits' },
+        { id: 129, name: 'Ginger', price: 3.20, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJ3aWR0aCI6MjgwLCJoZWlnaHQiOjE4N319LCJrZXkiOiJwcm9kdWN0LWltYWdlcy9XMGQxT0h2VDdKQ2hBR3dJU0lWUTNvNnZzMVNNZE9rVFdrV2pJdlI2LmpwZyJ9', category: 'Fruits & Dry Fruits' },
     ]
 };
 
