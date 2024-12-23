@@ -1,3 +1,4 @@
+import React from 'react';
 import './card-items-carousel.styles.css';
 
 import CardItem from '../card-item/card-item';
@@ -9,7 +10,12 @@ const CardItemsCarousel = ({ inventory, editCart, cart, category }) => {
             <h5 className="category-title">{category}</h5>
             <div className={`items-list ${isGridLayout ? 'grid' : 'carousel'}`}>
                 {inventory.map(item => (
-                    <CardItem key={item.id} item={item} editCart={editCart} cart={cart} />
+                    <CardItem 
+                    key={item.id} 
+                    item={item} 
+                    editCart={editCart} 
+                    cart={cart} 
+                    />
                 ))}
             </div>
         </div>

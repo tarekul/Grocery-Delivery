@@ -3,6 +3,7 @@ import axios from 'axios';
 import { editCart } from './functions/editCart';
 import { handleFormChange } from './functions/handleFormChange';
 import { handleOrderSubmit } from './functions/handleOrderSubmit';
+import apiUrl from './apiUrl.js';
 import './App.css';
 
 import Title from './components/title/title.jsx';
@@ -13,8 +14,6 @@ import Toast from './components/toast/toast.jsx';
 import CheckoutContainer from './components/checkout-container/checkout-container.jsx';
 import DarkMode from './components/toggle-theme/toggle-theme.jsx';
 import CategoryCarousel from './components/carousel-container/carousel-container.jsx';
-
-const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
 
 function App() {
   const [showMission, setShowMission] = useState(false);

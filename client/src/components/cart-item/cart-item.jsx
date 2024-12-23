@@ -4,7 +4,7 @@ const CartItem = ({cartItem, editCart}) => {
     const {item, quantity} = cartItem
     return (
         <div className="cart-item">
-            <img src={process.env.REACT_APP_API_URL + item.image} alt={item.name} />
+            <img src={item.image} alt={item.name} />
             <div className="cart-item-details">
                 <h4 className="cart-item-name">{item.name}</h4>
                 <p className="cart-item-price">${item.price}</p>
