@@ -3,6 +3,7 @@
     --light-background-main: #F0F2F9;
     --light-background-white: #FFFFFF;
     --light-background-card: #F8F9FC;
+    --light-background-price: #ffcc80;
     --light-background-cart: #E5E9FF;
     --light-background-hover: #F0F1F9;
     --light-background-category-title: #EAF5F3;
@@ -29,6 +30,7 @@
     --dark-background-white: #2D3748;
     --dark-background-card: #2D3748;
     --dark-background-cart: #2D3748;
+    --dark-background-price: #4A5568;
     --dark-background-hover: #4A5568;
     --dark-background-category-title: #264D4A;
     --dark-background-category: #3D7A76;
@@ -53,6 +55,7 @@
     --background-main: var(--light-background-main);
     --background-white: var(--light-background-white);
     --background-card: var(--light-background-card);
+    --background-price: var(--light-background-price);
     --background-cart: var(--light-background-cart);
     --background-hover: var(--light-background-hover);
     --background-category-title: var(--light-background-category-title);
@@ -80,6 +83,7 @@
     --background-main: var(--dark-background-main);
     --background-white: var(--dark-background-white);
     --background-card: var(--dark-background-card);
+    --background-price: var(--dark-background-price);
     --background-cart: var(--dark-background-cart);
     --background-hover: var(--dark-background-hover);
     --background-category-title: var(--dark-background-category-title);

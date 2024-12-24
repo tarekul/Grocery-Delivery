@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import "./card-item.styles.css";
 
 const CardItem = ({item, editCart, cart}) => {
@@ -26,9 +27,12 @@ const CardItem = ({item, editCart, cart}) => {
             </div>
 
             {isFullSizeVisible && (
-                <div className="card-item-overlay" onClick={handleOverlayClick}>
-                    <img src={item.image} alt={item.name} className="full-size-image" />
-                </div>
+                ReactDOM.createPortal(
+                    <div className="card-item-overlay" onClick={handleOverlayClick}>
+                        <img src={item.image} alt={item.name} className="full-size-image" />
+                    </div>,
+                    document.getElementById('root')
+                )
             )}
         </div>
     )
