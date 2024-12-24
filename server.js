@@ -74,7 +74,7 @@ const inventory = {
         { id: 109, name: 'Achar Gosht', price: 1.99, image: 'https://www.abanifoods.com/cdn/shop/products/100-33SHANACHARGOSHT_1024x1024.jpg?v=1585973577', category: 'Ready-to-Cook' },
         { id: 110, name: 'Haleem Mix', price: 1.99, image: 'https://www.abanifoods.com/cdn/shop/products/ShanHaleenmix_1024x1024.jpg?v=1620363189', category: 'Ready-to-Cook' },
         { id: 111, name: 'Chicken Masala', price: 1.99, image: 'https://www.abanifoods.com/cdn/shop/products/100-21SHANCHICKENMASALA_1024x1024.jpg?v=1585864444', category: 'Ready-to-Cook' },
-        { id: 128, name: 'Mutton Biryani', price: 1.99, image: 'https://www.abanifoods.com/cdn/shop/products/100-10shanmuttonbiryani_540x.jpg?v=1585991423', category: 'Ready-to-Cook' },
+        { id: 130, name: 'Mutton Biryani', price: 1.99, image: 'https://www.abanifoods.com/cdn/shop/products/100-10shanmuttonbiryani_540x.jpg?v=1585991423', category: 'Ready-to-Cook' },
     ],
     'Dairy Products': [
         { id: 112, name: 'Nestle Carnation Evaporated Milk', price: 1.99, image: 'https://d2sg5tibg946xl.cloudfront.net/eyJidWNrZXQiOiJtZXJjYXRvLWltYWdlcyIsImVkaXRzIjp7InJlc2l6ZSI6eyJmaXQiOiJpbnNpZGUiLCJoZWlnaHQiOjcyMH0sIndlYnAiOnsicXVhbGl0eSI6NjB9fSwia2V5IjoicHJvZHVjdC1pbWFnZXMvS3E5R1BRMm1qN3JYQVMyV2JwaVFVQnlKcVBFcGpEUGtYOFF3Z3IyWi5qcGcifQ==', category: 'Dairy Products' },
