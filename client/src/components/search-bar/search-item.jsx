@@ -14,7 +14,7 @@ const SearchItem = ({item, editCart, cart}) => {
     };
     return (
         <div className="search-item">
-            <img src= {item.image} alt={item.name} onClick={handleImageClick} />
+            <img src= {item.image} alt={item.name} onClick={handleImageClick} className="search-item-img" />
             <div className="search-item-details">
                 <h4 className="search-item-name">{item.name}</h4>
                 <p className="search-item-price">${item.price}</p>
@@ -24,7 +24,7 @@ const SearchItem = ({item, editCart, cart}) => {
                 </div>
 
                 {isFullSizeVisible && (
-                    <div className="overlay" onClick={handleOverlayClick}>
+                    <div className="search-item-overlay" onClick={handleOverlayClick}>
                         <img src={item.image} alt={item.name} className="full-size-image" />
                     </div>
                 )}

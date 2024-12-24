@@ -10,7 +10,7 @@
     box-shadow: 0 2px 4px rgba(91, 107, 191, 0.1);
 }
 
-.search-item img {
+.search-item-img {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -18,7 +18,7 @@
     margin-right: 8px;
 }
 
-.overlay {
+.search-item-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -27,14 +27,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0.8;
-    z-index: 1000; /* Ensure it appears above other elements */
+    opacity: 1;
+    z-index: 1000;
 }
 
 .full-size-image {
     max-width: 90%;
     max-height: 90%;
-    border-radius: 8px; /* Optional: add some styling */
+    border-radius: 8px;
 }
 
 .search-item-details {
