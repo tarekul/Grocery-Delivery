@@ -70,23 +70,23 @@ function App() {
       {showMission && (<Mission />)}
       {!showMission && (
         <>
-          <SearchBar 
-            inventory={Object.values(inventory).flat()} 
-            editCart={cartEditor} 
-            setIsSearchBarActive={setIsSearchBarActive}
-            isSearchBarActive={isSearchBarActive}
-            cart={cart}
-            isDropdownOpen={isDropdownOpen}
-          />
           {isCheckoutOpen ? (
-        <CheckoutContainer 
-          setIsCheckoutOpen={setIsCheckoutOpen}
-          form={form}
-          handleFormChange={formHandler}
-          handleOrderSubmit={orderSubmitHandler}
-        />
-      ) : (
-        <>
+          <CheckoutContainer 
+            setIsCheckoutOpen={setIsCheckoutOpen}
+            form={form}
+            handleFormChange={formHandler}
+            handleOrderSubmit={orderSubmitHandler}
+          />
+          ) : (
+          <>
+            <SearchBar 
+              inventory={Object.values(inventory).flat()} 
+              editCart={cartEditor} 
+              setIsSearchBarActive={setIsSearchBarActive}
+              isSearchBarActive={isSearchBarActive}
+              cart={cart}
+              isDropdownOpen={isDropdownOpen}
+            />
             <Cart 
               cart={cart} 
               editCart={cartEditor} 
@@ -95,14 +95,14 @@ function App() {
               setIsCheckoutOpen={setIsCheckoutOpen} 
               isSearchBarActive={isSearchBarActive}
             />
-          <CategoryCarousel inventory={inventory} cart={cart} editCart={cartEditor} />
-          {showToast && (
-            <Toast 
-              message={toastMessage} 
-              onClose={() => setShowToast(false)}
-              color={toastColor}
-            />
-          )}
+            <CategoryCarousel inventory={inventory} cart={cart} editCart={cartEditor} />
+            {showToast && (
+              <Toast 
+                message={toastMessage} 
+                onClose={() => setShowToast(false)}
+                color={toastColor}
+              />
+            )}
         </>
         )}
       </>
