@@ -30,6 +30,8 @@ const Cart = ({ cart, editCart, isDropdownOpen, setIsDropdownOpen, setIsCheckout
 
     const toggleCheckout = () => {
         setIsCheckoutOpen(true);
+        setIsDropdownOpen(false);
+        document.body.style.overflow = 'unset';
     };
 
     useEffect(() => {

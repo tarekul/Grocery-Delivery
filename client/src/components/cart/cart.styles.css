@@ -94,6 +94,11 @@
     transition: all 0.2s ease;
 }
 
+.checkout-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .checkout-button:hover {
     background-color: var(--action-orange-darkest);
 }

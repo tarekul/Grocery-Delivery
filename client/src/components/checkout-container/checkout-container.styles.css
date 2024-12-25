@@ -1,0 +1,88 @@
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    width: fit-content;
+    margin: auto;
+}
+
+.checkout-form input {
+    font-size: 1.2rem;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 300px;
+}
+
+.email, .phone {
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+.email.invalid, .phone.invalid {
+    border-color: red;
+    background-color: #ffe6e6;
+    color: #cc0000;
+}
+
+.email.valid, .phone.valid {
+    border-color: green;
+    background-color: #e6ffe6;
+    color: #019d01;
+}
+
+.email-phone-container {
+    display: flex;
+    gap: 10px;
+}
+
+.name-container {
+    display: flex;
+    gap: 10px;
+}
+
+.address-container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.address {
+    width: 400px;
+}
+
+.zip-state-container {
+    display: flex;
+    gap: 10px;
+}
+
+.email-container, .phone-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.checkout-info {
+    align-self: flex-start;
+    font-style: italic;
+}
+
+@media screen and (max-width: 768px) {
+    .checkout-form input {
+        width: 100%;
+    }
+
+    .city {
+        flex-shrink: 1.5;
+    }
+    
+    .address {
+        flex-shrink: 1;
+    }
+}

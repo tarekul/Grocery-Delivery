@@ -66,4 +66,4 @@ const inventory = {
     ]
 };
 
-export default inventory;
+module.exports = inventory;

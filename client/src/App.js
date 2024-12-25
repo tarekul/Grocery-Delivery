@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { editCart } from './functions/editCart';
-import { handleFormChange } from './functions/handleFormChange';
-import { handleOrderSubmit } from './functions/handleOrderSubmit';
 import apiUrl from './apiUrl.js';
 import './App.css';
 
@@ -22,7 +20,6 @@ function App() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const [form, setForm] = useState({ name: '', phone: '', address: '' });
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastColor, setToastColor] = useState('');
@@ -41,18 +38,6 @@ function App() {
         } 
       });
   }, []);
-
-  const formHandler = useMemo(() => handleFormChange({ 
-    setForm, 
-    form 
-  }), [form]);
-
-  const orderSubmitHandler = useMemo(() => handleOrderSubmit({
-    cart,
-    form,
-    setCart,
-    setForm
-  }), [cart, form]);
 
   const cartEditor = useMemo(() => editCart({
     inventory,
@@ -73,9 +58,7 @@ function App() {
           {isCheckoutOpen ? (
           <CheckoutContainer 
             setIsCheckoutOpen={setIsCheckoutOpen}
-            form={form}
-            handleFormChange={formHandler}
-            handleOrderSubmit={orderSubmitHandler}
+            cart={cart}
           />
           ) : (
           <>
@@ -87,14 +70,6 @@ function App() {
               cart={cart}
               isDropdownOpen={isDropdownOpen}
             />
-            <Cart 
-              cart={cart} 
-              editCart={cartEditor} 
-              setIsDropdownOpen={setIsDropdownOpen} 
-              isDropdownOpen={isDropdownOpen} 
-              setIsCheckoutOpen={setIsCheckoutOpen} 
-              isSearchBarActive={isSearchBarActive}
-            />
             <CategoryCarousel inventory={inventory} cart={cart} editCart={cartEditor} />
             {showToast && (
               <Toast 
@@ -105,6 +80,14 @@ function App() {
             )}
         </>
         )}
+        <Cart 
+              cart={cart} 
+              editCart={cartEditor} 
+              setIsDropdownOpen={setIsDropdownOpen} 
+              isDropdownOpen={isDropdownOpen} 
+              setIsCheckoutOpen={setIsCheckoutOpen} 
+              isSearchBarActive={isSearchBarActive}
+            />
       </>
       )}
       <DarkMode />

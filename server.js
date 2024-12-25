@@ -1,36 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const sqlite3 = require('sqlite3').verbose();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// Inventory data
-const inventory = require('./inventory.json');
+const inventory  = require('./inventory.js');
+const db = require('./database/db_create.js').db;
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-// Database
-const db = new sqlite3.Database('./grocery.db', (err) => {
-    if (err) {
-        console.error(err.message);
-    }
-    console.log('Connected to the database.');
-});
-
-// Create tables
-db.run(`
-    Create table if not exists orders (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        phone TEXT,
-        address TEXT,
-        items TEXT,
-        total_price REAL
-    )`);
 
 // Routes
 app.get('/', (req, res) => {
@@ -48,22 +29,40 @@ app.get('/inventory', (req, res) => {
 app.use('/inventory_images', express.static('inventory_images'));
 
 app.post('/order', (req, res) => {
-    const { name, phone, address, items } = req.body;
-    const total_price = items.reduce((total, item) => {
-        const itemData = Object.values(inventory).flat().find(i => i.id === item.id);
-        if (!itemData) {
-            return total;
-        }
+    const { firstName, lastName, email, phone, address, city, state, zipcode, items, totalPrice } = req.body;
+    const name = `${firstName} ${lastName}`; 
+    total_price = parseFloat(totalPrice);
 
-        return total + itemData.price * item.quantity;
-    }, 0);
+    if (!name || !email || !phone || !address || !city || !state || !zipcode || !items || !totalPrice) {
+        return res.status(400).send('Invalid request.');
+    }
+
+    if(isNaN(total_price)) {
+        return res.status(400).send('Invalid total price.');
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        console.log(email);
+        return res.status(400).send('Invalid email address.');
+    }
+
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phone)) {
+        return res.status(400).send('Invalid phone number.');
+    }
+
+    const zipRegex = /^\d{5}$/;
+    if (!zipRegex.test(zipcode)) {
+        return res.status(400).send('Invalid zip code.');
+    }
 
     const sql = `
-        INSERT INTO orders (name, phone, address, items, total_price)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO orders (name, email, phone, address, city, state, zipcode, items, total_price)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     
-    db.run(sql, [name, phone, address, JSON.stringify(items), total_price], function (err) {
+    db.run(sql, [name, email, phone, address, city, state, zipcode, JSON.stringify(items), total_price], function (err) {
         if (err) {
           console.error(err.message);
           res.status(500).send('Error placing order.');
