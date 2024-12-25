@@ -50,7 +50,6 @@
 .address-container {
     display: flex;
     gap: 10px;
-    width: 100%;
 }
 
 .address {
@@ -78,11 +77,11 @@
         width: 100%;
     }
 
-    .city {
-        flex-shrink: 1.5;
-    }
-    
-    .address {
-        flex-shrink: 1;
+    .email-phone-container, 
+    .address-container, 
+    .zip-state-container, 
+    .name-container {
+        flex-direction: column;
+        width: 100%;
     }
 }
