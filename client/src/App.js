@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { editCart } from './functions/editCart';
+import { getCart } from './functions/getCart';
 import apiUrl from './apiUrl.js';
 import './App.css';
 
@@ -16,7 +17,7 @@ import CategoryCarousel from './components/carousel-container/carousel-container
 function App() {
   const [showMission, setShowMission] = useState(false);
   const [inventory, setInventory] = useState([]);
-  const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []);
+  const [cart, setCart] = useState(getCart());
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -38,6 +39,10 @@ function App() {
         } 
       });
   }, []);
+
+  useEffect(() => {
+    setCart(getCart());
+  }, [isDropdownOpen])
 
   const cartEditor = useMemo(() => editCart({
     inventory,

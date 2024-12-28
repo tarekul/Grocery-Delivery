@@ -1,3 +1,5 @@
+import { saveCartToLocalStorage } from './saveCart';
+
 export const editCart = (dependencies) => {
     const { inventory, setCart, setShowToast, setToastMessage, setToastColor } = dependencies;
     
@@ -30,7 +32,7 @@ export const editCart = (dependencies) => {
                 updatedCart = updatedCart.filter(cartItem => cartItem.quantity > 0);
     
                 // Save the updated cart to localStorage
-                localStorage.setItem('cart', JSON.stringify(updatedCart));
+                saveCartToLocalStorage(updatedCart);
             
                 if(source === 'card') {
                     setShowToast(false);
