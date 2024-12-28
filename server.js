@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { verifyInputRequest } = require('./functions/verifyInputRequest');
+const verifyInputRequest = require('./middleware/verifyInputRequest.js');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
