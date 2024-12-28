@@ -24,6 +24,34 @@ const CheckoutContainer = ({setIsCheckoutOpen, cart, setCart}) => {
         setIsInvalidPhone(!phoneRegex.test(phone));
     };
 
+    const handleOrderConfirm = (e) => {
+        e.preventDefault();
+        const customer = {
+            firstName,
+            lastName,
+            email,
+            phone,
+            address,
+            city,
+            state,
+            zipCode
+        };
+        handleOrderSubmit(customer, cart, setCart)
+            .then(() => {
+                setFirstName('');
+                setLastName('');
+                setEmail('');
+                setPhone('');
+                setAddress('');
+                setCity('');
+                setZipCode('');
+                // setIsCheckoutOpen(false);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
     return (
         <div className="checkout-form">
             <h3>Checkout</h3>
@@ -111,20 +139,7 @@ const CheckoutContainer = ({setIsCheckoutOpen, cart, setCart}) => {
                 </div>
             </div>
             <button 
-                onClick={(e) => {
-                    e.preventDefault();
-                    handleOrderSubmit(
-                        firstName, 
-                        lastName, 
-                        address, 
-                        city, 
-                        state, 
-                        zipCode, 
-                        email, 
-                        phone, 
-                        cart,
-                        setCart);  
-                }} 
+                onClick={(e) => handleOrderConfirm(e)} 
                 className={`checkout-button ${cart.length === 0 ? "disabled" : ""}`} 
                 type="submit"
                 disabled={cart.length === 0}>Confirm Order</button>

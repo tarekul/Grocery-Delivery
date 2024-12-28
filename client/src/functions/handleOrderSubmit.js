@@ -4,14 +4,16 @@ import apiUrl from '../apiUrl';
 import { refreshCart } from './refreshCart';
 
 export const handleOrderSubmit = ( 
-    firstName, 
-    lastName, 
-    address, 
-    city, 
-    state, 
-    zipcode, 
-    email, 
-    phone, 
+    { 
+        firstName, 
+        lastName, 
+        address, 
+        city, 
+        state, 
+        zipcode, 
+        email, 
+        phone 
+    },
     cart,
     setCart
  ) => {

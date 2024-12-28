@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { verifyInputRequest } = require('./functions/verifyInputRequest');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -28,34 +29,10 @@ app.get('/inventory', (req, res) => {
 
 app.use('/inventory_images', express.static('inventory_images'));
 
-app.post('/order', (req, res) => {
+app.post('/order', verifyInputRequest, (req, res) => {
     const { firstName, lastName, email, phone, address, city, state, zipcode, items, totalPrice } = req.body;
     const name = `${firstName} ${lastName}`; 
-    total_price = parseFloat(totalPrice);
-
-    if (!name || !email || !phone || !address || !city || !state || !zipcode || !items || !totalPrice) {
-        return res.status(400).send('Invalid request.');
-    }
-
-    if(isNaN(total_price)) {
-        return res.status(400).send('Invalid total price.');
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        console.log(email);
-        return res.status(400).send('Invalid email address.');
-    }
-
-    const phoneRegex = /^\d{10}$/;
-    if (!phoneRegex.test(phone)) {
-        return res.status(400).send('Invalid phone number.');
-    }
-
-    const zipRegex = /^\d{5}$/;
-    if (!zipRegex.test(zipcode)) {
-        return res.status(400).send('Invalid zip code.');
-    }
+    const total_price = parseFloat(totalPrice);
 
     const sql = `
         INSERT INTO orders (name, email, phone, address, city, state, zipcode, items, total_price)
