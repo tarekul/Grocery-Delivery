@@ -7,7 +7,7 @@ const CheckoutContainer = ({setIsCheckoutOpen, cart, setCart}) => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [zipCode, setZipCode] = useState('');
+    const [zipcode, setZipcode] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state] = useState('NY');
@@ -34,18 +34,11 @@ const CheckoutContainer = ({setIsCheckoutOpen, cart, setCart}) => {
             address,
             city,
             state,
-            zipCode
+            zipcode
         };
         handleOrderSubmit(customer, cart, setCart)
             .then(() => {
-                setFirstName('');
-                setLastName('');
-                setEmail('');
-                setPhone('');
-                setAddress('');
-                setCity('');
-                setZipCode('');
-                // setIsCheckoutOpen(false);
+                setIsCheckoutOpen(false);
             })
             .catch(err => {
                 console.log(err);
@@ -92,11 +85,11 @@ const CheckoutContainer = ({setIsCheckoutOpen, cart, setCart}) => {
                     className="zip" 
                     type="text" 
                     placeholder="Zip"
-                    value={zipCode}
+                    value={zipcode}
                     onChange={(e) => {
                         const value = e.target.value.replace(/\D/g, '');
                         if (value.length <= 5) { 
-                            setZipCode(value);
+                            setZipcode(value);
                         }
                     }} 
                     maxLength={5}
@@ -131,8 +124,11 @@ const CheckoutContainer = ({setIsCheckoutOpen, cart, setCart}) => {
                         placeholder="Phone Number" 
                         value={phone}
                         onChange={(e) => {
-                            setPhone(e.target.value);
-                            validatePhone(e.target.value);
+                            const value = e.target.value.replace(/\D/g, '');
+                            if (value.length <= 10) {
+                                setPhone(value);
+                                validatePhone(value);
+                            }
                         }}
                     />
                     {isInvalidPhone && <small style={{ color: "red" }}>Invalid phone number</small>}

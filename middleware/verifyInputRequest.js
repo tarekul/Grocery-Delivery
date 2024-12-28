@@ -1,4 +1,4 @@
-export const verifyInputRequest = (req, res, next) => {
+const verifyInputRequest = (req, res, next) => {
     const { firstName, lastName, email, phone, address, city, state, zipcode, items, totalPrice } = req.body;
 
     // Check for required fields and respond with specific error messages
@@ -60,3 +60,6 @@ export const verifyInputRequest = (req, res, next) => {
     // If all validations pass, proceed to the next middleware
     next();
 };
+
+module.exports = verifyInputRequest;
+
