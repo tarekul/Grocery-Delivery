@@ -11,7 +11,8 @@ db.run(`
         state TEXT,
         zipcode TEXT,
         items TEXT,
-        total_price REAL
+        total_price REAL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
 
 exports.db = db;

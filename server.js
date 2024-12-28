@@ -35,11 +35,11 @@ app.post('/order', verifyInputRequest, (req, res) => {
     const total_price = parseFloat(totalPrice);
 
     const sql = `
-        INSERT INTO orders (name, email, phone, address, city, state, zipcode, items, total_price)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO orders (name, email, phone, address, city, state, zipcode, items, total_price, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     
-    db.run(sql, [name, email, phone, address, city, state, zipcode, JSON.stringify(items), total_price], function (err) {
+    db.run(sql, [name, email, phone, address, city, state, zipcode, JSON.stringify(items), total_price, new Date()], function (err) {
         if (err) {
           console.error(err.message);
           res.status(500).send('Error placing order.');
