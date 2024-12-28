@@ -1,6 +1,7 @@
 import axios from 'axios';
+import apiUrl from '../apiUrl';
 
-const apiUrl = 'http://localhost:5001';
+import { refreshCart } from './refreshCart';
 
 export const handleOrderSubmit = ( 
     firstName, 
@@ -11,7 +12,9 @@ export const handleOrderSubmit = (
     zipcode, 
     email, 
     phone, 
-    cart ) => {
+    cart,
+    setCart
+ ) => {
 
     const totalPrice = cart.reduce(
         (totalPrice, cartItem) => (totalPrice += cartItem.quantity * cartItem.item.price),
@@ -21,6 +24,8 @@ export const handleOrderSubmit = (
     return axios.post(`${apiUrl}/order`, { firstName, lastName, email, phone, zipcode, address, city, state, totalPrice, items: cart })
     .then(res => {
         console.log(res.data);
+        refreshCart();
+        setCart([]);
     })
     .catch(err => {
         console.log(err);

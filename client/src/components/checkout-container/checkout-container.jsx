@@ -2,7 +2,7 @@ import './checkout-container.styles.css';
 import { handleOrderSubmit }  from '../../functions/handleOrderSubmit.js'
 import { useState } from 'react';
 
-const CheckoutContainer = ({setIsCheckoutOpen, cart}) => {
+const CheckoutContainer = ({setIsCheckoutOpen, cart, setCart}) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -122,7 +122,8 @@ const CheckoutContainer = ({setIsCheckoutOpen, cart}) => {
                         zipCode, 
                         email, 
                         phone, 
-                        cart);  
+                        cart,
+                        setCart);  
                 }} 
                 className={`checkout-button ${cart.length === 0 ? "disabled" : ""}`} 
                 type="submit"

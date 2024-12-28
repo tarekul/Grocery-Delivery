@@ -64,6 +64,7 @@ function App() {
           <CheckoutContainer 
             setIsCheckoutOpen={setIsCheckoutOpen}
             cart={cart}
+            setCart={setCart}
           />
           ) : (
           <>
