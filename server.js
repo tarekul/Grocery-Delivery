@@ -34,19 +34,23 @@ app.post('/order', verifyInputRequest, (req, res) => {
     const name = `${firstName} ${lastName}`; 
     const total_price = parseFloat(totalPrice);
 
+    res.status(202).send('Order is being processed. It will be completed in 5 minutes.');
+
     const sql = `
         INSERT INTO orders (name, email, phone, address, city, state, zipcode, items, total_price, created_at)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     
-    db.run(sql, [name, email, phone, address, city, state, zipcode, JSON.stringify(items), total_price, new Date()], function (err) {
-        if (err) {
-          console.error(err.message);
-          res.status(500).send('Error placing order.');
-        } else {
-          res.status(201).send('Order placed successfully.');
-        }
-    });
+    setTimeout(() => {
+        db.run(sql, [name, email, phone, address, city, state, zipcode, JSON.stringify(items), total_price, new Date()], function (err) {
+            if (err) {
+              console.error(err.message);
+              res.status(500).send('Error placing order.');
+            } else {
+              res.status(201).send('Order placed successfully.');
+            }
+        });
+    }, 300000);
 });
 
 app.get('/orders', (req, res) => {
