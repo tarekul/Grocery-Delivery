@@ -96,7 +96,8 @@
     .search-items {
         max-width: 100%;
         box-sizing: border-box;
-        height: 100vh;
+        height: 87dvh;
+        overflow-y: auto;
     }
     .search-items > * {
         width: 90%;
