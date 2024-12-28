@@ -14,6 +14,8 @@ const CheckoutContainer = ({setIsCheckoutOpen, cart, setCart}) => {
     const [isInvalidEmail, setIsInvalidEmail] = useState(true);
     const [isInvalidPhone, setIsInvalidPhone] = useState(true);
 
+    let orderTimeout;
+
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         setIsInvalidEmail(!emailRegex.test(email));
@@ -36,14 +38,26 @@ const CheckoutContainer = ({setIsCheckoutOpen, cart, setCart}) => {
             state,
             zipcode
         };
-        handleOrderSubmit(customer, cart, setCart)
-            .then(() => {
-                setIsCheckoutOpen(false);
-            })
-            .catch(err => {
-                console.log(err);
-            });
+
+        const orderDetails = { customer, cart };
+
+        alert('Your order is being processed. You have 5 minutes to cancel.');
+
+        orderTimeout = setTimeout(() => {
+            handleOrderSubmit(orderDetails.customer, orderDetails.cart, setCart)
+                .then(() => {
+                    setIsCheckoutOpen(false);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }, 300000);
     };
+
+    const cancelOrder = () => {
+        clearTimeout(orderTimeout);
+        alert('Order has been canceled.');
+    }
 
     return (
         <div className="checkout-form">
@@ -138,11 +152,13 @@ const CheckoutContainer = ({setIsCheckoutOpen, cart, setCart}) => {
                 onClick={(e) => handleOrderConfirm(e)} 
                 className={`checkout-button ${cart.length === 0 ? "disabled" : ""}`} 
                 type="submit"
-                disabled={cart.length === 0}>Confirm Order</button>
-                <button onClick={() => setIsCheckoutOpen(false)}>Back</button>
-                <span className="checkout-info">*Delivery fee is $5.99</span>
-                <span className="checkout-info">*We accept only cash on delivery</span>
-                <span className="checkout-info">*Delivery time is 1 to 2 hours</span>
+                disabled={cart.length === 0}>Confirm Order
+            </button>
+            <button onClick={cancelOrder}>Cancel Order</button>
+            <button onClick={() => setIsCheckoutOpen(false)}>Back</button>
+            <span className="checkout-info">*Delivery fee is $5.99</span>
+            <span className="checkout-info">*We accept only cash on delivery</span>
+            <span className="checkout-info">*Delivery time is 1 to 2 hours</span>
         </div>
         
     )
