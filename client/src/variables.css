@@ -1,107 +1,107 @@
 :root {
-    /* Light Theme Colors */
-    --light-background-main: #F0F2F9;
-    --light-background-white: #FFFFFF;
-    --light-background-card: #F8F9FC;
-    --light-background-price: #ffcc80;
-    --light-background-cart: #E5E9FF;
-    --light-background-hover: #F0F1F9;
-    --light-background-category-title: #EAF5F3;
-    --light-background-category: #F2F8F7;
-    --light-background-category-selected: #b7f9ee;
-    --light-text-primary: #2D3748;
-    --light-text-secondary: #4A5568;
-    --light-text-white: #fff;
-    --light-primary: #5B6BBF;
-    --light-primary-dark: #4A59A9;
-    --light-primary-darker: #3B4787;
-    --light-primary-darkest: #4A5AA8;
-    --light-border: #E6E9F4;
-    --light-action-orange: #FF9F1C;
-    --light-action-orange-dark: #E88E0C;
-    --light-action-orange-darker: #E67E22;
-    --light-action-orange-darkest: #D35400;
-    --light-action-orange-deep: #BA4A00;
-    --light-success: #4CAF50;
-    --light-error: #f44336;
+  /* Light Theme Colors */
+  --light-background-main: #fffaf0; /* Floral White */
+  --light-background-white: #ffffff;
+  --light-background-card: #fff8e1; /* Light Cream */
+  --light-background-price: #ffcc80;
+  --light-background-cart: #e5e9ff;
+  --light-background-hover: #f0f1f9;
+  --light-background-category-title: #eaf5f3;
+  --light-background-category: #f2f8f7;
+  --light-background-category-selected: #b7f9ee;
+  --light-text-primary: #3e2723; /* Dark Brown */
+  --light-text-secondary: #6d4c41; /* Brown */
+  --light-text-white: #fff;
+  --light-primary: #ff5722; /* Deep Orange */
+  --light-primary-dark: #e64a19; /* Dark Orange */
+  --light-primary-darker: #3b4787;
+  --light-primary-darkest: #4a5aa8;
+  --light-border: #bdbdbd; /* Light Gray */
+  --light-action-orange: #ffc107; /* Amber */
+  --light-action-orange-dark: #e88e0c;
+  --light-action-orange-darker: #e67e22;
+  --light-action-orange-darkest: #d35400;
+  --light-action-orange-deep: #ba4a00;
+  --light-success: #4caf50;
+  --light-error: #f44336;
 
-    /* Dark Theme Colors */
-    --dark-background-main: #1A202C;
-    --dark-background-white: #2D3748;
-    --dark-background-card: #2D3748;
-    --dark-background-cart: #2D3748;
-    --dark-background-price: #001F3F;
-    --dark-background-hover: #4A5568;
-    --dark-background-category-title: #264D4A;
-    --dark-background-category: #3D7A76;
-    --dark-background-category-selected: #295570;   
-    --dark-text-primary: #F7FAFC;
-    --dark-text-secondary: #E2E8F0;
-    --dark-text-white: #fff;
-    --dark-primary: #7986CB;
-    --dark-primary-dark: #5C6BC0;
-    --dark-primary-darker: #3F51B5;
-    --dark-primary-darkest: #303F9F;
-    --dark-border: #4A5568;
-    --dark-action-orange: #F6AD55;
-    --dark-action-orange-dark: #ED8936;
-    --dark-action-orange-darker: #DD6B20;
-    --dark-action-orange-darkest: #C05621;
-    --dark-action-orange-deep: #9C4221;
-    --dark-success: #48BB78;
-    --dark-error: #F56565;
+  /* Dark Theme Colors */
+  --dark-background-main: #263238; /* Charcoal */
+  --dark-background-white: #2d3748;
+  --dark-background-card: #37474f; /* Dark Gray */
+  --dark-background-cart: #2d3748;
+  --dark-background-price: #001f3f;
+  --dark-background-hover: #4a5568;
+  --dark-background-category-title: #264d4a;
+  --dark-background-category: #3d7a76;
+  --dark-background-category-selected: #295570;
+  --dark-text-primary: #ffeb3b; /* Bright Yellow */
+  --dark-text-secondary: #e0e0e0; /* Light Gray */
+  --dark-text-white: #fff;
+  --dark-primary: #ff5722; /* Deep Orange */
+  --dark-primary-dark: #bf360c; /* Dark Red-Orange */
+  --dark-primary-darker: #3f51b5;
+  --dark-primary-darkest: #303f9f;
+  --dark-border: #4a5568;
+  --dark-action-orange: #f6ad55;
+  --dark-action-orange-dark: #ed8936;
+  --dark-action-orange-darker: #dd6b20;
+  --dark-action-orange-darkest: #c05621;
+  --dark-action-orange-deep: #9c4221;
+  --dark-success: #48bb78;
+  --dark-error: #f56565;
 
-    /* Default theme variables - these are what your components actually use */
-    --background-main: var(--light-background-main);
-    --background-white: var(--light-background-white);
-    --background-card: var(--light-background-card);
-    --background-price: var(--light-background-price);
-    --background-cart: var(--light-background-cart);
-    --background-hover: var(--light-background-hover);
-    --background-category-title: var(--light-background-category-title);
-    --background-category: var(--light-background-category);
-    --background-category-selected: var(--light-background-category-selected);
-    --text-primary: var(--light-text-primary);
-    --text-secondary: var(--light-text-secondary);
-    --text-white: var(--light-text-white);
-    --primary: var(--light-primary);
-    --primary-dark: var(--light-primary-dark);
-    --primary-darker: var(--light-primary-darker);
-    --primary-darkest: var(--light-primary-darkest);
-    --border: var(--light-border);
-    --action-orange: var(--light-action-orange);
-    --action-orange-dark: var(--light-action-orange-dark);
-    --action-orange-darker: var(--light-action-orange-darker);
-    --action-orange-darkest: var(--light-action-orange-darkest);
-    --action-orange-deep: var(--light-action-orange-deep);
-    --success: var(--light-success);
-    --error: var(--light-error);
+  /* Default theme variables - these are what your components actually use */
+  --background-main: var(--light-background-main);
+  --background-white: var(--light-background-white);
+  --background-card: var(--light-background-card);
+  --background-price: var(--light-background-price);
+  --background-cart: var(--light-background-cart);
+  --background-hover: var(--light-background-hover);
+  --background-category-title: var(--light-background-category-title);
+  --background-category: var(--light-background-category);
+  --background-category-selected: var(--light-background-category-selected);
+  --text-primary: var(--light-text-primary);
+  --text-secondary: var(--light-text-secondary);
+  --text-white: var(--light-text-white);
+  --primary: var(--light-primary);
+  --primary-dark: var(--light-primary-dark);
+  --primary-darker: var(--light-primary-darker);
+  --primary-darkest: var(--light-primary-darkest);
+  --border: var(--light-border);
+  --action-orange: var(--light-action-orange);
+  --action-orange-dark: var(--light-action-orange-dark);
+  --action-orange-darker: var(--light-action-orange-darker);
+  --action-orange-darkest: var(--light-action-orange-darkest);
+  --action-orange-deep: var(--light-action-orange-deep);
+  --success: var(--light-success);
+  --error: var(--light-error);
 }
 
 /* When dark mode is active, update all the default variables */
-[data-theme='dark'] {
-    --background-main: var(--dark-background-main);
-    --background-white: var(--dark-background-white);
-    --background-card: var(--dark-background-card);
-    --background-price: var(--dark-background-price);
-    --background-cart: var(--dark-background-cart);
-    --background-hover: var(--dark-background-hover);
-    --background-category-title: var(--dark-background-category-title);
-    --background-category: var(--dark-background-category);
-    --background-category-selected: var(--dark-background-category-selected);
-    --text-primary: var(--dark-text-primary);
-    --text-secondary: var(--dark-text-secondary);
-    --text-white: var(--dark-text-white);
-    --primary: var(--dark-primary);
-    --primary-dark: var(--dark-primary-dark);
-    --primary-darker: var(--dark-primary-darker);
-    --primary-darkest: var(--dark-primary-darkest);
-    --border: var(--dark-border);
-    --action-orange: var(--dark-action-orange);
-    --action-orange-dark: var(--dark-action-orange-dark);
-    --action-orange-darker: var(--dark-action-orange-darker);
-    --action-orange-darkest: var(--dark-action-orange-darkest);
-    --action-orange-deep: var(--dark-action-orange-deep);
-    --success: var(--dark-success);
-    --error: var(--dark-error);
+[data-theme="dark"] {
+  --background-main: var(--dark-background-main);
+  --background-white: var(--dark-background-white);
+  --background-card: var(--dark-background-card);
+  --background-price: var(--dark-background-price);
+  --background-cart: var(--dark-background-cart);
+  --background-hover: var(--dark-background-hover);
+  --background-category-title: var(--dark-background-category-title);
+  --background-category: var(--dark-background-category);
+  --background-category-selected: var(--dark-background-category-selected);
+  --text-primary: var(--dark-text-primary);
+  --text-secondary: var(--dark-text-secondary);
+  --text-white: var(--dark-text-white);
+  --primary: var(--dark-primary);
+  --primary-dark: var(--dark-primary-dark);
+  --primary-darker: var(--dark-primary-darker);
+  --primary-darkest: var(--dark-primary-darkest);
+  --border: var(--dark-border);
+  --action-orange: var(--dark-action-orange);
+  --action-orange-dark: var(--dark-action-orange-dark);
+  --action-orange-darker: var(--dark-action-orange-darker);
+  --action-orange-darkest: var(--dark-action-orange-darkest);
+  --action-orange-deep: var(--dark-action-orange-deep);
+  --success: var(--dark-success);
+  --error: var(--dark-error);
 }
