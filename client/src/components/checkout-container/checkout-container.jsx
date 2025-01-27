@@ -1,167 +1,261 @@
-import './checkout-container.styles.css';
-import { handleOrderSubmit }  from '../../functions/handleOrderSubmit.js'
-import { useState } from 'react';
+import { useEffect, useState } from "react";
+import { handleOrderSubmit } from "../../functions/handleOrderSubmit";
+import ProgressiveBar from "../progress-bar/progress-bar.jsx";
+import "./checkout-container.styles.css";
 
-const CheckoutContainer = ({setIsCheckoutOpen, cart, setCart}) => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [zipcode, setZipcode] = useState('');
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [state] = useState('NY');
-    const [isInvalidEmail, setIsInvalidEmail] = useState(true);
-    const [isInvalidPhone, setIsInvalidPhone] = useState(true);
+const CheckoutContainer = ({ setIsCheckoutOpen, cart, setCart }) => {
+  const customer = localStorage.getItem("customer");
+  const [firstName, setFirstName] = useState(
+    customer ? JSON.parse(customer).firstName : ""
+  );
+  const [lastName, setLastName] = useState(
+    customer ? JSON.parse(customer).lastName : ""
+  );
+  const [email, setEmail] = useState(
+    customer ? JSON.parse(customer).email : ""
+  );
+  const [phone, setPhone] = useState(
+    customer ? JSON.parse(customer).phone : ""
+  );
+  const [zipcode, setZipcode] = useState(
+    customer ? JSON.parse(customer).zipcode : ""
+  );
+  const [address, setAddress] = useState(
+    customer ? JSON.parse(customer).address : ""
+  );
+  const [city, setCity] = useState(customer ? JSON.parse(customer).city : "");
+  const [state] = useState("NY");
+  const [isInvalidEmail, setIsInvalidEmail] = useState(false);
+  const [isInvalidPhone, setIsInvalidPhone] = useState(false);
+  const [isInputsDisabled, setIsInputsDisabled] = useState(false);
+  const [isOrderPlaced, setIsOrderPlaced] = useState(
+    localStorage.getItem("isOrderPlaced") ?? false
+  );
+  const [isProgressBarComplete, setIsProgressBarComplete] = useState(false);
 
-    let orderTimeout;
+  const areFieldsFilled = () => {
+    return (
+      firstName &&
+      lastName &&
+      email &&
+      phone &&
+      zipcode &&
+      address &&
+      city &&
+      !isInvalidEmail &&
+      !isInvalidPhone
+    );
+  };
 
-    const validateEmail = (email) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        setIsInvalidEmail(!emailRegex.test(email));
+  const submitOrder = () => {
+    const customer = {
+      firstName,
+      lastName,
+      email,
+      phone,
+      address,
+      city,
+      state,
+      zipcode,
     };
 
-    const validatePhone = (phone) => {
-        const phoneRegex = /^\d{10}$/;
-        setIsInvalidPhone(!phoneRegex.test(phone));
-    };
+    const orderDetails = { customer, cart };
 
-    const handleOrderConfirm = (e) => {
-        e.preventDefault();
-        const customer = {
-            firstName,
-            lastName,
-            email,
-            phone,
-            address,
-            city,
-            state,
-            zipcode
-        };
+    handleOrderSubmit(orderDetails.customer, orderDetails.cart, setCart)
+      .then(() => {
+        setIsOrderPlaced(false);
+        setIsCheckoutOpen(false);
+        setIsInputsDisabled(false);
+        setIsProgressBarComplete(false);
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPhone("");
+        setZipcode("");
+        setAddress("");
+        setCity("");
+        setIsInvalidEmail(true);
+        setIsInvalidPhone(true);
 
-        const orderDetails = { customer, cart };
+        localStorage.removeItem("customer");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-        alert('Your order is being processed. You have 5 minutes to cancel.');
+  const disabled = cart.length === 0 || !areFieldsFilled();
 
-        orderTimeout = setTimeout(() => {
-            handleOrderSubmit(orderDetails.customer, orderDetails.cart, setCart)
-                .then(() => {
-                    setIsCheckoutOpen(false);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        }, 300000);
-    };
+  useEffect(() => {
+    if (cart.length === 0) {
+      setIsInputsDisabled(false);
+      setIsOrderPlaced(false);
+    }
+  }, [cart]);
 
-    const cancelOrder = () => {
-        clearTimeout(orderTimeout);
-        alert('Order has been canceled.');
+  useEffect(() => {
+    if (isProgressBarComplete && isOrderPlaced && !disabled) {
+      submitOrder();
+    }
+  }, [isProgressBarComplete, isOrderPlaced]);
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsInvalidEmail(!emailRegex.test(email));
+  };
+
+  const validatePhone = (phone) => {
+    const phoneRegex = /^\d{10}$/;
+    setIsInvalidPhone(!phoneRegex.test(phone));
+  };
+
+  const toggleOrder = (e) => {
+    e.preventDefault();
+
+    if (disabled) {
+      return;
     }
 
-    return (
-        <div className="checkout-form">
-            <h3>Checkout</h3>
-            <div className="name-container">
-                <input 
-                    className="first-name" 
-                    type="text" 
-                    placeholder="First name" 
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                />
-                <input 
-                    className="last-name" 
-                    type="text" 
-                    placeholder="Last name" 
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                />
-            </div>
-            <div className="address-container">
-                <input 
-                    className="address" 
-                    type="text" 
-                    placeholder="Address" 
-                    value={address} 
-                    onChange={(e) => setAddress(e.target.value)}
-                />
-                <input 
-                    className="city" 
-                    type="text" 
-                    placeholder="City" 
-                    value={city} 
-                    onChange={(e) => setCity(e.target.value)}
-                />
-            </div>
-            <div className="zip-state-container">
-                <input 
-                    className="zip" 
-                    type="text" 
-                    placeholder="Zip"
-                    value={zipcode}
-                    onChange={(e) => {
-                        const value = e.target.value.replace(/\D/g, '');
-                        if (value.length <= 5) { 
-                            setZipcode(value);
-                        }
-                    }} 
-                    maxLength={5}
-                />
-                <input 
-                    className="state" 
-                    type="text" 
-                    placeholder="State" 
-                    value={state} 
-                    disabled={true} 
-                />
-            </div>
-            <div className="email-phone-container">
-                <div className="email-container">
-                    <input 
-                        className={`email ${isInvalidEmail ? "invalid" : "valid"}`}
-                        type="email"  
-                        value={email}
-                        placeholder="Email"
-                        onChange={(e) => {
-                            setEmail(e.target.value);
-                            validateEmail(e.target.value);
-                        }}
-                    />
-                    {isInvalidEmail && <small style={{ color: "red" }}>Invalid email address</small>}
-                </div>
-                
-                <div className="phone-container">
-                    <input 
-                        className={`phone ${isInvalidPhone ? "invalid" : "valid"}`} 
-                        type="text" 
-                        placeholder="Phone Number" 
-                        value={phone}
-                        onChange={(e) => {
-                            const value = e.target.value.replace(/\D/g, '');
-                            if (value.length <= 10) {
-                                setPhone(value);
-                                validatePhone(value);
-                            }
-                        }}
-                    />
-                    {isInvalidPhone && <small style={{ color: "red" }}>Invalid phone number</small>}
-                </div>
-            </div>
-            <button 
-                onClick={(e) => handleOrderConfirm(e)} 
-                className={`checkout-button ${cart.length === 0 ? "disabled" : ""}`} 
-                type="submit"
-                disabled={cart.length === 0}>Confirm Order
-            </button>
-            <button onClick={cancelOrder}>Cancel Order</button>
-            <button onClick={() => setIsCheckoutOpen(false)}>Back</button>
-            <span className="checkout-info">*Delivery fee is $5.99</span>
-            <span className="checkout-info">*We accept only cash on delivery</span>
-            <span className="checkout-info">*Delivery time is 1 to 2 hours</span>
+    if (isOrderPlaced) {
+      setIsOrderPlaced(false);
+      localStorage.removeItem("isOrderPlaced");
+      return;
+    }
+
+    setIsInputsDisabled(true);
+    setIsOrderPlaced(true);
+    localStorage.setItem("isOrderPlaced", true);
+
+    const customer = {
+      firstName,
+      lastName,
+      email,
+      phone,
+      address,
+      city,
+      state,
+      zipcode,
+    };
+    localStorage.setItem("customer", JSON.stringify(customer));
+  };
+
+  return (
+    <div className="checkout-form">
+      <h3>Checkout</h3>
+      <div className="name-container">
+        <input
+          className="first-name"
+          type="text"
+          placeholder="First name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          disabled={isInputsDisabled}
+        />
+        <input
+          className="last-name"
+          type="text"
+          placeholder="Last name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          disabled={isInputsDisabled}
+        />
+      </div>
+      <div className="address-container">
+        <input
+          className="address"
+          type="text"
+          placeholder="Address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          disabled={isInputsDisabled}
+        />
+        <input
+          className="city"
+          type="text"
+          placeholder="City"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          disabled={isInputsDisabled}
+        />
+      </div>
+      <div className="zip-state-container">
+        <input
+          className="zip"
+          type="text"
+          placeholder="Zip"
+          value={zipcode}
+          onChange={(e) => {
+            const value = e.target.value.replace(/\D/g, "");
+            if (value.length <= 5) {
+              setZipcode(value);
+            }
+          }}
+          maxLength={5}
+          disabled={isInputsDisabled}
+        />
+        <input
+          className="state"
+          type="text"
+          placeholder="State"
+          value={state}
+          disabled={true}
+        />
+      </div>
+      <div className="email-phone-container">
+        <div className="email-container">
+          <input
+            className={`email ${isInvalidEmail ? "invalid" : "valid"}`}
+            type="email"
+            value={email}
+            placeholder="Email"
+            onChange={(e) => {
+              setEmail(e.target.value);
+              validateEmail(e.target.value);
+            }}
+            disabled={isInputsDisabled}
+          />
+          {isInvalidEmail && (
+            <small style={{ color: "red" }}>Invalid email address</small>
+          )}
         </div>
-        
-    )
-}
+
+        <div className="phone-container">
+          <input
+            className={`phone ${isInvalidPhone ? "invalid" : "valid"}`}
+            type="text"
+            placeholder="Phone Number"
+            value={phone}
+            onChange={(e) => {
+              const value = e.target.value.replace(/\D/g, "");
+              if (value.length <= 10) {
+                setPhone(value);
+                validatePhone(value);
+              }
+            }}
+            disabled={isInputsDisabled}
+          />
+          {isInvalidPhone && (
+            <small style={{ color: "red" }}>Invalid phone number</small>
+          )}
+        </div>
+      </div>
+      <ProgressiveBar
+        isDisabled={disabled}
+        isOrderPlaced={isOrderPlaced}
+        setIsProgressBarComplete={setIsProgressBarComplete}
+      />
+      <button
+        className={`confirm-button ${disabled ? "disabled" : ""}`}
+        onClick={toggleOrder}
+      >
+        {isOrderPlaced ? "Cancel Order" : "Confirm Order"}
+      </button>
+      <button onClick={() => setIsCheckoutOpen(false)}>Back</button>
+      <span className="checkout-info">*Delivery fee is $5.99</span>
+      <span className="checkout-info">*We accept only cash on delivery</span>
+      <span className="checkout-info">*Delivery time is 1 to 2 hours</span>
+    </div>
+  );
+};
 
 export default CheckoutContainer;

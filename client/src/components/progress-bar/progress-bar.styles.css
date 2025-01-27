@@ -1,0 +1,25 @@
+.bar-container {
+  position: relative;
+  background-color: grey;
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  width: 90%;
+  margin: 15px 0;
+  height: 5px;
+}
+
+.bar-container .bar-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.bar {
+  background-color: var(--success);
+  height: 100%;
+  width: 0;
+}

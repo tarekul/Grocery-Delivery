@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import axios from 'axios';
-import { editCart } from './functions/editCart';
-import { getCart } from './functions/getCart';
-import apiUrl from './apiUrl.js';
-import './App.css';
+import axios from "axios";
+import React, { useEffect, useMemo, useState } from "react";
+import apiUrl from "./apiUrl.js";
+import "./App.css";
+import { editCart } from "./functions/editCart";
+import { getCart } from "./functions/getCart";
 
-import Title from './components/title/title.jsx';
-import Mission from './components/mission/mission.jsx';
-import SearchBar from './components/search-bar/search-bar.jsx';
-import Cart from './components/cart/cart.jsx';
-import Toast from './components/toast/toast.jsx';
-import CheckoutContainer from './components/checkout-container/checkout-container.jsx';
-import DarkMode from './components/toggle-theme/toggle-theme.jsx';
-import CategoryCarousel from './components/carousel-container/carousel-container.jsx';
+import CategoryCarousel from "./components/carousel-container/carousel-container.jsx";
+import Cart from "./components/cart/cart.jsx";
+import CheckoutContainer from "./components/checkout-container/checkout-container.jsx";
+import Mission from "./components/mission/mission.jsx";
+import SearchBar from "./components/search-bar/search-bar.jsx";
+import Title from "./components/title/title.jsx";
+import Toast from "./components/toast/toast.jsx";
+import DarkMode from "./components/toggle-theme/toggle-theme.jsx";
 
 function App() {
   const [showMission, setShowMission] = useState(false);
@@ -22,79 +22,96 @@ function App() {
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastColor, setToastColor] = useState('');
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastColor, setToastColor] = useState("");
 
   useEffect(() => {
-    axios.get(`${apiUrl}/inventory`)
-      .then(res => {
-        const inventoryData = res.data
-        localStorage.setItem('inventory', JSON.stringify(inventoryData));
+    axios
+      .get(`${apiUrl}/inventory`)
+      .then((res) => {
+        const inventoryData = res.data;
+        localStorage.setItem("inventory", JSON.stringify(inventoryData));
         setInventory(inventoryData);
       })
-      .catch(err => {
-        console.error('Error fetching inventory:', err);
-        if (localStorage.getItem('inventory')) {
-          setInventory(JSON.parse(localStorage.getItem('inventory')));
-        } 
+      .catch((err) => {
+        console.error("Error fetching inventory:", err);
+        if (localStorage.getItem("inventory")) {
+          setInventory(JSON.parse(localStorage.getItem("inventory")));
+        }
       });
   }, []);
 
   useEffect(() => {
     setCart(getCart());
-  }, [isDropdownOpen])
+  }, [isDropdownOpen]);
 
-  const cartEditor = useMemo(() => editCart({
-    inventory,
-    setCart,
-    setShowToast,
-    setToastMessage,
-    setToastColor
-  }), [inventory]);
-
-  
+  const cartEditor = useMemo(
+    () =>
+      editCart({
+        inventory,
+        setCart,
+        setShowToast,
+        setToastMessage,
+        setToastColor,
+      }),
+    [inventory]
+  );
 
   return (
     <div className="App">
-      <Title setShowMission={setShowMission} showMission={showMission}/>
-      {showMission && (<Mission />)}
+      <Title setShowMission={setShowMission} showMission={showMission} />
+      {showMission && <Mission />}
       {!showMission && (
         <>
           {isCheckoutOpen ? (
-          <CheckoutContainer 
-            setIsCheckoutOpen={setIsCheckoutOpen}
-            cart={cart}
-            setCart={setCart}
-          />
-          ) : (
-          <>
-            <SearchBar 
-              inventory={Object.values(inventory).flat()} 
-              editCart={cartEditor} 
-              setIsSearchBarActive={setIsSearchBarActive}
-              isSearchBarActive={isSearchBarActive}
-              cart={cart}
-              isDropdownOpen={isDropdownOpen}
-            />
-            <CategoryCarousel inventory={inventory} cart={cart} editCart={cartEditor} />
-            {showToast && (
-              <Toast 
-                message={toastMessage} 
-                onClose={() => setShowToast(false)}
-                color={toastColor}
+            <>
+              <SearchBar
+                inventory={Object.values(inventory).flat()}
+                editCart={cartEditor}
+                setIsSearchBarActive={setIsSearchBarActive}
+                isSearchBarActive={isSearchBarActive}
+                cart={cart}
+                isDropdownOpen={isDropdownOpen}
               />
-            )}
+              <CheckoutContainer
+                setIsCheckoutOpen={setIsCheckoutOpen}
+                cart={cart}
+                setCart={setCart}
+              />
+            </>
+          ) : (
+            <>
+              <SearchBar
+                inventory={Object.values(inventory).flat()}
+                editCart={cartEditor}
+                setIsSearchBarActive={setIsSearchBarActive}
+                isSearchBarActive={isSearchBarActive}
+                cart={cart}
+                isDropdownOpen={isDropdownOpen}
+              />
+              <CategoryCarousel
+                inventory={inventory}
+                cart={cart}
+                editCart={cartEditor}
+              />
+              {showToast && (
+                <Toast
+                  message={toastMessage}
+                  onClose={() => setShowToast(false)}
+                  color={toastColor}
+                />
+              )}
+            </>
+          )}
+          <Cart
+            cart={cart}
+            editCart={cartEditor}
+            setIsDropdownOpen={setIsDropdownOpen}
+            isDropdownOpen={isDropdownOpen}
+            setIsCheckoutOpen={setIsCheckoutOpen}
+            isSearchBarActive={isSearchBarActive}
+          />
         </>
-        )}
-        <Cart 
-              cart={cart} 
-              editCart={cartEditor} 
-              setIsDropdownOpen={setIsDropdownOpen} 
-              isDropdownOpen={isDropdownOpen} 
-              setIsCheckoutOpen={setIsCheckoutOpen} 
-              isSearchBarActive={isSearchBarActive}
-            />
-      </>
       )}
       <DarkMode />
     </div>

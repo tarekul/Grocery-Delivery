@@ -1,87 +1,125 @@
 .checkout-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
-    width: fit-content;
-    margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  width: fit-content;
+  margin: auto;
 }
 
 .checkout-form input {
-    font-size: 1.2rem;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    width: 300px;
+  font-size: 1.2rem;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 300px;
 }
 
-.email, .phone {
-    border: 1px solid #ccc;
-    padding: 8px;
-    font-size: 16px;
-    outline: none;
+.email,
+.phone {
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 16px;
+  outline: none;
 }
 
-.email.invalid, .phone.invalid {
-    border-color: red;
-    background-color: #ffe6e6;
-    color: #cc0000;
+.email.invalid,
+.phone.invalid {
+  border-color: red;
+  background-color: #ffe6e6;
+  color: #cc0000;
 }
 
-.email.valid, .phone.valid {
-    border-color: green;
-    background-color: #e6ffe6;
-    color: #019d01;
+.email.valid,
+.phone.valid {
+  border-color: green;
+  background-color: #e6ffe6;
+  color: #019d01;
 }
 
 .email-phone-container {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .name-container {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .address-container {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .address {
-    width: 400px;
+  width: 400px;
 }
 
 .zip-state-container {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
-.email-container, .phone-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
+.email-container,
+.phone-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
 }
 
 .checkout-info {
-    align-self: flex-start;
-    font-style: italic;
+  align-self: flex-start;
+  font-style: italic;
 }
 
 @media screen and (max-width: 768px) {
-    .checkout-form input {
-        width: 100%;
-    }
+  .checkout-form input {
+    width: 100%;
+  }
 
-    .email-phone-container, 
-    .address-container, 
-    .zip-state-container, 
-    .name-container {
-        flex-direction: column;
-        width: 100%;
-    }
+  .email-phone-container,
+  .address-container,
+  .zip-state-container,
+  .name-container {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.confirm-button {
+  background-color: var(--action-orange-darker);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  width: 90%;
+  margin: 15px 0;
+  transition: all 0.2s ease;
+}
+
+.confirm-button.disabled:hover,
+.confirm-button.disabled:active {
+  background-color: var(--action-orange-darker);
+  transform: none;
+}
+
+.confirm-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.confirm-button:hover {
+  background-color: var(--action-orange-darkest);
+}
+
+.confirm-button:active {
+  background-color: var(--action-orange-deep);
+  transform: scale(0.98);
 }
