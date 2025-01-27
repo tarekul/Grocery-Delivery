@@ -27,9 +27,11 @@ const CheckoutContainer = ({ setIsCheckoutOpen, cart, setCart }) => {
   const [state] = useState("NY");
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isInvalidPhone, setIsInvalidPhone] = useState(false);
-  const [isInputsDisabled, setIsInputsDisabled] = useState(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState(
     localStorage.getItem("isOrderPlaced") ?? false
+  );
+  const [isInputsDisabled, setIsInputsDisabled] = useState(
+    isOrderPlaced ?? false
   );
   const [isProgressBarComplete, setIsProgressBarComplete] = useState(false);
 
@@ -118,6 +120,7 @@ const CheckoutContainer = ({ setIsCheckoutOpen, cart, setCart }) => {
 
     if (isOrderPlaced) {
       setIsOrderPlaced(false);
+      setIsInputsDisabled(false);
       localStorage.removeItem("isOrderPlaced");
       return;
     }
