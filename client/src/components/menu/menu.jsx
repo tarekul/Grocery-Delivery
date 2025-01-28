@@ -1,17 +1,22 @@
+import React from "react";
 import "./menu.styles.css";
 
-const Menu = () => {
+const Menu = ({ setShowMission }) => {
   const handleMenuClick = () => {
-    console.log("clicked");
     const nav = document.querySelector("nav");
     nav.classList.toggle("show");
+  };
+
+  const handleMissionClick = () => {
+    localStorage.setItem("showMission", true);
+    setShowMission(true);
   };
 
   return (
     <>
       <nav>
         <ul>
-          <li>Mission</li>
+          <li onClick={handleMissionClick}>Mission </li>
           <li>About</li>
           <li>Contact</li>
         </ul>

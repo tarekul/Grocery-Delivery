@@ -1,8 +1,12 @@
 import "./title.styles.css";
 
-const Title = ({ closeCheckout }) => {
+const Title = ({ closeCheckout, setMission }) => {
+  const handleTitleClick = () => {
+    closeCheckout();
+    setMission(false);
+  };
   return (
-    <h1 className="title" onClick={() => closeCheckout()}>
+    <h1 className="title" onClick={handleTitleClick}>
       Grocery Go
     </h1>
   );

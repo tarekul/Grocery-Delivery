@@ -1,12 +1,12 @@
 .title {
   color: var(--text-primary);
-  margin-top: 60px;
   font-size: 1.7rem;
   font-weight: 600;
-  padding: 10px 20px;
   text-align: center;
+  margin: 0;
   cursor: pointer;
   width: fit-content;
+  padding: 5px 20px;
 }
 
 .title:hover {
