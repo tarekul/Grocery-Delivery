@@ -24,3 +24,9 @@ body {
   box-sizing: border-box;
   height: 13vh;
 }
+
+@media (max-width: 768px) {
+  .header {
+    height: 16vh;
+  }
+}

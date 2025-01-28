@@ -84,12 +84,7 @@ function App() {
           setMission={setShowMission}
           setShowAbout={setShowAbout}
         />
-        <Menu
-          showMission={showMission}
-          showAbout={showAbout}
-          setShowMission={setShowMission}
-          setShowAbout={setShowAbout}
-        />
+        <Menu setShowMission={setShowMission} setShowAbout={setShowAbout} />
       </div>
       {showMission ? (
         <Mission />

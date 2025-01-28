@@ -1,10 +1,14 @@
 import React from "react";
 import "./menu.styles.css";
 
-const Menu = ({ showMission, showAbout, setShowMission, setShowAbout }) => {
-  const handleMenuClick = () => {
+const Menu = ({ setShowMission, setShowAbout }) => {
+  const handleMenuClick = (shouldShowMobileMenu) => {
     const nav = document.querySelector("nav");
-    nav.classList.toggle("show");
+    if (shouldShowMobileMenu) {
+      nav.classList.add("show");
+    } else {
+      nav.classList.remove("show");
+    }
   };
 
   const handleMissionClick = (isShow = true) => {
@@ -20,6 +24,7 @@ const Menu = ({ showMission, showAbout, setShowMission, setShowAbout }) => {
   };
 
   const handleAboutClick = (isShow = true) => {
+    handleMenuClick();
     if (isShow) {
       localStorage.setItem("showAbout", isShow);
       setShowAbout(isShow);
@@ -44,8 +49,16 @@ const Menu = ({ showMission, showAbout, setShowMission, setShowAbout }) => {
             </span>
           </li>
         </ul>
+        <button className="close-button" onClick={() => handleMenuClick(false)}>
+          X
+        </button>
       </nav>
-      <i className="fa-solid fa-bars fa-lg" onClick={handleMenuClick}></i>
+      <div className="menu-icon">
+        <i
+          className="fa-solid fa-bars fa-lg"
+          onClick={() => handleMenuClick(true)}
+        ></i>
+      </div>
     </>
   );
 };
