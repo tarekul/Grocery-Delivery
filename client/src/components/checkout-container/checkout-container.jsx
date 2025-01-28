@@ -148,6 +148,14 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
   return (
     <div className="checkout-form">
       <h3>Checkout</h3>
+      <p className="total-price">
+        Total:{" "}
+        {cart.reduce(
+          (totalPrice, cartItem) =>
+            (totalPrice += cartItem.quantity * cartItem.item.price),
+          0
+        )}
+      </p>
       <div className="name-container">
         <input
           className="first-name"
