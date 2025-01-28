@@ -8,22 +8,33 @@ import { getCart } from "./functions/getCart";
 import CategoryCarousel from "./components/carousel-container/carousel-container.jsx";
 import Cart from "./components/cart/cart.jsx";
 import CheckoutContainer from "./components/checkout-container/checkout-container.jsx";
-import Mission from "./components/mission/mission.jsx";
+import Menu from "./components/menu/menu.jsx";
 import SearchBar from "./components/search-bar/search-bar.jsx";
 import Title from "./components/title/title.jsx";
 import Toast from "./components/toast/toast.jsx";
 import DarkMode from "./components/toggle-theme/toggle-theme.jsx";
 
 function App() {
-  const [showMission, setShowMission] = useState(false);
   const [inventory, setInventory] = useState([]);
   const [cart, setCart] = useState(getCart());
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(
+    localStorage.getItem("isCheckoutOpen") === "true" ?? false
+  );
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastColor, setToastColor] = useState("");
+
+  const openCheckout = () => {
+    setIsCheckoutOpen(true);
+    localStorage.setItem("isCheckoutOpen", true);
+  };
+
+  const closeCheckout = () => {
+    setIsCheckoutOpen(false);
+    localStorage.setItem("isCheckoutOpen", false);
+  };
 
   useEffect(() => {
     axios
@@ -59,60 +70,61 @@ function App() {
 
   return (
     <div className="App">
-      <Title setShowMission={setShowMission} showMission={showMission} />
-      {showMission && <Mission />}
-      {!showMission && (
-        <>
-          {isCheckoutOpen ? (
-            <>
-              <SearchBar
-                inventory={Object.values(inventory).flat()}
-                editCart={cartEditor}
-                setIsSearchBarActive={setIsSearchBarActive}
-                isSearchBarActive={isSearchBarActive}
-                cart={cart}
-                isDropdownOpen={isDropdownOpen}
+      <div className="header">
+        <Title closeCheckout={closeCheckout} />
+        <Menu />
+      </div>
+      <>
+        {isCheckoutOpen ? (
+          <>
+            <SearchBar
+              inventory={Object.values(inventory).flat()}
+              editCart={cartEditor}
+              setIsSearchBarActive={setIsSearchBarActive}
+              isSearchBarActive={isSearchBarActive}
+              cart={cart}
+              isDropdownOpen={isDropdownOpen}
+            />
+            <CheckoutContainer
+              closeCheckout={closeCheckout}
+              cart={cart}
+              setCart={setCart}
+            />
+          </>
+        ) : (
+          <>
+            <SearchBar
+              inventory={Object.values(inventory).flat()}
+              editCart={cartEditor}
+              setIsSearchBarActive={setIsSearchBarActive}
+              isSearchBarActive={isSearchBarActive}
+              cart={cart}
+              isDropdownOpen={isDropdownOpen}
+            />
+            <CategoryCarousel
+              inventory={inventory}
+              cart={cart}
+              editCart={cartEditor}
+            />
+            {showToast && (
+              <Toast
+                message={toastMessage}
+                onClose={() => setShowToast(false)}
+                color={toastColor}
               />
-              <CheckoutContainer
-                setIsCheckoutOpen={setIsCheckoutOpen}
-                cart={cart}
-                setCart={setCart}
-              />
-            </>
-          ) : (
-            <>
-              <SearchBar
-                inventory={Object.values(inventory).flat()}
-                editCart={cartEditor}
-                setIsSearchBarActive={setIsSearchBarActive}
-                isSearchBarActive={isSearchBarActive}
-                cart={cart}
-                isDropdownOpen={isDropdownOpen}
-              />
-              <CategoryCarousel
-                inventory={inventory}
-                cart={cart}
-                editCart={cartEditor}
-              />
-              {showToast && (
-                <Toast
-                  message={toastMessage}
-                  onClose={() => setShowToast(false)}
-                  color={toastColor}
-                />
-              )}
-            </>
-          )}
-          <Cart
-            cart={cart}
-            editCart={cartEditor}
-            setIsDropdownOpen={setIsDropdownOpen}
-            isDropdownOpen={isDropdownOpen}
-            setIsCheckoutOpen={setIsCheckoutOpen}
-            isSearchBarActive={isSearchBarActive}
-          />
-        </>
-      )}
+            )}
+          </>
+        )}
+        <Cart
+          cart={cart}
+          editCart={cartEditor}
+          setIsDropdownOpen={setIsDropdownOpen}
+          isDropdownOpen={isDropdownOpen}
+          openCheckout={openCheckout}
+          isSearchBarActive={isSearchBarActive}
+        />
+      </>
+
       <DarkMode />
     </div>
   );

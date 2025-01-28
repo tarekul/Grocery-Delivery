@@ -3,7 +3,7 @@ import { handleOrderSubmit } from "../../functions/handleOrderSubmit";
 import ProgressiveBar from "../progress-bar/progress-bar.jsx";
 import "./checkout-container.styles.css";
 
-const CheckoutContainer = ({ setIsCheckoutOpen, cart, setCart }) => {
+const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
   const customer = localStorage.getItem("customer");
   const [firstName, setFirstName] = useState(
     customer ? JSON.parse(customer).firstName : ""
@@ -67,7 +67,7 @@ const CheckoutContainer = ({ setIsCheckoutOpen, cart, setCart }) => {
       .then(() => {
         setIsOrderPlaced(false);
         localStorage.setItem("isOrderPlaced", false);
-        setIsCheckoutOpen(false);
+        closeCheckout();
         setIsInputsDisabled(false);
         setIsProgressBarComplete(false);
         setFirstName("");
@@ -98,7 +98,7 @@ const CheckoutContainer = ({ setIsCheckoutOpen, cart, setCart }) => {
   }, [cart]);
 
   useEffect(() => {
-    if (isProgressBarComplete && isOrderPlaced && !disabled) {
+    if (isProgressBarComplete && isOrderPlaced) {
       submitOrder();
     }
   }, [isProgressBarComplete, isOrderPlaced]);
@@ -245,7 +245,6 @@ const CheckoutContainer = ({ setIsCheckoutOpen, cart, setCart }) => {
         </div>
       </div>
       <ProgressiveBar
-        isDisabled={disabled}
         isOrderPlaced={isOrderPlaced}
         setIsProgressBarComplete={setIsProgressBarComplete}
       />
@@ -255,7 +254,6 @@ const CheckoutContainer = ({ setIsCheckoutOpen, cart, setCart }) => {
       >
         {isOrderPlaced ? "Cancel Order" : "Confirm Order"}
       </button>
-      <button onClick={() => setIsCheckoutOpen(false)}>Back</button>
       <span className="checkout-info">*Delivery fee is $5.99</span>
       <span className="checkout-info">*We accept only cash on delivery</span>
       <span className="checkout-info">*Delivery time is 1 to 2 hours</span>

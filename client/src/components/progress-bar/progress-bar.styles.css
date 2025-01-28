@@ -7,7 +7,7 @@
   font-weight: 500;
   width: 90%;
   margin: 15px 0;
-  height: 25px;
+  height: 35px;
 }
 
 .bar-container .bar-text {
@@ -16,6 +16,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
+  width: 100%;
+  text-align: center;
 }
 
 .bar {

@@ -1,5 +1,6 @@
 :root {
   /* Light Theme Colors */
+  --light-background-header: #ffe0b2;
   --light-background-main: #fffaf0; /* Floral White */
   --light-background-white: #ffffff;
   --light-background-card: #fff8e1; /* Light Cream */
@@ -26,6 +27,7 @@
   --light-error: #f44336;
 
   /* Dark Theme Colors */
+  --dark-background-header: #004d40;
   --dark-background-main: #263238; /* Charcoal */
   --dark-background-white: #2d3748;
   --dark-background-card: #37474f; /* Dark Gray */
@@ -52,6 +54,7 @@
   --dark-error: #f56565;
 
   /* Default theme variables - these are what your components actually use */
+  --background-header: var(--light-background-header);
   --background-main: var(--light-background-main);
   --background-white: var(--light-background-white);
   --background-card: var(--light-background-card);
@@ -80,6 +83,7 @@
 
 /* When dark mode is active, update all the default variables */
 [data-theme="dark"] {
+  --background-header: var(--dark-background-header);
   --background-main: var(--dark-background-main);
   --background-white: var(--dark-background-white);
   --background-card: var(--dark-background-card);

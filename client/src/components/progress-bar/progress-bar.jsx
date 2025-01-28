@@ -1,11 +1,7 @@
 import { useEffect } from "react";
 import "./progress-bar.styles.css";
 
-const ProgressiveBar = ({
-  isDisabled,
-  isOrderPlaced,
-  setIsProgressBarComplete,
-}) => {
+const ProgressiveBar = ({ isOrderPlaced, setIsProgressBarComplete }) => {
   useEffect(() => {
     const bar = document.querySelector(".bar");
     let intervalId;
@@ -49,12 +45,12 @@ const ProgressiveBar = ({
       localStorage.removeItem("startTime");
       bar.style.width = "0%";
     }
-  }, [isOrderPlaced]);
+  }, [isOrderPlaced, setIsProgressBarComplete]);
 
   return (
     <div className="bar-container">
       <div className="bar-text">
-        {isOrderPlaced ? "Order is being processed..." : ""}
+        {isOrderPlaced ? "Order processing..." : ""}
       </div>
       <div className="bar"></div>
     </div>
