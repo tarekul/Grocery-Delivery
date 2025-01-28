@@ -40,7 +40,7 @@ const ProgressiveBar = ({
         }, ms / 100);
       };
 
-      fillBar(300000);
+      fillBar(180000);
       return () => {
         clearInterval(intervalId);
       };
@@ -53,7 +53,9 @@ const ProgressiveBar = ({
 
   return (
     <div className="bar-container">
-      <div className="bar-text"></div>
+      <div className="bar-text">
+        {isOrderPlaced ? "Order is being processed..." : ""}
+      </div>
       <div className="bar"></div>
     </div>
   );

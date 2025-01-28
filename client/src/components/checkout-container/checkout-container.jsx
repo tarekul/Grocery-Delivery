@@ -66,6 +66,7 @@ const CheckoutContainer = ({ setIsCheckoutOpen, cart, setCart }) => {
     handleOrderSubmit(orderDetails.customer, orderDetails.cart, setCart)
       .then(() => {
         setIsOrderPlaced(false);
+        localStorage.setItem("isOrderPlaced", false);
         setIsCheckoutOpen(false);
         setIsInputsDisabled(false);
         setIsProgressBarComplete(false);
