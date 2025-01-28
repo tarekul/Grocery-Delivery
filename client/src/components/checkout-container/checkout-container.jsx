@@ -89,7 +89,6 @@ const CheckoutContainer = ({ setIsCheckoutOpen, cart, setCart }) => {
   const disabled = cart.length === 0 || !areFieldsFilled();
 
   useEffect(() => {
-    console.log(isOrderPlaced);
     if (cart.length === 0) {
       setIsInputsDisabled(false);
       setIsOrderPlaced(false);
