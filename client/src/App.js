@@ -5,6 +5,7 @@ import "./App.css";
 import { editCart } from "./functions/editCart";
 import { getCart } from "./functions/getCart";
 
+import About from "./components/about/about.jsx";
 import CategoryCarousel from "./components/carousel-container/carousel-container.jsx";
 import Cart from "./components/cart/cart.jsx";
 import CheckoutContainer from "./components/checkout-container/checkout-container.jsx";
@@ -28,6 +29,9 @@ function App() {
   const [toastColor, setToastColor] = useState("");
   const [showMission, setShowMission] = useState(
     localStorage.getItem("showMission") === "true" ?? false
+  );
+  const [showAbout, setShowAbout] = useState(
+    localStorage.getItem("showAbout") === "true" ?? false
   );
 
   const openCheckout = () => {
@@ -75,11 +79,22 @@ function App() {
   return (
     <div className="App">
       <div className="header">
-        <Title closeCheckout={closeCheckout} setMission={setShowMission} />
-        <Menu setShowMission={setShowMission} />
+        <Title
+          closeCheckout={closeCheckout}
+          setMission={setShowMission}
+          setShowAbout={setShowAbout}
+        />
+        <Menu
+          showMission={showMission}
+          showAbout={showAbout}
+          setShowMission={setShowMission}
+          setShowAbout={setShowAbout}
+        />
       </div>
       {showMission ? (
         <Mission />
+      ) : showAbout ? (
+        <About />
       ) : (
         <>
           {isCheckoutOpen ? (

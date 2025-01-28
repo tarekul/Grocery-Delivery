@@ -1,0 +1,16 @@
+.zip-dropdown {
+  width: 300px;
+}
+
+.zip-dropdown select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.zip-dropdown select:focus {
+  outline: none;
+  border-color: #4d90fe;
+}

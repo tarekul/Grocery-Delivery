@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { handleOrderSubmit } from "../../functions/handleOrderSubmit";
 import ProgressiveBar from "../progress-bar/progress-bar.jsx";
+import ZipDropdown from "../zip-dropdown/zip-dropdown.jsx";
 import "./checkout-container.styles.css";
 
 const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
@@ -18,7 +19,7 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
     customer ? JSON.parse(customer).phone : ""
   );
   const [zipcode, setZipcode] = useState(
-    customer ? JSON.parse(customer).zipcode : ""
+    customer ? JSON.parse(customer).zipcode : "11416"
   );
   const [address, setAddress] = useState(
     customer ? JSON.parse(customer).address : ""
@@ -184,20 +185,7 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
         />
       </div>
       <div className="zip-state-container">
-        <input
-          className="zip"
-          type="text"
-          placeholder="Zip"
-          value={zipcode}
-          onChange={(e) => {
-            const value = e.target.value.replace(/\D/g, "");
-            if (value.length <= 5) {
-              setZipcode(value);
-            }
-          }}
-          maxLength={5}
-          disabled={isInputsDisabled}
-        />
+        <ZipDropdown setZipcode={setZipcode} disabled={isInputsDisabled} />
         <input
           className="state"
           type="text"

@@ -1,15 +1,34 @@
 import React from "react";
 import "./menu.styles.css";
 
-const Menu = ({ setShowMission }) => {
+const Menu = ({ showMission, showAbout, setShowMission, setShowAbout }) => {
   const handleMenuClick = () => {
     const nav = document.querySelector("nav");
     nav.classList.toggle("show");
   };
 
-  const handleMissionClick = () => {
-    localStorage.setItem("showMission", true);
-    setShowMission(true);
+  const handleMissionClick = (isShow = true) => {
+    if (isShow) {
+      localStorage.setItem("showMission", isShow);
+      setShowMission(isShow);
+
+      handleAboutClick(false);
+    } else {
+      localStorage.removeItem("showMission");
+      setShowMission(false);
+    }
+  };
+
+  const handleAboutClick = (isShow = true) => {
+    if (isShow) {
+      localStorage.setItem("showAbout", isShow);
+      setShowAbout(isShow);
+
+      handleMissionClick(false);
+    } else {
+      localStorage.removeItem("showAbout");
+      setShowAbout(false);
+    }
   };
 
   return (
@@ -17,8 +36,8 @@ const Menu = ({ setShowMission }) => {
       <nav>
         <ul>
           <li onClick={handleMissionClick}>Mission </li>
-          <li>About</li>
-          <li>Contact</li>
+          <li onClick={handleAboutClick}>About</li>
+          <li>Share Recipes</li>
         </ul>
       </nav>
       <i className="fa-solid fa-bars fa-lg" onClick={handleMenuClick}></i>
