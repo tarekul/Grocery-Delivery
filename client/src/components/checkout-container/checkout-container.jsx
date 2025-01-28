@@ -28,7 +28,7 @@ const CheckoutContainer = ({ setIsCheckoutOpen, cart, setCart }) => {
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isInvalidPhone, setIsInvalidPhone] = useState(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState(
-    localStorage.getItem("isOrderPlaced") ?? false
+    localStorage.getItem("isOrderPlaced") === "true" ?? false
   );
   const [isInputsDisabled, setIsInputsDisabled] = useState(
     isOrderPlaced ?? false
@@ -89,9 +89,11 @@ const CheckoutContainer = ({ setIsCheckoutOpen, cart, setCart }) => {
   const disabled = cart.length === 0 || !areFieldsFilled();
 
   useEffect(() => {
+    console.log(isOrderPlaced);
     if (cart.length === 0) {
       setIsInputsDisabled(false);
       setIsOrderPlaced(false);
+      localStorage.setItem("isOrderPlaced", false);
     }
   }, [cart]);
 
