@@ -37,7 +37,12 @@ const Menu = ({ showMission, showAbout, setShowMission, setShowAbout }) => {
         <ul>
           <li onClick={handleMissionClick}>Mission </li>
           <li onClick={handleAboutClick}>About</li>
-          <li>Share Recipes</li>
+          <li>
+            <span className="tooltip-container">
+              Share Recipes
+              <div className="tooltip">Coming soon!</div>
+            </span>
+          </li>
         </ul>
       </nav>
       <i className="fa-solid fa-bars fa-lg" onClick={handleMenuClick}></i>
