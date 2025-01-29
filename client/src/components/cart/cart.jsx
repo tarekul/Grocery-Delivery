@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import CartItem from "../cart-item/cart-item";
-
+import { saveCartToLocalStorage } from "../../functions/saveCart";
 import CartButton from "../card-button/cart-button";
+import CartItem from "../cart-item/cart-item";
 import "./cart.styles.css";
 
 const Cart = ({
   cart,
   editCart,
+  setCart,
   isDropdownOpen,
   setIsDropdownOpen,
   openCheckout,
@@ -40,6 +41,11 @@ const Cart = ({
     openCheckout();
     setIsDropdownOpen(false);
     document.body.style.overflow = "unset";
+  };
+
+  const clearCart = () => {
+    setCart([]);
+    saveCartToLocalStorage([]);
   };
 
   useEffect(() => {
@@ -76,6 +82,9 @@ const Cart = ({
             X
           </button>
           <p className="total-price">Total: ${totalPrice.toFixed(2)}</p>
+          <button className="clear-button" onClick={clearCart}>
+            Clear
+          </button>
           {cart.length > 0 ? (
             <div className="cart-items">
               {cart.map((cartItem) => (

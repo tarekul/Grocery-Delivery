@@ -84,7 +84,12 @@ function App() {
           setMission={setShowMission}
           setShowAbout={setShowAbout}
         />
-        <Menu setShowMission={setShowMission} setShowAbout={setShowAbout} />
+        <Menu
+          setShowMission={setShowMission}
+          setShowAbout={setShowAbout}
+          openCheckout={openCheckout}
+          closeCheckout={closeCheckout}
+        />
       </div>
       {showMission ? (
         <Mission />
@@ -135,6 +140,7 @@ function App() {
           <Cart
             cart={cart}
             editCart={cartEditor}
+            setCart={setCart}
             setIsDropdownOpen={setIsDropdownOpen}
             isDropdownOpen={isDropdownOpen}
             openCheckout={openCheckout}

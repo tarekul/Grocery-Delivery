@@ -1,7 +1,12 @@
 import React from "react";
 import "./menu.styles.css";
 
-const Menu = ({ setShowMission, setShowAbout }) => {
+const Menu = ({
+  setShowMission,
+  setShowAbout,
+  openCheckout,
+  closeCheckout,
+}) => {
   const handleMenuClick = (shouldShowMobileMenu) => {
     const nav = document.querySelector("nav");
     if (shouldShowMobileMenu) {
@@ -13,27 +18,31 @@ const Menu = ({ setShowMission, setShowAbout }) => {
 
   const handleMissionClick = (isShow = true) => {
     if (isShow) {
-      localStorage.setItem("showMission", isShow);
       setShowMission(isShow);
-
+      handleMenuClick(false);
       handleAboutClick(false);
+      closeCheckout();
     } else {
-      localStorage.removeItem("showMission");
       setShowMission(false);
     }
   };
 
   const handleAboutClick = (isShow = true) => {
-    handleMenuClick();
     if (isShow) {
-      localStorage.setItem("showAbout", isShow);
       setShowAbout(isShow);
-
+      handleMenuClick(false);
       handleMissionClick(false);
+      closeCheckout();
     } else {
-      localStorage.removeItem("showAbout");
       setShowAbout(false);
     }
+  };
+
+  const handleCheckoutClick = () => {
+    openCheckout();
+    handleMenuClick(false);
+    handleAboutClick(false);
+    handleMissionClick(false);
   };
 
   return (
@@ -42,6 +51,7 @@ const Menu = ({ setShowMission, setShowAbout }) => {
         <ul>
           <li onClick={handleMissionClick}>Mission </li>
           <li onClick={handleAboutClick}>About</li>
+          <li onClick={handleCheckoutClick}>Checkout</li>
           <li>
             <span className="tooltip-container">
               Share Recipes
