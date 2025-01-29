@@ -150,11 +150,13 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
       <h3>Checkout</h3>
       <p className="total-price">
         Total:{" "}
-        {cart.reduce(
-          (totalPrice, cartItem) =>
-            (totalPrice += cartItem.quantity * cartItem.item.price),
-          0
-        )}
+        {cart
+          .reduce(
+            (totalPrice, cartItem) =>
+              (totalPrice += cartItem.quantity * cartItem.item.price),
+            0
+          )
+          .toFixed(2)}
       </p>
       <div className="name-container">
         <input
