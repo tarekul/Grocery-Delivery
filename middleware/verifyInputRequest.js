@@ -66,8 +66,6 @@ const verifyInputRequest = (req, res, next) => {
 
   // Validate zip code format (assuming 5 digits)
   const zipRegex = /^\d{5}$/;
-  console.log(zipcode);
-  console.log(typeof zipcode);
   if (!zipRegex.test(parseInt(zipcode))) {
     return res.status(400).send("Invalid zip code. It should be 5 digits.");
   }
