@@ -45,11 +45,6 @@
   color: #019d01;
 }
 
-.email-phone-container {
-  display: flex;
-  gap: 10px;
-}
-
 .name-container {
   display: flex;
   gap: 10px;
@@ -72,8 +67,16 @@
 .email-container,
 .phone-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 10px;
   margin-bottom: 10px;
+}
+
+.phone-input-container,
+.email-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .checkout-info {
@@ -86,7 +89,8 @@
     width: 100%;
   }
 
-  .email-phone-container,
+  .email-container,
+  .phone-container,
   .address-container,
   .zip-state-container,
   .name-container {

@@ -15,8 +15,14 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
   const [email, setEmail] = useState(
     customer ? JSON.parse(customer).email : ""
   );
+  const [verifyEmail, setVerifyEmail] = useState(
+    customer ? JSON.parse(customer).verifyEmail : ""
+  );
   const [phone, setPhone] = useState(
     customer ? JSON.parse(customer).phone : ""
+  );
+  const [verifyPhone, setVerifyPhone] = useState(
+    customer ? JSON.parse(customer).verifyPhone : ""
   );
   const [zipcode, setZipcode] = useState(
     customer ? JSON.parse(customer).zipcode : "11416"
@@ -26,6 +32,8 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
   );
   const [city, setCity] = useState(customer ? JSON.parse(customer).city : "");
   const [state] = useState("NY");
+  const [isEmailVerified, setIsEmailVerified] = useState(email === verifyEmail);
+  const [isPhoneVerified, setIsPhoneVerified] = useState(phone === verifyPhone);
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isInvalidPhone, setIsInvalidPhone] = useState(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState(
@@ -46,7 +54,9 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
       address &&
       city &&
       !isInvalidEmail &&
-      !isInvalidPhone
+      !isInvalidPhone &&
+      isEmailVerified &&
+      isPhoneVerified
     );
   };
 
@@ -74,6 +84,8 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
         setFirstName("");
         setLastName("");
         setEmail("");
+        setVerifyEmail("");
+        setVerifyPhone("");
         setPhone("");
         setZipcode("");
         setAddress("");
@@ -136,6 +148,8 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
       firstName,
       lastName,
       email,
+      verifyEmail,
+      verifyPhone,
       phone,
       address,
       city,
@@ -204,44 +218,96 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
           disabled={true}
         />
       </div>
-      <div className="email-phone-container">
-        <div className="email-container">
+
+      <div className="email-container">
+        <div className="email-input-container">
           <input
             className={`email ${isInvalidEmail ? "invalid" : "valid"}`}
             type="email"
             value={email}
-            placeholder="Email"
+            placeholder="email"
             onChange={(e) => {
-              setEmail(e.target.value);
-              validateEmail(e.target.value);
+              const newEmail = e.target.value;
+              setEmail(newEmail);
+              validateEmail(newEmail);
+              setIsEmailVerified(verifyEmail === newEmail);
             }}
             disabled={isInputsDisabled}
           />
-          {isInvalidEmail && (
+          {isInvalidEmail && email !== "" && (
             <small style={{ color: "red" }}>Invalid email address</small>
           )}
         </div>
+        <div className="email-input-container">
+          <input
+            className={`email ${!isEmailVerified ? "invalid" : "valid"}`}
+            type="email"
+            value={verifyEmail}
+            placeholder="verify email"
+            onChange={(e) => {
+              const newVerifyEmail = e.target.value;
+              setVerifyEmail(newVerifyEmail);
+              setIsEmailVerified(newVerifyEmail === email);
+            }}
+            disabled={isInputsDisabled}
+          />
+          {!isEmailVerified && (
+            <small style={{ color: "red" }}>Email Address not matched</small>
+          )}
+          {isEmailVerified && verifyEmail !== "" && (
+            <small style={{ color: "green" }}>Email Address matched</small>
+          )}
+        </div>
+      </div>
 
-        <div className="phone-container">
+      <div className="phone-container">
+        <div className="phone-input-container">
           <input
             className={`phone ${isInvalidPhone ? "invalid" : "valid"}`}
-            type="text"
-            placeholder="Phone Number"
+            type="tel"
+            name="phone"
+            placeholder="phone number"
             value={phone}
             onChange={(e) => {
               const value = e.target.value.replace(/\D/g, "");
               if (value.length <= 10) {
                 setPhone(value);
                 validatePhone(value);
+                setIsPhoneVerified(verifyPhone === value);
               }
             }}
             disabled={isInputsDisabled}
           />
-          {isInvalidPhone && (
+          {isInvalidPhone && phone !== "" && (
             <small style={{ color: "red" }}>Invalid phone number</small>
           )}
         </div>
+        <div className="phone-input-container">
+          <input
+            className={`phone ${!isPhoneVerified ? "invalid" : "valid"}`}
+            type="tel"
+            name="verifyPhone"
+            placeholder="verify phone number"
+            value={verifyPhone}
+            onChange={(e) => {
+              const value = e.target.value.replace(/\D/g, "");
+              if (value.length <= 10) {
+                setVerifyPhone(value);
+                // validatePhone(value);
+                setIsPhoneVerified(value === phone);
+              }
+            }}
+            disabled={isInputsDisabled}
+          />
+          {isPhoneVerified && phone !== "" && (
+            <small style={{ color: "green" }}>Phone numbers matched</small>
+          )}
+          {!isPhoneVerified && (
+            <small style={{ color: "red" }}>Phone numbers not matched</small>
+          )}
+        </div>
       </div>
+
       <ProgressiveBar
         isOrderPlaced={isOrderPlaced}
         setIsProgressBarComplete={setIsProgressBarComplete}
