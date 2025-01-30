@@ -1,5 +1,3 @@
-const verifyAddress = require("./verifyAddress");
-
 const verifyInputRequest = async (req, res, next) => {
   const {
     firstName,
@@ -70,13 +68,6 @@ const verifyInputRequest = async (req, res, next) => {
   const zipRegex = /^\d{5}$/;
   if (!zipRegex.test(parseInt(zipcode))) {
     return res.status(400).send("Invalid zip code. It should be 5 digits.");
-  }
-
-  // Validate address
-  const isValidAddress = await verifyAddress(`${address}, ${state} ${zipcode}`);
-
-  if (!isValidAddress) {
-    return res.status(400).send("Invalid address.");
   }
 
   next();
