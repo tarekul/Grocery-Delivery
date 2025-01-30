@@ -9,11 +9,11 @@ const ZipDropdown = ({ setZipcode, disabled }) => {
   return (
     <div className="zip-dropdown">
       <select onChange={handleChange} disabled={disabled}>
-        <option value="zip1">11416 (Ozone Park, NY)</option>
-        <option value="zip2">11418 (Richmond Hill, NY)</option>
-        <option value="zip3">11419 (South Richmond Hill, NY)</option>
-        <option value="zip4">11421 (Woodhaven, NY)</option>
-        <option value="zip5">11208 (Brooklyn, NY)</option>
+        <option value="11416">11416</option>
+        <option value="11418">11418</option>
+        <option value="11419">11419</option>
+        <option value="11421">11421</option>
+        <option value="11208">11208</option>
       </select>
     </div>
   );
