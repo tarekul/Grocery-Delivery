@@ -1,4 +1,6 @@
-const verifyInputRequest = (req, res, next) => {
+const verifyAddress = require("./verifyAddress");
+
+const verifyInputRequest = async (req, res, next) => {
   const {
     firstName,
     lastName,
@@ -70,7 +72,13 @@ const verifyInputRequest = (req, res, next) => {
     return res.status(400).send("Invalid zip code. It should be 5 digits.");
   }
 
-  // If all validations pass, proceed to the next middleware
+  // Validate address
+  const isValidAddress = await verifyAddress(`${address}, ${state} ${zipcode}`);
+
+  if (!isValidAddress) {
+    return res.status(400).send("Invalid address.");
+  }
+
   next();
 };
 
