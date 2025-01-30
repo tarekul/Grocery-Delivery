@@ -4,7 +4,12 @@ import ProgressiveBar from "../progress-bar/progress-bar.jsx";
 import ZipDropdown from "../zip-dropdown/zip-dropdown.jsx";
 import "./checkout-container.styles.css";
 
-const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
+const CheckoutContainer = ({
+  closeCheckout,
+  cart,
+  setCart,
+  setIsOrderComplete,
+}) => {
   const customer = localStorage.getItem("customer");
   const [firstName, setFirstName] = useState(
     customer ? JSON.parse(customer).firstName : ""
@@ -76,6 +81,7 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
 
     handleOrderSubmit(orderDetails.customer, orderDetails.cart, setCart)
       .then(() => {
+        setIsOrderComplete(true);
         setIsOrderPlaced(false);
         localStorage.setItem("isOrderPlaced", false);
         closeCheckout();

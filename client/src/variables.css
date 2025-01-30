@@ -25,6 +25,7 @@
   --light-action-orange-deep: #ba4a00;
   --light-success: #4caf50;
   --light-error: #f44336;
+  --light-order-toast: #ff6f61;
 
   /* Dark Theme Colors */
   --dark-background-header: #004d40;
@@ -52,6 +53,7 @@
   --dark-action-orange-deep: #9c4221;
   --dark-success: #3a9660;
   --dark-error: #f56565;
+  --dark-order-toast: #ff6f61;
 
   /* Default theme variables - these are what your components actually use */
   --background-header: var(--light-background-header);
@@ -79,6 +81,7 @@
   --action-orange-deep: var(--light-action-orange-deep);
   --success: var(--light-success);
   --error: var(--light-error);
+  --order-toast: var(--light-order-toast);
 }
 
 /* When dark mode is active, update all the default variables */
@@ -108,4 +111,5 @@
   --action-orange-deep: var(--dark-action-orange-deep);
   --success: var(--dark-success);
   --error: var(--dark-error);
+  --order-toast: var(--dark-order-toast);
 }

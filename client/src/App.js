@@ -13,7 +13,8 @@ import Menu from "./components/menu/menu.jsx";
 import Mission from "./components/mission/mission.jsx";
 import SearchBar from "./components/search-bar/search-bar.jsx";
 import Title from "./components/title/title.jsx";
-import Toast from "./components/toast/toast.jsx";
+import CartToast from "./components/toast/cart-toast.jsx";
+import OrderToast from "./components/toast/order-toast.jsx";
 import DarkMode from "./components/toggle-theme/toggle-theme.jsx";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
   const [showAbout, setShowAbout] = useState(
     localStorage.getItem("showAbout") === "true" ?? false
   );
+  const [isOrderComplete, setIsOrderComplete] = useState(false);
 
   const openCheckout = () => {
     setIsCheckoutOpen(true);
@@ -111,6 +113,7 @@ function App() {
                 closeCheckout={closeCheckout}
                 cart={cart}
                 setCart={setCart}
+                setIsOrderComplete={setIsOrderComplete}
               />
             </>
           ) : (
@@ -128,8 +131,11 @@ function App() {
                 cart={cart}
                 editCart={cartEditor}
               />
+              {isOrderComplete && (
+                <OrderToast onClose={() => setIsOrderComplete(false)} />
+              )}
               {showToast && (
-                <Toast
+                <CartToast
                   message={toastMessage}
                   onClose={() => setShowToast(false)}
                   color={toastColor}

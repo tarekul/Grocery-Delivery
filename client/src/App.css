@@ -19,7 +19,7 @@ body {
   display: flex;
   align-items: flex-end;
   margin: -20px;
-  margin-bottom: 40px;
+  margin-bottom: 66px;
   background-color: var(--background-header);
   box-sizing: border-box;
   height: 13vh;

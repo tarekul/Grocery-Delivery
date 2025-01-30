@@ -1,49 +1,55 @@
 .toast {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    color: white;
-    padding: 15px 25px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    z-index: 1000;
-    animation: slideIn 0.3s ease-out, fadeOut 0.3s ease-out 2.7s forwards;
-    font-size: 16px;
-    font-weight: 500;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out, fadeOut 0.3s ease-out 2.7s forwards;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .toast.success {
-    background-color: var(--success);
+  background-color: var(--success);
 }
 
 .toast.error {
-    background-color: var(--error);
+  background-color: var(--error);
+}
+
+.toast.submit {
+  background-color: var(--order-toast);
+  top: 130px;
+  bottom: auto;
 }
 
 @keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOut {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateX(100%);
-        opacity: 0;
-    }
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .toast {
-        font-size: 13px;
-    }
+  .toast {
+    font-size: 13px;
+  }
 }
