@@ -10,7 +10,6 @@ body {
   min-height: 100vh;
   background-color: var(--background-main);
   color: var(--text-primary);
-  padding: 20px;
   transition: background-color 0.3s ease, color 0.3s ease;
   box-sizing: border-box;
 }
@@ -18,11 +17,13 @@ body {
 .header {
   display: flex;
   align-items: flex-end;
-  margin: -20px;
-  margin-bottom: 66px;
   background-color: var(--background-header);
   box-sizing: border-box;
   height: 13vh;
+}
+
+.main {
+  padding: 20px;
 }
 
 @media (max-width: 768px) {

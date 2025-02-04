@@ -3,11 +3,14 @@ import "./progress-bar.styles.css";
 
 const ProgressiveBar = ({
   isOrderPlaced,
-  setIsProgressBarComplete,
   setOrderStartTime,
+  setIsProgressBarComplete,
+  isMini = false,
 }) => {
   useEffect(() => {
-    const bar = document.querySelector(".bar");
+    const bar = isMini
+      ? document.querySelector(".mini-bar")
+      : document.querySelector(".bar");
     let intervalId;
     if (isOrderPlaced) {
       const fillBar = (ms) => {
@@ -24,12 +27,11 @@ const ProgressiveBar = ({
           const elapsedTime = Date.now() - startTime;
           const currentPercent = Math.min((elapsedTime / ms) * 100, 100);
 
-          localStorage.setItem("progress", currentPercent);
           bar.style.width = `${currentPercent}%`;
 
           if (currentPercent >= 100) {
             clearInterval(intervalId);
-            setIsProgressBarComplete(true);
+            setIsProgressBarComplete && setIsProgressBarComplete(true);
             localStorage.removeItem("startTime");
           }
         };
@@ -54,12 +56,20 @@ const ProgressiveBar = ({
     }
   }, [isOrderPlaced]);
 
-  return (
-    <div className="bar-container">
-      <div className="bar-text">
-        {isOrderPlaced ? "Order processing..." : ""}
+  if (!isMini) {
+    return (
+      <div className="bar-container">
+        <div className="bar-text">
+          {isOrderPlaced ? "Order processing..." : ""}
+        </div>
+        <div className="bar"></div>
       </div>
-      <div className="bar"></div>
+    );
+  }
+
+  return (
+    <div className="mini-bar-container">
+      <div className="mini-bar"></div>
     </div>
   );
 };

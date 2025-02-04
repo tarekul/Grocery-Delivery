@@ -11,6 +11,7 @@ import Cart from "./components/cart/cart.jsx";
 import CheckoutContainer from "./components/checkout-container/checkout-container.jsx";
 import Menu from "./components/menu/menu.jsx";
 import Mission from "./components/mission/mission.jsx";
+import ProgressiveBar from "./components/progress-bar/progress-bar.jsx";
 import SearchBar from "./components/search-bar/search-bar.jsx";
 import Title from "./components/title/title.jsx";
 import CartToast from "./components/toast/cart-toast.jsx";
@@ -76,7 +77,6 @@ function App() {
     if (orderStartTime) {
       intervalId.current = setInterval(() => {
         let currentPercent = calculateProgress(orderStartTime, 180000);
-        console.log(currentPercent);
 
         if (currentPercent === 100) {
           clearInterval(intervalId.current);
@@ -84,7 +84,6 @@ function App() {
           const customer = customerData ? JSON.parse(customerData) : null;
           handleOrderSubmit(customer, cart, setCart).then(() => {
             console.log("ordered submitted");
-            setIsOrderComplete(true);
             localStorage.setItem("isOrderPlaced", false);
             setOrderStartTime(null);
             localStorage.removeItem("startTime");
@@ -126,57 +125,65 @@ function App() {
           closeCheckout={closeCheckout}
         />
       </div>
-      {showMission ? (
-        <Mission />
-      ) : showAbout ? (
-        <About />
-      ) : (
-        <>
-          <SearchBar
-            inventory={Object.values(inventory).flat()}
-            editCart={cartEditor}
-            setIsSearchBarActive={setIsSearchBarActive}
-            isSearchBarActive={isSearchBarActive}
-            cart={cart}
-            isDropdownOpen={isDropdownOpen}
-          />
-          {isCheckoutOpen ? (
-            <CheckoutContainer
-              closeCheckout={closeCheckout}
+      <ProgressiveBar
+        isOrderPlaced={orderStartTime !== null}
+        setOrderStartTime={setOrderStartTime}
+        setIsProgressBarComplete={setIsOrderComplete}
+        isMini={true}
+      />
+      <div className="main">
+        {showMission ? (
+          <Mission />
+        ) : showAbout ? (
+          <About />
+        ) : (
+          <>
+            <SearchBar
+              inventory={Object.values(inventory).flat()}
+              editCart={cartEditor}
+              setIsSearchBarActive={setIsSearchBarActive}
+              isSearchBarActive={isSearchBarActive}
               cart={cart}
-              setOrderStartTime={setOrderStartTime}
+              isDropdownOpen={isDropdownOpen}
             />
-          ) : (
-            <CategoryCarousel
-              inventory={inventory}
+            {isCheckoutOpen ? (
+              <CheckoutContainer
+                closeCheckout={closeCheckout}
+                cart={cart}
+                setOrderStartTime={setOrderStartTime}
+              />
+            ) : (
+              <CategoryCarousel
+                inventory={inventory}
+                cart={cart}
+                editCart={cartEditor}
+              />
+            )}
+
+            <Cart
               cart={cart}
               editCart={cartEditor}
+              setCart={setCart}
+              setIsDropdownOpen={setIsDropdownOpen}
+              isDropdownOpen={isDropdownOpen}
+              openCheckout={openCheckout}
+              isSearchBarActive={isSearchBarActive}
             />
-          )}
+            {isOrderComplete && (
+              <OrderToast onClose={() => setIsOrderComplete(false)} />
+            )}
+            {showToast && (
+              <CartToast
+                message={toastMessage}
+                onClose={() => setShowToast(false)}
+                color={toastColor}
+              />
+            )}
+          </>
+        )}
 
-          <Cart
-            cart={cart}
-            editCart={cartEditor}
-            setCart={setCart}
-            setIsDropdownOpen={setIsDropdownOpen}
-            isDropdownOpen={isDropdownOpen}
-            openCheckout={openCheckout}
-            isSearchBarActive={isSearchBarActive}
-          />
-          {isOrderComplete && (
-            <OrderToast onClose={() => setIsOrderComplete(false)} />
-          )}
-          {showToast && (
-            <CartToast
-              message={toastMessage}
-              onClose={() => setShowToast(false)}
-              color={toastColor}
-            />
-          )}
-        </>
-      )}
-
-      <DarkMode />
+        <DarkMode />
+      </div>
     </div>
   );
 }

@@ -280,8 +280,8 @@ const CheckoutContainer = ({ closeCheckout, cart, setOrderStartTime }) => {
 
       <ProgressiveBar
         isOrderPlaced={isOrderPlaced}
-        setIsProgressBarComplete={setIsProgressBarComplete}
         setOrderStartTime={setOrderStartTime}
+        setIsProgressBarComplete={setIsProgressBarComplete}
       />
       <button
         className={`confirm-button ${disabled ? "disabled" : ""}`}

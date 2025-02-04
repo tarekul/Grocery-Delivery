@@ -1,13 +1,17 @@
-.bar-container {
+.bar-container,
+.mini-bar-container {
   position: relative;
   background-color: grey;
   color: white;
   border: none;
   font-size: 16px;
   font-weight: 500;
-  width: 90%;
-  margin: 15px 0;
+  width: 100%;
   height: 35px;
+}
+
+.mini-bar-container {
+  height: 3px;
 }
 
 .bar-container .bar-text {
@@ -20,7 +24,8 @@
   text-align: center;
 }
 
-.bar {
+.bar,
+.mini-bar {
   background-color: var(--success);
   height: 100%;
   width: 0;
