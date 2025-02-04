@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import "./progress-bar.styles.css";
 
-const ProgressiveBar = ({ isOrderPlaced, setIsProgressBarComplete }) => {
+const ProgressiveBar = ({
+  isOrderPlaced,
+  setIsProgressBarComplete,
+  setOrderStartTime,
+}) => {
   useEffect(() => {
     const bar = document.querySelector(".bar");
     let intervalId;
@@ -9,6 +13,8 @@ const ProgressiveBar = ({ isOrderPlaced, setIsProgressBarComplete }) => {
       const fillBar = (ms) => {
         const startTime =
           parseInt(localStorage.getItem("startTime")) || Date.now();
+
+        setOrderStartTime(startTime);
 
         if (!localStorage.getItem("startTime")) {
           localStorage.setItem("startTime", startTime);
@@ -18,6 +24,7 @@ const ProgressiveBar = ({ isOrderPlaced, setIsProgressBarComplete }) => {
           const elapsedTime = Date.now() - startTime;
           const currentPercent = Math.min((elapsedTime / ms) * 100, 100);
 
+          localStorage.setItem("progress", currentPercent);
           bar.style.width = `${currentPercent}%`;
 
           if (currentPercent >= 100) {
@@ -45,7 +52,7 @@ const ProgressiveBar = ({ isOrderPlaced, setIsProgressBarComplete }) => {
       localStorage.removeItem("startTime");
       bar.style.width = "0%";
     }
-  }, [isOrderPlaced, setIsProgressBarComplete]);
+  }, [isOrderPlaced]);
 
   return (
     <div className="bar-container">

@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react";
-import { handleOrderSubmit } from "../../functions/handleOrderSubmit";
 import ProgressiveBar from "../progress-bar/progress-bar.jsx";
 import ZipDropdown from "../zip-dropdown/zip-dropdown.jsx";
 import "./checkout-container.styles.css";
 
-const CheckoutContainer = ({
-  closeCheckout,
-  cart,
-  setCart,
-  setIsOrderComplete,
-}) => {
+const CheckoutContainer = ({ closeCheckout, cart, setOrderStartTime }) => {
   const customer = localStorage.getItem("customer");
   const [firstName, setFirstName] = useState(
     customer ? JSON.parse(customer).firstName : ""
@@ -65,60 +59,26 @@ const CheckoutContainer = ({
     );
   };
 
-  const submitOrder = () => {
-    const customer = {
-      firstName,
-      lastName,
-      email,
-      phone,
-      address,
-      city,
-      state,
-      zipcode,
-    };
-
-    const orderDetails = { customer, cart };
-
-    handleOrderSubmit(orderDetails.customer, orderDetails.cart, setCart)
-      .then(() => {
-        setIsOrderComplete(true);
-        setIsOrderPlaced(false);
-        localStorage.setItem("isOrderPlaced", false);
-        closeCheckout();
-        setIsInputsDisabled(false);
-        setIsProgressBarComplete(false);
-        setFirstName("");
-        setLastName("");
-        setEmail("");
-        setVerifyEmail("");
-        setVerifyPhone("");
-        setPhone("");
-        setZipcode("");
-        setAddress("");
-        setCity("");
-        setIsInvalidEmail(true);
-        setIsInvalidPhone(true);
-
-        localStorage.removeItem("customer");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const disabled = cart.length === 0 || !areFieldsFilled();
+
+  const cancelOrderPlaced = () => {
+    setIsOrderPlaced(false);
+    setIsInputsDisabled(false);
+    setOrderStartTime(null);
+    localStorage.removeItem("isOrderPlaced");
+  };
 
   useEffect(() => {
     if (cart.length === 0) {
-      setIsInputsDisabled(false);
-      setIsOrderPlaced(false);
-      localStorage.setItem("isOrderPlaced", false);
+      cancelOrderPlaced();
     }
   }, [cart]);
 
   useEffect(() => {
     if (isProgressBarComplete && isOrderPlaced) {
-      submitOrder();
+      setTimeout(() => {
+        closeCheckout();
+      }, 6000);
     }
   }, [isProgressBarComplete, isOrderPlaced]);
 
@@ -132,24 +92,7 @@ const CheckoutContainer = ({
     setIsInvalidPhone(!phoneRegex.test(phone));
   };
 
-  const toggleOrder = (e) => {
-    e.preventDefault();
-
-    if (disabled) {
-      return;
-    }
-
-    if (isOrderPlaced) {
-      setIsOrderPlaced(false);
-      setIsInputsDisabled(false);
-      localStorage.removeItem("isOrderPlaced");
-      return;
-    }
-
-    setIsInputsDisabled(true);
-    setIsOrderPlaced(true);
-    localStorage.setItem("isOrderPlaced", true);
-
+  const saveCustomer = () => {
     const customer = {
       firstName,
       lastName,
@@ -163,6 +106,28 @@ const CheckoutContainer = ({
       zipcode,
     };
     localStorage.setItem("customer", JSON.stringify(customer));
+  };
+
+  const placeOrder = () => {
+    setIsInputsDisabled(true);
+    setIsOrderPlaced(true);
+    localStorage.setItem("isOrderPlaced", true);
+    saveCustomer();
+  };
+
+  const toggleOrder = (e) => {
+    e.preventDefault();
+
+    if (disabled) {
+      return;
+    }
+
+    if (isOrderPlaced) {
+      cancelOrderPlaced();
+      return;
+    }
+
+    placeOrder();
   };
 
   return (
@@ -299,7 +264,6 @@ const CheckoutContainer = ({
               const value = e.target.value.replace(/\D/g, "");
               if (value.length <= 10) {
                 setVerifyPhone(value);
-                // validatePhone(value);
                 setIsPhoneVerified(value === phone);
               }
             }}
@@ -317,6 +281,7 @@ const CheckoutContainer = ({
       <ProgressiveBar
         isOrderPlaced={isOrderPlaced}
         setIsProgressBarComplete={setIsProgressBarComplete}
+        setOrderStartTime={setOrderStartTime}
       />
       <button
         className={`confirm-button ${disabled ? "disabled" : ""}`}

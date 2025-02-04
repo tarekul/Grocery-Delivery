@@ -5,7 +5,7 @@ const OrderToast = ({ onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    }, 3000);
+    }, 8000);
 
     return () => clearTimeout(timer);
   }, [onClose]);

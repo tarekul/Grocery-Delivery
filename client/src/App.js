@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import apiUrl from "./apiUrl.js";
 import "./App.css";
 import { editCart } from "./functions/editCart";
@@ -16,6 +16,8 @@ import Title from "./components/title/title.jsx";
 import CartToast from "./components/toast/cart-toast.jsx";
 import OrderToast from "./components/toast/order-toast.jsx";
 import DarkMode from "./components/toggle-theme/toggle-theme.jsx";
+import calculateProgress from "./functions/calculateProgress.js";
+import { handleOrderSubmit } from "./functions/handleOrderSubmit.js";
 
 function App() {
   const [inventory, setInventory] = useState([]);
@@ -35,6 +37,9 @@ function App() {
     localStorage.getItem("showAbout") === "true" ?? false
   );
   const [isOrderComplete, setIsOrderComplete] = useState(false);
+  const [orderStartTime, setOrderStartTime] = useState(
+    localStorage.getItem("startTime") || null
+  );
 
   const openCheckout = () => {
     setIsCheckoutOpen(true);
@@ -65,6 +70,34 @@ function App() {
   useEffect(() => {
     setCart(getCart());
   }, [isDropdownOpen]);
+
+  const intervalId = useRef(null);
+  useEffect(() => {
+    if (orderStartTime) {
+      intervalId.current = setInterval(() => {
+        let currentPercent = calculateProgress(orderStartTime, 180000);
+        console.log(currentPercent);
+
+        if (currentPercent === 100) {
+          clearInterval(intervalId.current);
+          const customerData = localStorage.getItem("customer");
+          const customer = customerData ? JSON.parse(customerData) : null;
+          handleOrderSubmit(customer, cart, setCart).then(() => {
+            console.log("ordered submitted");
+            setIsOrderComplete(true);
+            localStorage.setItem("isOrderPlaced", false);
+            setOrderStartTime(null);
+            localStorage.removeItem("startTime");
+            currentPercent = null;
+            localStorage.removeItem("customer");
+          });
+        }
+      }, 180000 / 100);
+    } else {
+      clearInterval(intervalId.current);
+    }
+    return () => clearInterval(intervalId.current);
+  }, [orderStartTime, cart]);
 
   const cartEditor = useMemo(
     () =>
@@ -99,50 +132,28 @@ function App() {
         <About />
       ) : (
         <>
+          <SearchBar
+            inventory={Object.values(inventory).flat()}
+            editCart={cartEditor}
+            setIsSearchBarActive={setIsSearchBarActive}
+            isSearchBarActive={isSearchBarActive}
+            cart={cart}
+            isDropdownOpen={isDropdownOpen}
+          />
           {isCheckoutOpen ? (
-            <>
-              <SearchBar
-                inventory={Object.values(inventory).flat()}
-                editCart={cartEditor}
-                setIsSearchBarActive={setIsSearchBarActive}
-                isSearchBarActive={isSearchBarActive}
-                cart={cart}
-                isDropdownOpen={isDropdownOpen}
-              />
-              <CheckoutContainer
-                closeCheckout={closeCheckout}
-                cart={cart}
-                setCart={setCart}
-                setIsOrderComplete={setIsOrderComplete}
-              />
-            </>
+            <CheckoutContainer
+              closeCheckout={closeCheckout}
+              cart={cart}
+              setOrderStartTime={setOrderStartTime}
+            />
           ) : (
-            <>
-              <SearchBar
-                inventory={Object.values(inventory).flat()}
-                editCart={cartEditor}
-                setIsSearchBarActive={setIsSearchBarActive}
-                isSearchBarActive={isSearchBarActive}
-                cart={cart}
-                isDropdownOpen={isDropdownOpen}
-              />
-              <CategoryCarousel
-                inventory={inventory}
-                cart={cart}
-                editCart={cartEditor}
-              />
-              {isOrderComplete && (
-                <OrderToast onClose={() => setIsOrderComplete(false)} />
-              )}
-              {showToast && (
-                <CartToast
-                  message={toastMessage}
-                  onClose={() => setShowToast(false)}
-                  color={toastColor}
-                />
-              )}
-            </>
+            <CategoryCarousel
+              inventory={inventory}
+              cart={cart}
+              editCart={cartEditor}
+            />
           )}
+
           <Cart
             cart={cart}
             editCart={cartEditor}
@@ -152,6 +163,16 @@ function App() {
             openCheckout={openCheckout}
             isSearchBarActive={isSearchBarActive}
           />
+          {isOrderComplete && (
+            <OrderToast onClose={() => setIsOrderComplete(false)} />
+          )}
+          {showToast && (
+            <CartToast
+              message={toastMessage}
+              onClose={() => setShowToast(false)}
+              color={toastColor}
+            />
+          )}
         </>
       )}
 
