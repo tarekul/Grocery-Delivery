@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { PROGRESS_BAR_DURATION } from "../../constants.js";
 import "./progress-bar.styles.css";
 
 const ProgressiveBar = ({
@@ -45,7 +46,7 @@ const ProgressiveBar = ({
         }, ms / 100);
       };
 
-      fillBar(180000);
+      fillBar(PROGRESS_BAR_DURATION);
       return () => {
         clearInterval(intervalId);
       };

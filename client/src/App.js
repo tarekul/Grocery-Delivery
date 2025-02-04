@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import apiUrl from "./apiUrl.js";
 import "./App.css";
+import { PROGRESS_BAR_DURATION } from "./constants.js";
 import { editCart } from "./functions/editCart";
 import { getCart } from "./functions/getCart";
 
@@ -76,14 +77,16 @@ function App() {
   useEffect(() => {
     if (orderStartTime) {
       intervalId.current = setInterval(() => {
-        let currentPercent = calculateProgress(orderStartTime, 180000);
+        let currentPercent = calculateProgress(
+          orderStartTime,
+          PROGRESS_BAR_DURATION
+        );
 
         if (currentPercent === 100) {
           clearInterval(intervalId.current);
           const customerData = localStorage.getItem("customer");
           const customer = customerData ? JSON.parse(customerData) : null;
           handleOrderSubmit(customer, cart, setCart).then(() => {
-            console.log("ordered submitted");
             localStorage.setItem("isOrderPlaced", false);
             setOrderStartTime(null);
             localStorage.removeItem("startTime");
@@ -91,7 +94,7 @@ function App() {
             localStorage.removeItem("customer");
           });
         }
-      }, 180000 / 100);
+      }, PROGRESS_BAR_DURATION / 100);
     } else {
       clearInterval(intervalId.current);
     }
