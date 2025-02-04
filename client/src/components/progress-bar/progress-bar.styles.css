@@ -26,7 +26,7 @@
 
 .bar,
 .mini-bar {
-  background-color: var(--success);
+  background-color: var(--progress-bar);
   height: 100%;
   width: 0;
 }
