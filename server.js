@@ -29,6 +29,7 @@ app.get("/inventory", (req, res) => {
 
 app.use("/inventory_images", express.static("inventory_images"));
 
+let isProcessingOrder = false;
 app.post("/order", verifyInputRequest, (req, res) => {
   const {
     firstName,
@@ -51,31 +52,45 @@ app.post("/order", verifyInputRequest, (req, res) => {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
-  db.run(
-    sql,
-    [
-      name,
-      email,
-      phone,
-      address,
-      city,
-      state,
-      zipcode,
-      JSON.stringify(items),
-      total_price,
-      new Date(),
-    ],
-    function (err) {
-      if (err) {
-        console.error(err.message);
-        res.status(500).send("Error placing order.");
-      } else {
-        res.status(201).send("Order placed successfully.");
-        // Send order confirmation email
-        orderConfirmationEmail(req.body);
+  isProcessingOrder = true;
+
+  setTimeout(() => {
+    db.run(
+      sql,
+      [
+        name,
+        email,
+        phone,
+        address,
+        city,
+        state,
+        zipcode,
+        JSON.stringify(items),
+        total_price,
+        new Date(),
+      ],
+      function (err) {
+        isProcessingOrder = false;
+        if (err) {
+          console.error(err.message);
+          res.status(500).send("Error placing order.");
+        } else {
+          res.status(201).send("Order placed successfully.");
+          orderConfirmationEmail(req.body);
+        }
       }
-    }
-  );
+    );
+  }, 180000);
+
+  res.status(202).send("Order is being processed.");
+});
+
+app.get("/order/status", (req, res) => {
+  if (isProcessingOrder) {
+    res.status(202).send("Order is still being processed.");
+  } else {
+    res.status(200).send("No order is currently being processed.");
+  }
 });
 
 app.get("/orders", (req, res) => {
