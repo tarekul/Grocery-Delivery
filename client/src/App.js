@@ -1,8 +1,7 @@
 import axios from "axios";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import apiUrl from "./apiUrl.js";
 import "./App.css";
-import { PROGRESS_BAR_DURATION } from "./constants.js";
 import { editCart } from "./functions/editCart";
 import { getCart } from "./functions/getCart";
 
@@ -12,14 +11,11 @@ import Cart from "./components/cart/cart.jsx";
 import CheckoutContainer from "./components/checkout-container/checkout-container.jsx";
 import Menu from "./components/menu/menu.jsx";
 import Mission from "./components/mission/mission.jsx";
-import ProgressiveBar from "./components/progress-bar/progress-bar.jsx";
 import SearchBar from "./components/search-bar/search-bar.jsx";
 import Title from "./components/title/title.jsx";
 import CartToast from "./components/toast/cart-toast.jsx";
 import OrderToast from "./components/toast/order-toast.jsx";
 import DarkMode from "./components/toggle-theme/toggle-theme.jsx";
-import calculateProgress from "./functions/calculateProgress.js";
-import { handleOrderSubmit } from "./functions/handleOrderSubmit.js";
 
 function App() {
   const [inventory, setInventory] = useState([]);
@@ -39,9 +35,6 @@ function App() {
     localStorage.getItem("showAbout") === "true" ?? false
   );
   const [isOrderComplete, setIsOrderComplete] = useState(false);
-  const [orderStartTime, setOrderStartTime] = useState(
-    localStorage.getItem("startTime") || null
-  );
 
   const openCheckout = () => {
     setIsCheckoutOpen(true);
@@ -73,34 +66,6 @@ function App() {
     setCart(getCart());
   }, [isDropdownOpen]);
 
-  const intervalId = useRef(null);
-  useEffect(() => {
-    if (orderStartTime) {
-      intervalId.current = setInterval(() => {
-        let currentPercent = calculateProgress(
-          orderStartTime,
-          PROGRESS_BAR_DURATION
-        );
-
-        if (currentPercent === 100) {
-          clearInterval(intervalId.current);
-          const customerData = localStorage.getItem("customer");
-          const customer = customerData ? JSON.parse(customerData) : null;
-          handleOrderSubmit(customer, cart, setCart).then(() => {
-            localStorage.setItem("isOrderPlaced", false);
-            setOrderStartTime(null);
-            localStorage.removeItem("startTime");
-            currentPercent = null;
-            localStorage.removeItem("customer");
-          });
-        }
-      }, PROGRESS_BAR_DURATION / 100);
-    } else {
-      clearInterval(intervalId.current);
-    }
-    return () => clearInterval(intervalId.current);
-  }, [orderStartTime, cart]);
-
   const cartEditor = useMemo(
     () =>
       editCart({
@@ -128,12 +93,6 @@ function App() {
           closeCheckout={closeCheckout}
         />
       </div>
-      <ProgressiveBar
-        isOrderPlaced={orderStartTime !== null}
-        setOrderStartTime={setOrderStartTime}
-        setIsProgressBarComplete={setIsOrderComplete}
-        isMini={true}
-      />
       <div className="main">
         {showMission ? (
           <Mission />
@@ -150,11 +109,7 @@ function App() {
               isDropdownOpen={isDropdownOpen}
             />
             {isCheckoutOpen ? (
-              <CheckoutContainer
-                closeCheckout={closeCheckout}
-                cart={cart}
-                setOrderStartTime={setOrderStartTime}
-              />
+              <CheckoutContainer closeCheckout={closeCheckout} cart={cart} />
             ) : (
               <CategoryCarousel
                 inventory={inventory}

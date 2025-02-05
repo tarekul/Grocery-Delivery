@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import ProgressiveBar from "../progress-bar/progress-bar.jsx";
+import LoadingIcon from "../loading-icon/loading-icon.jsx";
 import ZipDropdown from "../zip-dropdown/zip-dropdown.jsx";
 import "./checkout-container.styles.css";
 
-const CheckoutContainer = ({ closeCheckout, cart, setOrderStartTime }) => {
+const CheckoutContainer = ({ closeCheckout, cart }) => {
   const customer = localStorage.getItem("customer");
   const [firstName, setFirstName] = useState(
     customer ? JSON.parse(customer).firstName : ""
@@ -41,7 +41,6 @@ const CheckoutContainer = ({ closeCheckout, cart, setOrderStartTime }) => {
   const [isInputsDisabled, setIsInputsDisabled] = useState(
     isOrderPlaced ?? false
   );
-  const [isProgressBarComplete, setIsProgressBarComplete] = useState(false);
 
   const areFieldsFilled = () => {
     return (
@@ -64,7 +63,6 @@ const CheckoutContainer = ({ closeCheckout, cart, setOrderStartTime }) => {
   const cancelOrderPlaced = () => {
     setIsOrderPlaced(false);
     setIsInputsDisabled(false);
-    setOrderStartTime(null);
     localStorage.removeItem("isOrderPlaced");
   };
 
@@ -73,14 +71,6 @@ const CheckoutContainer = ({ closeCheckout, cart, setOrderStartTime }) => {
       cancelOrderPlaced();
     }
   }, [cart]);
-
-  useEffect(() => {
-    if (isProgressBarComplete && isOrderPlaced) {
-      setTimeout(() => {
-        closeCheckout();
-      }, 6000);
-    }
-  }, [isProgressBarComplete, isOrderPlaced]);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -277,12 +267,7 @@ const CheckoutContainer = ({ closeCheckout, cart, setOrderStartTime }) => {
           )}
         </div>
       </div>
-
-      <ProgressiveBar
-        isOrderPlaced={isOrderPlaced}
-        setOrderStartTime={setOrderStartTime}
-        setIsProgressBarComplete={setIsProgressBarComplete}
-      />
+      <LoadingIcon />
       <button
         className={`confirm-button ${disabled ? "disabled" : ""}`}
         onClick={toggleOrder}
