@@ -1,35 +1,43 @@
-import axios from 'axios';
-import apiUrl from '../apiUrl';
+import axios from "axios";
+import apiUrl from "../apiUrl";
 
-import { refreshCart } from './refreshCart';
+import delay from "./delay";
+import { refreshCart } from "./refreshCart";
 
-export const handleOrderSubmit = ( 
-    { 
-        firstName, 
-        lastName, 
-        address, 
-        city, 
-        state, 
-        zipcode, 
-        email, 
-        phone 
-    },
-    cart,
-    setCart
- ) => {
+export const submitOrder = (
+  { firstName, lastName, address, city, state, zipcode, email, phone },
+  cart,
+  setCart
+) => {
+  const totalPrice = cart.reduce(
+    (totalPrice, cartItem) =>
+      (totalPrice += cartItem.quantity * cartItem.item.price),
+    0
+  );
 
-    const totalPrice = cart.reduce(
-        (totalPrice, cartItem) => (totalPrice += cartItem.quantity * cartItem.item.price),
-        0
-    );
-
-    return axios.post(`${apiUrl}/order`, { firstName, lastName, email, phone, zipcode, address, city, state, totalPrice, items: cart })
-    .then(res => {
-        console.log(res.data);
-        refreshCart();
-        setCart([]);
+  return delay(4000)
+    .then(() => {
+      return axios.post(`${apiUrl}/order`, {
+        firstName,
+        lastName,
+        email,
+        phone,
+        zipcode,
+        address,
+        city,
+        state,
+        totalPrice,
+        items: cart,
+      });
     })
-    .catch(err => {
-        console.log(err);
+    .then((res) => {
+      refreshCart();
+      setCart([]);
+      console.log("Order placed successfully:", res.data);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      return err;
     });
 };

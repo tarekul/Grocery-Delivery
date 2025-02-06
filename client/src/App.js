@@ -14,7 +14,6 @@ import Mission from "./components/mission/mission.jsx";
 import SearchBar from "./components/search-bar/search-bar.jsx";
 import Title from "./components/title/title.jsx";
 import CartToast from "./components/toast/cart-toast.jsx";
-import OrderToast from "./components/toast/order-toast.jsx";
 import DarkMode from "./components/toggle-theme/toggle-theme.jsx";
 
 function App() {
@@ -34,7 +33,6 @@ function App() {
   const [showAbout, setShowAbout] = useState(
     localStorage.getItem("showAbout") === "true" ?? false
   );
-  const [isOrderComplete, setIsOrderComplete] = useState(false);
 
   const openCheckout = () => {
     setIsCheckoutOpen(true);
@@ -109,7 +107,11 @@ function App() {
               isDropdownOpen={isDropdownOpen}
             />
             {isCheckoutOpen ? (
-              <CheckoutContainer closeCheckout={closeCheckout} cart={cart} />
+              <CheckoutContainer
+                closeCheckout={closeCheckout}
+                cart={cart}
+                setCart={setCart}
+              />
             ) : (
               <CategoryCarousel
                 inventory={inventory}
@@ -127,9 +129,6 @@ function App() {
               openCheckout={openCheckout}
               isSearchBarActive={isSearchBarActive}
             />
-            {isOrderComplete && (
-              <OrderToast onClose={() => setIsOrderComplete(false)} />
-            )}
             {showToast && (
               <CartToast
                 message={toastMessage}

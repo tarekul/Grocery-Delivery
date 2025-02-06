@@ -5,7 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "install": "npm rebuild sqlite3",
-    "drop-table": "node database/db_delete.js"
+    "drop-table": "node database/db_delete.js",
+    "create-table": "node database/db_create.js",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",

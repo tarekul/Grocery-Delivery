@@ -29,7 +29,6 @@ app.get("/inventory", (req, res) => {
 
 app.use("/inventory_images", express.static("inventory_images"));
 
-let isProcessingOrder = false;
 app.post("/order", verifyInputRequest, (req, res) => {
   const {
     firstName,
@@ -52,45 +51,61 @@ app.post("/order", verifyInputRequest, (req, res) => {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
-  isProcessingOrder = true;
-
-  setTimeout(() => {
-    db.run(
-      sql,
-      [
-        name,
-        email,
-        phone,
-        address,
-        city,
-        state,
-        zipcode,
-        JSON.stringify(items),
-        total_price,
-        new Date(),
-      ],
-      function (err) {
-        isProcessingOrder = false;
-        if (err) {
-          console.error(err.message);
-          res.status(500).send("Error placing order.");
-        } else {
-          res.status(201).send("Order placed successfully.");
-          orderConfirmationEmail(req.body);
-        }
+  db.run(
+    sql,
+    [
+      name,
+      email,
+      phone,
+      address,
+      city,
+      state,
+      zipcode,
+      JSON.stringify(items),
+      total_price,
+      new Date(),
+    ],
+    function (err) {
+      if (err) {
+        console.error(err.message);
+        res.status(500).send("Error placing order.");
+      } else {
+        res.status(201).send({
+          message: "Order placed successfully.",
+          orderId: this.lastID,
+        });
+        // orderConfirmationEmail(req.body);
       }
-    );
-  }, 180000);
-
-  res.status(202).send("Order is being processed.");
+    }
+  );
 });
 
-app.get("/order/status", (req, res) => {
-  if (isProcessingOrder) {
-    res.status(202).send("Order is still being processed.");
-  } else {
-    res.status(200).send("No order is currently being processed.");
-  }
+app.delete("/order/:id", (req, res) => {
+  const orderId = req.params.id;
+
+  db.run("DELETE FROM orders WHERE id = ?", [orderId], (err) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send("Error deleting order.");
+    } else {
+      res.status(204).send();
+    }
+  });
+});
+
+app.get("/order/:id", (req, res) => {
+  const orderId = req.params.id;
+
+  db.get("SELECT * FROM orders WHERE id = ?", [orderId], (err, row) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send("Error fetching order.");
+    } else if (!row) {
+      res.status(404).send("Order not found.");
+    } else {
+      res.json(row);
+    }
+  });
 });
 
 app.get("/orders", (req, res) => {

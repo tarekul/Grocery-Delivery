@@ -1,4 +1,4 @@
-const db = require('./db.js');
+const db = require("./db.js");
 
 db.run(`
     Create table if not exists orders (
@@ -12,7 +12,8 @@ db.run(`
         zipcode TEXT,
         items TEXT,
         total_price REAL,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        deletedAt DATETIME DEFAULT NULL
     )`);
 
 exports.db = db;

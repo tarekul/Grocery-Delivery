@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { submitOrder } from "../../functions/handleOrderSubmit";
 import LoadingIcon from "../loading-icon/loading-icon.jsx";
+import OrderToast from "../toast/order-toast.jsx";
 import ZipDropdown from "../zip-dropdown/zip-dropdown.jsx";
 import "./checkout-container.styles.css";
 
-const CheckoutContainer = ({ closeCheckout, cart }) => {
+const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
   const customer = localStorage.getItem("customer");
   const [firstName, setFirstName] = useState(
     customer ? JSON.parse(customer).firstName : ""
@@ -35,12 +37,9 @@ const CheckoutContainer = ({ closeCheckout, cart }) => {
   const [isPhoneVerified, setIsPhoneVerified] = useState(phone === verifyPhone);
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isInvalidPhone, setIsInvalidPhone] = useState(false);
-  const [isOrderPlaced, setIsOrderPlaced] = useState(
-    localStorage.getItem("isOrderPlaced") === "true" ?? false
-  );
-  const [isInputsDisabled, setIsInputsDisabled] = useState(
-    isOrderPlaced ?? false
-  );
+  const [isInputsDisabled, setIsInputsDisabled] = useState(false);
+  const [isProcessingOrder, setIsProcessingOrder] = useState(false);
+  const [isOrderComplete, setIsOrderComplete] = useState(false);
 
   const areFieldsFilled = () => {
     return (
@@ -60,17 +59,19 @@ const CheckoutContainer = ({ closeCheckout, cart }) => {
 
   const disabled = cart.length === 0 || !areFieldsFilled();
 
-  const cancelOrderPlaced = () => {
-    setIsOrderPlaced(false);
-    setIsInputsDisabled(false);
-    localStorage.removeItem("isOrderPlaced");
-  };
-
   useEffect(() => {
     if (cart.length === 0) {
-      cancelOrderPlaced();
+      setIsInputsDisabled(false);
     }
   }, [cart]);
+
+  useEffect(() => {
+    if (isOrderComplete) {
+      setTimeout(() => {
+        closeCheckout();
+      }, 4000);
+    }
+  }, [isOrderComplete]);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -82,42 +83,39 @@ const CheckoutContainer = ({ closeCheckout, cart }) => {
     setIsInvalidPhone(!phoneRegex.test(phone));
   };
 
-  const saveCustomer = () => {
-    const customer = {
-      firstName,
-      lastName,
-      email,
-      verifyEmail,
-      verifyPhone,
-      phone,
-      address,
-      city,
-      state,
-      zipcode,
-    };
-    localStorage.setItem("customer", JSON.stringify(customer));
-  };
-
-  const placeOrder = () => {
-    setIsInputsDisabled(true);
-    setIsOrderPlaced(true);
-    localStorage.setItem("isOrderPlaced", true);
-    saveCustomer();
-  };
-
-  const toggleOrder = (e) => {
+  const handleSubmitOrder = async (e) => {
     e.preventDefault();
 
     if (disabled) {
       return;
     }
 
-    if (isOrderPlaced) {
-      cancelOrderPlaced();
-      return;
+    try {
+      setIsInputsDisabled(true);
+      setIsProcessingOrder(true);
+      const response = await submitOrder(
+        {
+          firstName,
+          lastName,
+          address,
+          city,
+          state,
+          zipcode,
+          email,
+          phone,
+        },
+        cart,
+        setCart
+      );
+      setIsProcessingOrder(false);
+      setIsOrderComplete(true);
+      localStorage.setItem("orderId", response.orderId);
+      setIsInputsDisabled(false);
+    } catch (error) {
+      console.error("Failed to place order:", error);
+      setIsInputsDisabled(false);
+      setIsProcessingOrder(false);
     }
-
-    placeOrder();
   };
 
   return (
@@ -267,16 +265,23 @@ const CheckoutContainer = ({ closeCheckout, cart }) => {
           )}
         </div>
       </div>
-      <LoadingIcon />
-      <button
-        className={`confirm-button ${disabled ? "disabled" : ""}`}
-        onClick={toggleOrder}
-      >
-        {isOrderPlaced ? "Cancel Order" : "Confirm Order"}
-      </button>
+      {isProcessingOrder ? (
+        <LoadingIcon />
+      ) : (
+        <button
+          className={`confirm-button ${disabled ? "disabled" : ""}`}
+          onClick={handleSubmitOrder}
+          disabled={disabled}
+        >
+          Confirm Order
+        </button>
+      )}
       <span className="checkout-info">*Delivery fee is $5.99</span>
       <span className="checkout-info">*We accept only cash on delivery</span>
       <span className="checkout-info">*Delivery time is 1 to 2 hours</span>
+      {isOrderComplete && (
+        <OrderToast onClose={() => setIsOrderComplete(false)} />
+      )}
     </div>
   );
 };
