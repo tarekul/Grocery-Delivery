@@ -6,6 +6,7 @@ const emailTemplate = require("./templates/emailTemplate");
 dotenv.config();
 
 const orderConfirmationEmail = ({
+  orderId,
   firstName,
   lastName,
   email,
@@ -26,6 +27,7 @@ const orderConfirmationEmail = ({
       to: email,
       subject: "Order Confirmation",
       html: emailTemplate(
+        orderId,
         name,
         email,
         address,

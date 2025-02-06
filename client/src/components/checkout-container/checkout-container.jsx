@@ -272,6 +272,7 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
           className={`confirm-button ${disabled ? "disabled" : ""}`}
           onClick={handleSubmitOrder}
           disabled={disabled}
+          ref={inputRef}
         >
           Confirm Order
         </button>

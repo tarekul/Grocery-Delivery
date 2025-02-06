@@ -1,4 +1,5 @@
 const emailTemplate = (
+  orderId,
   name,
   email,
   address,
@@ -11,6 +12,7 @@ const emailTemplate = (
   return `<p>Hello ${name},</p>
       <p>Thank you for your order!</p>
       <p>Here are the details of your order:</p>
+      <p>Order ID: ${orderId}</p>
       <ul>
         <li>Name: ${name}</li>
         <li>Email: ${email}</li>

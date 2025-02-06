@@ -74,7 +74,7 @@ app.post("/order", verifyInputRequest, (req, res) => {
           message: "Order placed successfully.",
           orderId: this.lastID,
         });
-        // orderConfirmationEmail(req.body);
+        orderConfirmationEmail({ ...req.body, orderId: this.lastID });
       }
     }
   );
