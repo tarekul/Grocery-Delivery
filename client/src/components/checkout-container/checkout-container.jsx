@@ -66,11 +66,17 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
   }, [cart]);
 
   useEffect(() => {
+    let timeoutId;
     if (isOrderComplete) {
-      setTimeout(() => {
+      timeoutId = setTimeout(() => {
         closeCheckout();
       }, 4000);
     }
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, [isOrderComplete]);
 
   const validateEmail = (email) => {
@@ -272,7 +278,6 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
           className={`confirm-button ${disabled ? "disabled" : ""}`}
           onClick={handleSubmitOrder}
           disabled={disabled}
-          ref={inputRef}
         >
           Confirm Order
         </button>
