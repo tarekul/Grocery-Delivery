@@ -4,7 +4,7 @@
   padding: 20px;
   display: flex;
   justify-content: flex-start;
-  gap: 15%;
+  gap: 25%;
 }
 
 @media screen and (max-width: 820px) {
