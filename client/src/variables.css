@@ -27,6 +27,7 @@
   --light-error: #f44336;
   --light-order-toast: #ff6f61;
   --light-progress-bar: #90ee90;
+  --light-summary: antiquewhite;
 
   /* Dark Theme Colors */
   --dark-background-header: #004d40;
@@ -56,6 +57,7 @@
   --dark-error: #f56565;
   --dark-order-toast: #ff6f61;
   --dark-progress-bar: #009688;
+  --dark-summary: darkslategray;
 
   /* Default theme variables - these are what your components actually use */
   --background-header: var(--light-background-header);
@@ -85,6 +87,7 @@
   --error: var(--light-error);
   --order-toast: var(--light-order-toast);
   --progress-bar: var(--light-progress-bar);
+  --summary: var(--light-summary);
 }
 
 /* When dark mode is active, update all the default variables */
@@ -116,4 +119,5 @@
   --error: var(--dark-error);
   --order-toast: var(--dark-order-toast);
   --progress-bar: var(--dark-progress-bar);
+  --summary: var(--dark-summary);
 }
