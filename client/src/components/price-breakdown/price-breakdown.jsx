@@ -12,7 +12,8 @@ const PriceBreakdown = ({ cart, zipcode }) => {
     <div className="price-breakdown">
       <h3>Summary</h3>
       <p>
-        {`${cart.length} items`}: {totalPrice}
+        {`${cart.length} item${cart.length > 1 ? "s" : ""}`}:{" "}
+        <span>${totalPrice}</span>
       </p>
       <p>
         Taxes and Fees: <span>$0.00</span>

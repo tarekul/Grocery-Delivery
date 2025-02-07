@@ -14,7 +14,7 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
         setZipcode={setZipcode}
         zipcode={zipcode}
       />
-      <PriceBreakdown cart={cart} zipcode={zipcode} />
+      {cart.length > 0 && <PriceBreakdown cart={cart} zipcode={zipcode} />}
     </div>
   );
 };

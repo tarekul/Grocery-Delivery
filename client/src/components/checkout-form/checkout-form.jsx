@@ -117,9 +117,11 @@ const CheckoutForm = ({
   return (
     <div className="checkout-form">
       <h3>Checkout</h3>
-      <p className="total-price">
-        Total: ${distanceCalculator(zipcode) + calculateCartTotal(cart)}
-      </p>
+      {cart.length > 0 && (
+        <p className="total-price">
+          Total: ${distanceCalculator(zipcode) + calculateCartTotal(cart)}
+        </p>
+      )}
       <div className="name-container">
         <input
           className="first-name"
