@@ -6,6 +6,7 @@ import { editCart } from "./functions/editCart";
 import { getCart } from "./functions/getCart";
 
 import About from "./components/about/about.jsx";
+import CancelOrder from "./components/cancel-order/cancel-order.jsx";
 import CategoryCarousel from "./components/carousel-container/carousel-container.jsx";
 import Cart from "./components/cart/cart.jsx";
 import CheckoutContainer from "./components/checkout-container/checkout-container.jsx";
@@ -32,6 +33,9 @@ function App() {
   );
   const [showAbout, setShowAbout] = useState(
     localStorage.getItem("showAbout") === "true" ?? false
+  );
+  const [showCancelOrder, setShowCancelOrder] = useState(
+    localStorage.getItem("showCancelOrder") === "true" ?? false
   );
 
   const openCheckout = () => {
@@ -87,6 +91,7 @@ function App() {
         <Menu
           setShowMission={setShowMission}
           setShowAbout={setShowAbout}
+          setShowCancelOrder={setShowCancelOrder}
           openCheckout={openCheckout}
           closeCheckout={closeCheckout}
         />
@@ -96,6 +101,8 @@ function App() {
           <Mission />
         ) : showAbout ? (
           <About />
+        ) : showCancelOrder ? (
+          <CancelOrder />
         ) : (
           <>
             <SearchBar

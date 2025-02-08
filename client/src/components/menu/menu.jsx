@@ -4,6 +4,7 @@ import "./menu.styles.css";
 const Menu = ({
   setShowMission,
   setShowAbout,
+  setShowCancelOrder,
   openCheckout,
   closeCheckout,
 }) => {
@@ -16,33 +17,32 @@ const Menu = ({
     }
   };
 
-  const handleMissionClick = (isShow = true) => {
-    if (isShow) {
-      setShowMission(isShow);
-      handleMenuClick(false);
-      handleAboutClick(false);
-      closeCheckout();
-    } else {
-      setShowMission(false);
-    }
+  const handleMissionClick = () => {
+    setShowMission(true);
+    handleMenuClick(false);
+    setShowAbout(false);
+    closeCheckout();
   };
 
-  const handleAboutClick = (isShow = true) => {
-    if (isShow) {
-      setShowAbout(isShow);
-      handleMenuClick(false);
-      handleMissionClick(false);
-      closeCheckout();
-    } else {
-      setShowAbout(false);
-    }
+  const handleAboutClick = () => {
+    setShowAbout(true);
+    handleMenuClick(false);
+    setShowMission(false);
+    closeCheckout();
   };
 
   const handleCheckoutClick = () => {
     openCheckout();
     handleMenuClick(false);
-    handleAboutClick(false);
-    handleMissionClick(false);
+    setShowAbout(false);
+    setShowMission(false);
+  };
+
+  const handleCancelOrderClick = () => {
+    setShowCancelOrder(true);
+    setShowAbout(false);
+    setShowMission(false);
+    handleMenuClick(false);
   };
 
   return (
@@ -52,12 +52,7 @@ const Menu = ({
           <li onClick={handleMissionClick}>Mission </li>
           <li onClick={handleAboutClick}>About</li>
           <li onClick={handleCheckoutClick}>Checkout</li>
-          <li>
-            <span className="tooltip-container">
-              Share Recipes
-              <div className="tooltip">Coming soon!</div>
-            </span>
-          </li>
+          <li onClick={handleCancelOrderClick}>Cancel Order</li>
         </ul>
         <button className="close-button" onClick={() => handleMenuClick(false)}>
           X
