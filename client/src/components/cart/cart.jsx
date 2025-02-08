@@ -82,9 +82,11 @@ const Cart = ({
             X
           </button>
           <p className="total-price">Total: ${totalPrice.toFixed(2)}</p>
-          <button className="clear-button" onClick={clearCart}>
-            Clear
-          </button>
+          {cart.length > 0 && (
+            <button className="clear-button" onClick={clearCart}>
+              Clear
+            </button>
+          )}
           {cart.length > 0 ? (
             <div className="cart-items">
               {cart.map((cartItem) => (
