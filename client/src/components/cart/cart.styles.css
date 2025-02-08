@@ -16,7 +16,7 @@
   right: 0;
   overflow-y: auto;
   z-index: 1000;
-  box-shadow: 0 4px 12px rgba(91, 107, 191, 0.15); /* Purple-tinted shadow */
+  box-shadow: 0 4px 12px rgba(91, 107, 191, 0.15);
   border-radius: 8px;
   padding: 0.3rem;
   width: 330px;
