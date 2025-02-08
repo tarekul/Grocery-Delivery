@@ -43,6 +43,10 @@
   color: #019d01;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 .name-container {
   display: flex;
   gap: 10px;

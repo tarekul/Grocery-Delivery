@@ -21,6 +21,7 @@ const PriceBreakdown = ({ cart, zipcode }) => {
       <p>
         Delivery Fee: <span>${deliveryFee}</span>
       </p>
+      <hr />
       <p className="total-price">
         Total: <span>${total.toFixed(2)}</span>
       </p>

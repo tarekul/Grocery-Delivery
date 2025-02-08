@@ -119,7 +119,8 @@ const CheckoutForm = ({
       <h3>Checkout</h3>
       {cart.length > 0 && (
         <p className="total-price">
-          Total: ${distanceCalculator(zipcode) + calculateCartTotal(cart)}
+          Total: $
+          {(distanceCalculator(zipcode) + calculateCartTotal(cart)).toFixed(2)}
         </p>
       )}
       <div className="name-container">
@@ -184,9 +185,12 @@ const CheckoutForm = ({
             }}
             disabled={isInputsDisabled}
           />
-          {isInvalidEmail && email !== "" && (
-            <small style={{ color: "red" }}>Invalid email address</small>
-          )}
+          <small
+            className={isInvalidEmail && email !== "" ? "" : "hidden"}
+            style={{ color: "red" }}
+          >
+            Invalid email address
+          </small>
         </div>
         <div className="email-input-container">
           <input
@@ -201,12 +205,12 @@ const CheckoutForm = ({
             }}
             disabled={isInputsDisabled}
           />
-          {!isEmailVerified && (
-            <small style={{ color: "red" }}>Email Address not matched</small>
-          )}
-          {isEmailVerified && verifyEmail !== "" && (
-            <small style={{ color: "green" }}>Email Address matched</small>
-          )}
+          <small
+            className={isEmailVerified ? "hidden" : ""}
+            style={{ color: "red" }}
+          >
+            Email Address not matched
+          </small>
         </div>
       </div>
 
@@ -228,9 +232,12 @@ const CheckoutForm = ({
             }}
             disabled={isInputsDisabled}
           />
-          {isInvalidPhone && phone !== "" && (
-            <small style={{ color: "red" }}>Invalid phone number</small>
-          )}
+          <small
+            className={isInvalidPhone ? "" : "hidden"}
+            style={{ color: "red" }}
+          >
+            Invalid phone number
+          </small>
         </div>
         <div className="phone-input-container">
           <input
@@ -248,12 +255,12 @@ const CheckoutForm = ({
             }}
             disabled={isInputsDisabled}
           />
-          {isPhoneVerified && phone !== "" && (
-            <small style={{ color: "green" }}>Phone numbers matched</small>
-          )}
-          {!isPhoneVerified && (
-            <small style={{ color: "red" }}>Phone numbers not matched</small>
-          )}
+          <small
+            className={isPhoneVerified ? "hidden" : ""}
+            style={{ color: "red" }}
+          >
+            Phone numbers not matched
+          </small>
         </div>
       </div>
       {isProcessingOrder ? (

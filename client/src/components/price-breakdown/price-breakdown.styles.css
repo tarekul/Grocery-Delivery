@@ -1,7 +1,7 @@
 .price-breakdown {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   background-color: var(--summary);
   padding: 20px;
   border-radius: 8px;
@@ -21,4 +21,9 @@
 
 .price-breakdown span {
   font-weight: 600;
+}
+
+hr {
+  border: 1px solid slategrey;
+  width: 100%;
 }
