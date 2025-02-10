@@ -19,7 +19,7 @@ const orderConfirmationEmail = ({
 }) => {
   try {
     const name = `${firstName} ${lastName}`;
-    const total_price = parseFloat(totalPrice);
+    const total_price = parseFloat(totalPrice).toFixed(2);
 
     const resend = new Resend(process.env.RESEND_API_KEY);
     resend.emails.send({
