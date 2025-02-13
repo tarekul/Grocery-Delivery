@@ -85,8 +85,8 @@ app.post("/order", verifyInputRequest, async (req, res) => {
   }
 });
 
-app.post("/order/cancel/:id", async (req, res) => {
-  const orderId = req.params.id;
+app.post("/order/cancel", async (req, res) => {
+  const orderId = req.body.orderId;
   const email = req.body.email;
 
   if (!orderId || !email) {
