@@ -1,15 +1,13 @@
 import axios from "axios";
 import apiUrl from "../apiUrl";
 
-export const cancelOrder = (orderId) => {
+export const cancelOrder = (orderId, email) => {
   return axios
-    .delete(`${apiUrl}/order/${orderId}`)
+    .post(`${apiUrl}/order/cancel/${orderId}`, { email })
     .then((res) => {
-      console.log("Cancellation Response:", res.data);
       return res.data;
     })
     .catch((err) => {
-      console.error("Error cancelling order:", err);
       throw err;
     });
 };

@@ -87,6 +87,7 @@ function App() {
           closeCheckout={closeCheckout}
           setMission={setShowMission}
           setShowAbout={setShowAbout}
+          setShowCancelOrder={setShowCancelOrder}
         />
         <Menu
           setShowMission={setShowMission}

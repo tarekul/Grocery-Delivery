@@ -36,12 +36,14 @@ const Menu = ({
     handleMenuClick(false);
     setShowAbout(false);
     setShowMission(false);
+    setShowCancelOrder(false);
   };
 
   const handleCancelOrderClick = () => {
     setShowCancelOrder(true);
     setShowAbout(false);
     setShowMission(false);
+    closeCheckout();
     handleMenuClick(false);
   };
 

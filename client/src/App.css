@@ -25,9 +25,3 @@ body {
 .main {
   padding: 20px;
 }
-
-@media (max-width: 768px) {
-  .header {
-    height: 16vh;
-  }
-}

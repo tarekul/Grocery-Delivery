@@ -2,13 +2,23 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const verifyInputRequest = require("./middleware/verifyInputRequest.js");
+const {
+  collection,
+  addDoc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  updateDoc,
+  doc,
+} = require("firebase/firestore");
 const orderConfirmationEmail = require("./resend.js");
+const db = require("./firebase-config.js");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 
 const inventory = require("./inventory.js");
-const db = require("./database/db_create.js").db;
 
 // Middleware
 app.use(cors());
@@ -29,7 +39,7 @@ app.get("/inventory", (req, res) => {
 
 app.use("/inventory_images", express.static("inventory_images"));
 
-app.post("/order", verifyInputRequest, (req, res) => {
+app.post("/order", verifyInputRequest, async (req, res) => {
   const {
     firstName,
     lastName,
@@ -46,14 +56,8 @@ app.post("/order", verifyInputRequest, (req, res) => {
   const name = `${firstName} ${lastName}`;
   const total_price = parseFloat(totalPrice);
 
-  const sql = `
-        INSERT INTO orders (name, email, phone, address, city, state, zipcode, items, total_price, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-
-  db.run(
-    sql,
-    [
+  try {
+    const orderRef = await addDoc(collection(db, "orders"), {
       name,
       email,
       phone,
@@ -61,62 +65,109 @@ app.post("/order", verifyInputRequest, (req, res) => {
       city,
       state,
       zipcode,
-      JSON.stringify(items),
+      items,
       total_price,
-      new Date(),
-    ],
-    function (err) {
-      if (err) {
-        console.error(err.message);
-        res.status(500).send("Error placing order.");
-      } else {
-        res.status(201).send({
-          message: "Order placed successfully.",
-          orderId: this.lastID,
-        });
-        orderConfirmationEmail({ ...req.body, orderId: this.lastID });
-      }
-    }
-  );
+      created_at: new Date(),
+      deletedAt: null,
+    });
+
+    orderConfirmationEmail({ ...req.body, orderId: orderRef.id });
+
+    res.status(201).send({
+      message: "Order placed successfully.",
+      orderId: orderRef.id,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "Failed to place order.",
+      error: error.message,
+    });
+  }
 });
 
-app.delete("/order/:id", (req, res) => {
+app.post("/order/cancel/:id", async (req, res) => {
+  const orderId = req.params.id;
+  const email = req.body.email;
+
+  if (!orderId || !email) {
+    return res.status(400).send("Order ID and Email are required.");
+  }
+
+  try {
+    const orderDocRef = doc(db, "orders", orderId);
+    const orderDoc = await getDoc(orderDocRef);
+
+    if (!orderDoc.exists()) {
+      return res.status(404).send("Order not found.");
+    }
+
+    const orderData = orderDoc.data();
+
+    if (orderData.email != email) {
+      return res.status(403).send("Forbidden. Email does not match record.");
+    }
+
+    if (orderData.deletedAt) {
+      return res.status(409).send("Order has already been cancelled.");
+    }
+
+    await updateDoc(doc(db, "orders", orderDoc.id), {
+      deletedAt: new Date(),
+    });
+
+    res.status(200).send("Order cancelled successfully.");
+  } catch (error) {
+    res.status(500).send({
+      message: "Failed to cancel order.",
+      error: error.message,
+    });
+  }
+});
+
+app.get("/order/:id", async (req, res) => {
   const orderId = req.params.id;
 
-  db.run("DELETE FROM orders WHERE id = ?", [orderId], (err) => {
-    if (err) {
-      console.error(err.message);
-      res.status(500).send("Error deleting order.");
-    } else {
-      res.status(204).send();
+  try {
+    const q = query(collection(db, "orders"), where("id", "==", orderId));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      return res.status(404).send("Order not found.");
     }
-  });
+
+    const orderDoc = querySnapshot.docs[0];
+    const orderData = orderDoc.data();
+
+    return res.status(200).send(orderData);
+  } catch (error) {
+    res.status(500).send({
+      message: "Failed to fetch order.",
+      error: error.message,
+    });
+  }
 });
 
-app.get("/order/:id", (req, res) => {
-  const orderId = req.params.id;
+app.get("/orders", async (req, res) => {
+  try {
+    const q = query(collection(db, "orders"));
+    const querySnapshot = await getDocs(q);
 
-  db.get("SELECT * FROM orders WHERE id = ?", [orderId], (err, row) => {
-    if (err) {
-      console.error(err.message);
-      res.status(500).send("Error fetching order.");
-    } else if (!row) {
-      res.status(404).send("Order not found.");
-    } else {
-      res.json(row);
+    if (querySnapshot.empty) {
+      return res.status(404).send("No orders found.");
     }
-  });
-});
 
-app.get("/orders", (req, res) => {
-  db.all("SELECT * FROM orders", (err, rows) => {
-    if (err) {
-      console.error(err.message);
-      res.status(500).send("Error fetching orders.");
-    } else {
-      res.json(rows);
-    }
-  });
+    const orders = [];
+    querySnapshot.forEach((doc) => {
+      orders.push({ ...doc.data(), id: doc.id });
+    });
+
+    return res.status(200).send(orders);
+  } catch (error) {
+    res.status(500).send({
+      message: "Failed to fetch orders.",
+      error: error.message,
+    });
+  }
 });
 
 // Start server

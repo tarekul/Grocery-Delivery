@@ -1,9 +1,12 @@
-.cancel-order-instructions {
+.cancel-order-container {
+  display: flex;
+  flex-direction: column;
   background-color: var(--background-card);
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 20px 0;
+  gap: 30px;
 }
 
 .cancel-order-instructions h3 {
@@ -18,14 +21,6 @@
   color: var(--text-secondary);
 }
 
-.cancel-order-instructions {
-  background-color: var(--background-card);
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 20px 0;
-}
-
 .cancel-order-instructions h3 {
   font-size: 1.5rem;
   margin-bottom: 15px;
@@ -36,4 +31,104 @@
   font-size: 1rem;
   margin-bottom: 10px;
   color: var(--text-secondary);
+}
+
+.email,
+.order-id {
+  font-size: 1rem;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 300px;
+}
+
+.cancel-order-button {
+  background-color: var(--action-orange-darker);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  width: 20%;
+  margin: 15px 0;
+  transition: all 0.2s ease;
+}
+
+.cancel-order-button:hover {
+  background-color: var(--action-orange-darkest);
+}
+
+.cancel-order-button:active {
+  background-color: var(--action-orange-deep);
+  transform: scale(0.98);
+}
+
+.cancel-order-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cancel-order-button.disabled:hover {
+  background-color: var(--action-orange-darker);
+}
+
+.cancel-order-button.disabled:active {
+  transform: none;
+}
+
+.cancel-order-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.additional-info {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.order-icon {
+  width: 50px;
+  margin-top: 10px;
+}
+
+.message {
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  color: var(--success);
+  width: fit-content;
+  padding: 10px;
+  height: 20px;
+  background-color: var(--background-white);
+  border-radius: 6px;
+  border: 1px solid var(--success);
+}
+
+.message.hidden {
+  visibility: hidden;
+}
+
+.error {
+  color: var(--error);
+  border: 1px solid var(--error);
+}
+
+@media screen and (max-width: 768px) {
+  .cancel-order-form {
+    flex-direction: column;
+  }
+  .email,
+  .order-id {
+    width: 80%;
+  }
+
+  .cancel-order-button {
+    width: 80%;
+  }
+
+  .message {
+    margin: 0 auto;
+  }
 }

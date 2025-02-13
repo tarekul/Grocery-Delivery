@@ -1,8 +1,52 @@
+import { useState } from "react";
+import { cancelOrder } from "../../functions/cancelOrder";
 import "./cancel-order.styles.css";
 
 const CancelOrder = () => {
+  const [orderId, setOrderId] = useState("");
+  const [email, setEmail] = useState("");
+  const [isInvalidEmail, setIsInvalidEmail] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsInvalidEmail(!emailRegex.test(email));
+  };
+
+  const disabled = isInvalidEmail || !email || orderId.length < 1;
+
+  const handleCancelOrder = async () => {
+    if (!disabled) {
+      try {
+        const res = await cancelOrder(orderId, email);
+        setMessage(res);
+        setIsError(false);
+        setEmail("");
+        setOrderId("");
+      } catch (error) {
+        if (error.response) {
+          if (
+            error.response.status === 409 ||
+            error.response.status === 404 ||
+            error.response.status === 403
+          ) {
+            setMessage(error.response.data);
+            setIsError(true);
+          } else {
+            setMessage("An unexpected error occurred.");
+            setIsError(true);
+          }
+        } else {
+          setMessage("An unexpected error occurred.");
+          setIsError(true);
+        }
+      }
+    }
+  };
+
   return (
-    <div>
+    <div className="cancel-order-container">
       <div className="cancel-order-instructions">
         <h3>Cancel Your Order</h3>
         <p>
@@ -10,23 +54,56 @@ const CancelOrder = () => {
           it was placed.
         </p>
         <p>
-          Please enter your <strong>Order ID</strong> to receive the
-          confirmation code. You can find your Order ID in the order summary
+          You can find your <strong>Order ID</strong> in the order summary
           provided in the email after your order was placed.
         </p>
         <p>
-          A confirmation code will be sent to the email address you used when
-          placing the order.
+          <em>Tip: Please ensure you have your order ID ready.</em>
         </p>
       </div>
-      <div>
-        <input type="email" placeholder="Email" />
-        <input type="text" placeholder="Order ID" />
-        <button class="cancel-order-button">Send Confirmation Code</button>
+      <div className="cancel-order-form">
+        <input
+          className={`email ${isInvalidEmail ? "invalid" : "valid"}`}
+          type="email"
+          placeholder="email"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            validateEmail(e.target.value);
+          }}
+        />
+        <input
+          className="order-id"
+          type="text"
+          placeholder="order ID"
+          value={orderId}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value.length <= 25) {
+              setOrderId(value);
+            }
+          }}
+        />
+        <button
+          className={`cancel-order-button ${disabled ? "disabled" : ""}`}
+          disabled={disabled}
+          onClick={handleCancelOrder}
+        >
+          Cancel Order
+        </button>
       </div>
-      <div>
-        <input type="text" placeholder="Confirmation Code" />
-        <button class="cancel-order-button">Cancel Order</button>
+      <div
+        className={`message ${isError ? "error" : ""} ${
+          !message ? "hidden" : ""
+        }`}
+      >
+        {message}
+      </div>
+      <div className="additional-info">
+        <p>
+          If you have any questions about your order, please contact our support
+          team.
+        </p>
       </div>
     </div>
   );
