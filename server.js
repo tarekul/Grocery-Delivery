@@ -20,6 +20,11 @@ const PORT = process.env.PORT || 5001;
 
 const inventory = require("./inventory.js");
 
+const allowedOrigins = [
+  "http://localhost:3000", // Local development
+  "https://local-grocery-delivery.netlify.app", // Deployed frontend
+];
+
 const corsOptions = {
   origin: (origin, callback) => {
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
