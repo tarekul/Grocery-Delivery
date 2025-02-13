@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { cancelOrder } from "../../functions/cancelOrder";
+import LoadingIcon from "../loading-icon/loading-icon";
 import "./cancel-order.styles.css";
 
 const CancelOrder = () => {
@@ -8,6 +9,7 @@ const CancelOrder = () => {
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -18,6 +20,7 @@ const CancelOrder = () => {
 
   const handleCancelOrder = async () => {
     if (!disabled) {
+      setIsLoading(true);
       try {
         const res = await cancelOrder(orderId, email);
         setMessage(res);
@@ -41,6 +44,8 @@ const CancelOrder = () => {
           setMessage("An unexpected error occurred.");
           setIsError(true);
         }
+
+        setIsLoading(false);
       }
     }
   };
@@ -92,13 +97,11 @@ const CancelOrder = () => {
           Cancel Order
         </button>
       </div>
-      <div
-        className={`message ${isError ? "error" : ""} ${
-          !message ? "hidden" : ""
-        }`}
-      >
-        {message}
-      </div>
+      {message ? (
+        <div className={`message ${isError ? "error" : ""}`}>{message}</div>
+      ) : (
+        isLoading && <LoadingIcon />
+      )}
       <div className="additional-info">
         <p>
           If you have any questions about your order, please contact our support
