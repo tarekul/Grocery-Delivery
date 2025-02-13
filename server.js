@@ -21,7 +21,13 @@ const PORT = process.env.PORT || 5001;
 const inventory = require("./inventory.js");
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+  origin:
+    "http://localhost:3000" || "https://local-grocery-delivery.netlify.app",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // Routes
