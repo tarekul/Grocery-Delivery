@@ -10,6 +10,7 @@ import CancelOrder from "./components/cancel-order/cancel-order.jsx";
 import CategoryCarousel from "./components/carousel-container/carousel-container.jsx";
 import Cart from "./components/cart/cart.jsx";
 import CheckoutContainer from "./components/checkout-container/checkout-container.jsx";
+import Footer from "./components/footer/footer.jsx";
 import Menu from "./components/menu/menu.jsx";
 import Mission from "./components/mission/mission.jsx";
 import SearchBar from "./components/search-bar/search-bar.jsx";
@@ -18,7 +19,7 @@ import CartToast from "./components/toast/cart-toast.jsx";
 import DarkMode from "./components/toggle-theme/toggle-theme.jsx";
 
 function App() {
-  const [inventory, setInventory] = useState([]);
+  const [inventory, setInventory] = useState({});
   const [cart, setCart] = useState(getCart());
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
@@ -47,6 +48,8 @@ function App() {
     setIsCheckoutOpen(false);
     localStorage.setItem("isCheckoutOpen", false);
   };
+
+  const showFooter = () => Object.values(inventory).length > 0;
 
   useEffect(() => {
     axios
@@ -149,6 +152,13 @@ function App() {
 
         <DarkMode />
       </div>
+      {showFooter() && (
+        <Footer
+          setShowMission={setShowMission}
+          setShowAbout={setShowAbout}
+          closeCheckout={closeCheckout}
+        />
+      )}
     </div>
   );
 }

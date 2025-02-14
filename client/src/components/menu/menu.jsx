@@ -17,20 +17,6 @@ const Menu = ({
     }
   };
 
-  const handleMissionClick = () => {
-    setShowMission(true);
-    handleMenuClick(false);
-    setShowAbout(false);
-    closeCheckout();
-  };
-
-  const handleAboutClick = () => {
-    setShowAbout(true);
-    handleMenuClick(false);
-    setShowMission(false);
-    closeCheckout();
-  };
-
   const handleCheckoutClick = () => {
     openCheckout();
     handleMenuClick(false);
@@ -51,8 +37,6 @@ const Menu = ({
     <>
       <nav>
         <ul>
-          <li onClick={handleMissionClick}>Mission </li>
-          <li onClick={handleAboutClick}>About</li>
           <li onClick={handleCheckoutClick}>Checkout</li>
           <li onClick={handleCancelOrderClick}>Cancel Order</li>
         </ul>
