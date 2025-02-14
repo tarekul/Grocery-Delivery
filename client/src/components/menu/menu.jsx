@@ -24,6 +24,7 @@ const Menu = ({
     setShowAbout(false);
     setShowMission(false);
     setShowCancelOrder(false);
+    setShowFAQ(false);
   };
 
   const handleCancelOrderClick = () => {
@@ -31,12 +32,14 @@ const Menu = ({
     setShowAbout(false);
     setShowMission(false);
     closeCheckout();
+    setShowFAQ(false);
     handleMenuClick(false);
   };
 
   const handleFaqClick = () => {
     setShowFAQ(true);
     setShowAbout(false);
+    setShowCancelOrder(false);
     setShowMission(false);
     closeCheckout();
     handleMenuClick(false);

@@ -12,6 +12,13 @@ const FAQ = () => {
         </p>
       </div>
       <div className="faq-item">
+        <h3>Can I order from your service anytime?</h3>
+        <p>
+          Yes, you can order from our service at any time as long as a delivery
+          driver is available.
+        </p>
+      </div>
+      <div className="faq-item">
         <h3>What store does your service deliver from?</h3>
         <p>We deliver from Mannan supermarket located in Ozone Park.</p>
       </div>
