@@ -8,8 +8,12 @@ const FAQ = () => {
         <h3>What is the delivery area for your service?</h3>
         <p>
           We currently offer delivery to the following zip codes 11416, 11418,
-          11419, 11208
+          11419, 11421, 11208
         </p>
+      </div>
+      <div className="faq-item">
+        <h3>What store does your service deliver from?</h3>
+        <p>We deliver from Mannan supermarket located in Ozone Park.</p>
       </div>
       <div className="faq-item">
         <h3>Why are the checkout price estimated?</h3>
