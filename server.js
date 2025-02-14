@@ -87,7 +87,7 @@ app.post("/order", verifyInputRequest, async (req, res) => {
       items,
       total_price,
       created_at: new Date(),
-      deletedAt: null,
+      deleted_at: null,
     });
 
     orderConfirmationEmail({ ...req.body, orderId: orderRef.id });
@@ -113,6 +113,7 @@ app.post("/order/cancel", async (req, res) => {
   }
 
   try {
+    console.log("here");
     const orderDocRef = doc(db, "orders", orderId);
     const orderDoc = await getDoc(orderDocRef);
 
@@ -127,19 +128,20 @@ app.post("/order/cancel", async (req, res) => {
     }
 
     const FIVE_MINUTES = 5 * 60 * 1000;
+
     if (
-      orderData.createdAt &&
-      Date.now() - orderData.createdAt.toMillis() > FIVE_MINUTES
+      orderData.created_at &&
+      Date.now() - orderData.created_at.toMillis() > FIVE_MINUTES
     ) {
       return res.status(403).send("Order cannot be cancelled after 5 minutes.");
     }
 
-    if (orderData.deletedAt) {
+    if (orderData.deleted_at) {
       return res.status(409).send("Order has already been cancelled.");
     }
 
     await updateDoc(doc(db, "orders", orderDoc.id), {
-      deletedAt: new Date(),
+      deleted_at: new Date(),
     });
 
     res.status(200).send("Order cancelled successfully.");
