@@ -39,3 +39,10 @@
 .theme-toggle:active {
   transform: scale(0.95);
 }
+
+@media screen and (max-width: 768px) {
+  .theme-toggle {
+    top: 10px;
+    left: 10px;
+  }
+}
