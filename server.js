@@ -22,7 +22,7 @@ const inventory = require("./inventory.js");
 
 const allowedOrigins = [
   "http://localhost:3000", // Local development
-  "http://192.168.1.8:3000" // On Network
+  "http://192.168.1.8:3000", // On Network
   "https://local-grocery-delivery.netlify.app", // Deployed frontend
 ];
 
