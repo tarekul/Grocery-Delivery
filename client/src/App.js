@@ -54,11 +54,7 @@ function App() {
   useEffect(() => {
     axios
       .get(`${apiUrl}/inventory`)
-      .then((res) => {
-        const inventoryData = res.data;
-        localStorage.setItem("inventory", JSON.stringify(inventoryData));
-        setInventory(inventoryData);
-      })
+      .then((res) => setInventory(res.data))
       .catch((err) => {
         console.error("Error fetching inventory:", err);
         if (localStorage.getItem("inventory")) {

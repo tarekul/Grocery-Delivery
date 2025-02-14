@@ -1,6 +1,11 @@
+import { useEffect } from "react";
 import "./about.styles.css";
 
 const About = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the window
+  }, []);
+
   return (
     <div className="about-container">
       <h1 className="about-title">About</h1>

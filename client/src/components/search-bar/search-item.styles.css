@@ -77,8 +77,8 @@
 }
 
 .search-item-quantity-button {
-  width: 28px;
-  height: 28px;
+  width: 35px;
+  height: 35px;
   padding: 0;
   display: flex;
   align-items: center;
@@ -89,7 +89,7 @@
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-size: 16px;
+  font-size: 25px;
 }
 
 .search-item-quantity-button.red {
@@ -109,5 +109,5 @@
 }
 
 .search-item-quantity-button.green:hover {
-  background-color: var(--light-primary-darkest);
+  background-color: var(--primary-darkest);
 }

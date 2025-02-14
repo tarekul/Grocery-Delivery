@@ -1,7 +1,12 @@
+import { useEffect } from "react";
 import missionImage from "./mission.png";
 import "./mission.styles.css";
 
 const Mission = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the window
+  }, []);
+
   return (
     <div className="mission-container">
       <h2 className="mission-title">Our Mission</h2>

@@ -15,8 +15,10 @@
   --light-text-white: #fff;
   --light-primary: #ff5722; /* Deep Orange */
   --light-primary-dark: #e64a19; /* Dark Orange */
-  --light-primary-darker: #3b4787;
-  --light-primary-darkest: #4a5aa8;
+  --light-remove-from-cart-hover: rgb(251, 98, 98);
+  --light-remove-from-cart: #f44336;
+  --light-add-to-cart-hover: #45ae94;
+  --light-add-to-cart: #4caf50;
   --light-border: #bdbdbd; /* Light Gray */
   --light-action-orange: #ffc107; /* Amber */
   --light-action-orange-dark: #e88e0c;
@@ -45,8 +47,10 @@
   --dark-text-white: #fff;
   --dark-primary: #e97451;
   --dark-primary-dark: #bf360c; /* Dark Red-Orange */
-  --dark-primary-darker: #3f51b5;
-  --dark-primary-darkest: #303f9f;
+  --dark-remove-from-cart: crimson;
+  --dark-remove-from-cart-hover: rgb(251, 98, 98);
+  --dark-add-to-cart-hover: #3e9d87;
+  --dark-add-to-cart: #3e9d87;
   --dark-border: #4a5568;
   --dark-action-orange: #f6ad55;
   --dark-action-orange-dark: #ed8936;
@@ -75,8 +79,10 @@
   --text-white: var(--light-text-white);
   --primary: var(--light-primary);
   --primary-dark: var(--light-primary-dark);
-  --primary-darker: var(--light-primary-darker);
-  --primary-darkest: var(--light-primary-darkest);
+  --add-to-cart: var(--light-add-to-cart);
+  --add-to-cart-hover: var(--light-add-to-cart-hover);
+  --remove-from-cart: var(--light-remove-from-cart);
+  --remove-from-cart-hover: var(--light-remove-from-cart-hover);
   --border: var(--light-border);
   --action-orange: var(--light-action-orange);
   --action-orange-dark: var(--light-action-orange-dark);
@@ -107,8 +113,10 @@
   --text-white: var(--dark-text-white);
   --primary: var(--dark-primary);
   --primary-dark: var(--dark-primary-dark);
-  --primary-darker: var(--dark-primary-darker);
-  --primary-darkest: var(--dark-primary-darkest);
+  --add-to-cart: var(--dark-add-to-cart);
+  --add-to-cart-hover: var(--dark-add-to-cart-hover);
+  --remove-from-cart: var(--dark-remove-from-cart);
+  --remove-from-cart-hover: var(--dark-remove-from-cart-hover);
   --border: var(--dark-border);
   --action-orange: var(--dark-action-orange);
   --action-orange-dark: var(--dark-action-orange-dark);

@@ -56,12 +56,7 @@
   align-items: center;
 }
 
-.item-quantity button:hover {
-  background-color: var(--primary-dark);
-}
-
 .item-quantity button:active {
-  background-color: var(--primary-darker);
   transform: scale(0.95);
 }
 
@@ -78,7 +73,7 @@
 }
 
 .quantity-button.red {
-  background-color: var(--action-orange);
+  background-color: var(--remove-from-cart);
 }
 
 .quantity-button.disabled {
@@ -87,11 +82,11 @@
 }
 
 .quantity-button.green {
-  background-color: var(--primary);
+  background-color: var(--add-to-cart);
 }
 
 .quantity-button.red:hover {
-  background-color: var(--action-orange-dark);
+  background-color: var(--remove-from-cart);
 }
 
 .quantity-button.disabled:hover {
@@ -99,7 +94,7 @@
 }
 
 .quantity-button.green:hover {
-  background-color: var(--primary-darkest);
+  background-color: var(--add-to-cart);
 }
 
 .quantity-button:hover {
