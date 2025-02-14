@@ -1,0 +1,22 @@
+.faq-container {
+  padding: 20px;
+  background-color: var(--background-main);
+  color: var(--text-primary);
+}
+
+.faq-item {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid var(--light-border);
+  border-radius: 5px;
+  background-color: var(--background-secondary);
+}
+
+.faq-item h2 {
+  font-size: 18px;
+  margin: 0 0 5px;
+}
+
+.faq-item p {
+  margin: 0;
+}

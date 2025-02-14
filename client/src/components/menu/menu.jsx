@@ -7,6 +7,7 @@ const Menu = ({
   setShowCancelOrder,
   openCheckout,
   closeCheckout,
+  setShowFAQ,
 }) => {
   const handleMenuClick = (shouldShowMobileMenu) => {
     const nav = document.querySelector("nav");
@@ -33,12 +34,21 @@ const Menu = ({
     handleMenuClick(false);
   };
 
+  const handleFaqClick = () => {
+    setShowFAQ(true);
+    setShowAbout(false);
+    setShowMission(false);
+    closeCheckout();
+    handleMenuClick(false);
+  };
+
   return (
     <>
       <nav>
         <ul>
           <li onClick={handleCheckoutClick}>Checkout</li>
           <li onClick={handleCancelOrderClick}>Cancel Order</li>
+          <li onClick={handleFaqClick}>FAQ</li>
         </ul>
         <button className="close-button" onClick={() => handleMenuClick(false)}>
           X

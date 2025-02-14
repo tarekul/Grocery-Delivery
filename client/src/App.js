@@ -10,6 +10,7 @@ import CancelOrder from "./components/cancel-order/cancel-order.jsx";
 import CategoryCarousel from "./components/carousel-container/carousel-container.jsx";
 import Cart from "./components/cart/cart.jsx";
 import CheckoutContainer from "./components/checkout-container/checkout-container.jsx";
+import FAQ from "./components/faq/faq.jsx";
 import Footer from "./components/footer/footer.jsx";
 import LoadingIcon from "./components/loading-icon/loading-icon.jsx";
 import Menu from "./components/menu/menu.jsx";
@@ -38,6 +39,9 @@ function App() {
   );
   const [showCancelOrder, setShowCancelOrder] = useState(
     localStorage.getItem("showCancelOrder") === "true" ?? false
+  );
+  const [showFAQ, setShowFAQ] = useState(
+    localStorage.getItem("showFAQ") === "true" ?? false
   );
   const [isLoading, setIsLoading] = useState(false);
 
@@ -86,6 +90,7 @@ function App() {
           setMission={setShowMission}
           setShowAbout={setShowAbout}
           setShowCancelOrder={setShowCancelOrder}
+          setShowFAQ={setShowFAQ}
         />
         <Menu
           setShowMission={setShowMission}
@@ -93,6 +98,7 @@ function App() {
           setShowCancelOrder={setShowCancelOrder}
           openCheckout={openCheckout}
           closeCheckout={closeCheckout}
+          setShowFAQ={setShowFAQ}
         />
       </div>
       <div className="main">
@@ -102,6 +108,8 @@ function App() {
           <About />
         ) : showCancelOrder ? (
           <CancelOrder />
+        ) : showFAQ ? (
+          <FAQ />
         ) : (
           <>
             <SearchBar
