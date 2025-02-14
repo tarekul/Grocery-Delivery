@@ -124,6 +124,13 @@ app.post("/order/cancel", async (req, res) => {
       return res.status(403).send("Forbidden. Email does not match record.");
     }
 
+    if (
+      orderData.createdAt &&
+      Date.now() - orderData.createdAt.toMillis() > FIVE_MINUTES
+    ) {
+      return res.status(403).send("Order cannot be cancelled after 5 minutes.");
+    }
+
     if (orderData.deletedAt) {
       return res.status(409).send("Order has already been cancelled.");
     }
