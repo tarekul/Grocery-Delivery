@@ -113,7 +113,6 @@ app.post("/order/cancel", async (req, res) => {
   }
 
   try {
-    console.log("here");
     const orderDocRef = doc(db, "orders", orderId);
     const orderDoc = await getDoc(orderDocRef);
 

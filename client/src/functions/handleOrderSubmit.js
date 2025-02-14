@@ -1,7 +1,6 @@
 import axios from "axios";
 import apiUrl from "../apiUrl";
 
-import delay from "./delay";
 import { refreshCart } from "./refreshCart";
 
 export const submitOrder = (
@@ -15,20 +14,18 @@ export const submitOrder = (
     0
   );
 
-  return delay(4000)
-    .then(() => {
-      return axios.post(`${apiUrl}/order`, {
-        firstName,
-        lastName,
-        email,
-        phone,
-        zipcode,
-        address,
-        city,
-        state,
-        totalPrice,
-        items: cart,
-      });
+  return axios
+    .post(`${apiUrl}/order`, {
+      firstName,
+      lastName,
+      email,
+      phone,
+      zipcode,
+      address,
+      city,
+      state,
+      totalPrice,
+      items: cart,
     })
     .then((res) => {
       refreshCart();
