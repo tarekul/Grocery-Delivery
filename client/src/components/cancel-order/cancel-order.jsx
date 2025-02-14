@@ -100,7 +100,11 @@ const CancelOrder = () => {
       {message ? (
         <div className={`message ${isError ? "error" : ""}`}>{message}</div>
       ) : (
-        isLoading && <LoadingIcon />
+        isLoading && (
+          <div className="cancel-order-loading-icon">
+            <LoadingIcon />
+          </div>
+        )
       )}
       <div className="additional-info">
         <p>

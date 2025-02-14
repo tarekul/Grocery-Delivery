@@ -101,7 +101,7 @@
   width: fit-content;
   padding: 10px;
   height: 20px;
-  background-color: var(--background-white);
+  background-color: var(--background-secondary);
   border-radius: 6px;
   border: 1px solid var(--success);
 }
@@ -109,6 +109,12 @@
 .error {
   color: var(--error);
   border: 1px solid var(--error);
+}
+
+.cancel-order-loading-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media screen and (max-width: 768px) {

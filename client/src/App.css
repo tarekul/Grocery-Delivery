@@ -27,3 +27,9 @@ body {
 .main {
   padding: 20px;
 }
+
+.home-loading-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

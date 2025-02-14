@@ -5,7 +5,7 @@
   padding: 8px;
   margin: 6px;
   border-radius: 8px;
-  background-color: var(--background-white);
+  background-color: var(--background-secondary);
   border: 1.5px solid var(--border);
   box-shadow: 0 2px 4px rgba(91, 107, 191, 0.1);
 }
@@ -93,7 +93,7 @@
 }
 
 .search-item-quantity-button.red {
-  background-color: var(--light-action-orange);
+  background-color: var(--remove-from-cart);
 }
 
 .search-item-quantity-button.red.disabled {
@@ -101,13 +101,13 @@
 }
 
 .search-item-quantity-button.green {
-  background-color: var(--light-primary);
+  background-color: var(--add-to-cart);
 }
 
 .search-item-quantity-button.red:hover {
-  background-color: var(--light-action-orange-dark);
+  background-color: var(--remove-from-cart-hover);
 }
 
 .search-item-quantity-button.green:hover {
-  background-color: var(--primary-darkest);
+  background-color: var(--add-to-cart-hover);
 }

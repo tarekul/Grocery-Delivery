@@ -2,7 +2,7 @@
   /* Light Theme Colors */
   --light-background-header: #ffe0b2;
   --light-background-main: #fffaf0; /* Floral White */
-  --light-background-white: #ffffff;
+  --light-background-secondary: #f5f5f5;
   --light-background-card: #fff8e1; /* Light Cream */
   --light-background-price: #ffcc80;
   --light-background-cart: #e5e9ff;
@@ -34,7 +34,7 @@
   /* Dark Theme Colors */
   --dark-background-header: #004d40;
   --dark-background-main: #263238; /* Charcoal */
-  --dark-background-white: #2d3748;
+  --dark-background-secondary: #2d3748;
   --dark-background-card: #37474f; /* Dark Gray */
   --dark-background-cart: #2d3748;
   --dark-background-price: #001f3f;
@@ -66,7 +66,7 @@
   /* Default theme variables - these are what your components actually use */
   --background-header: var(--light-background-header);
   --background-main: var(--light-background-main);
-  --background-white: var(--light-background-white);
+  --background-secondary: var(--light-background-secondary);
   --background-card: var(--light-background-card);
   --background-price: var(--light-background-price);
   --background-cart: var(--light-background-cart);
@@ -100,7 +100,7 @@
 [data-theme="dark"] {
   --background-header: var(--dark-background-header);
   --background-main: var(--dark-background-main);
-  --background-white: var(--dark-background-white);
+  --background-secondary: var(--dark-background-secondary);
   --background-card: var(--dark-background-card);
   --background-price: var(--dark-background-price);
   --background-cart: var(--dark-background-cart);

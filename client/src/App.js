@@ -11,6 +11,7 @@ import CategoryCarousel from "./components/carousel-container/carousel-container
 import Cart from "./components/cart/cart.jsx";
 import CheckoutContainer from "./components/checkout-container/checkout-container.jsx";
 import Footer from "./components/footer/footer.jsx";
+import LoadingIcon from "./components/loading-icon/loading-icon.jsx";
 import Menu from "./components/menu/menu.jsx";
 import Mission from "./components/mission/mission.jsx";
 import SearchBar from "./components/search-bar/search-bar.jsx";
@@ -38,6 +39,7 @@ function App() {
   const [showCancelOrder, setShowCancelOrder] = useState(
     localStorage.getItem("showCancelOrder") === "true" ?? false
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   const openCheckout = () => {
     setIsCheckoutOpen(true);
@@ -49,18 +51,15 @@ function App() {
     localStorage.setItem("isCheckoutOpen", false);
   };
 
-  const showFooter = () => Object.values(inventory).length > 0;
-
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`${apiUrl}/inventory`)
       .then((res) => setInventory(res.data))
       .catch((err) => {
         console.error("Error fetching inventory:", err);
-        if (localStorage.getItem("inventory")) {
-          setInventory(JSON.parse(localStorage.getItem("inventory")));
-        }
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   useEffect(() => {
@@ -119,6 +118,10 @@ function App() {
                 cart={cart}
                 setCart={setCart}
               />
+            ) : isLoading ? (
+              <div className="home-loading-icon">
+                <LoadingIcon />
+              </div>
             ) : (
               <CategoryCarousel
                 inventory={inventory}
@@ -148,13 +151,11 @@ function App() {
 
         <DarkMode />
       </div>
-      {showFooter() && (
-        <Footer
-          setShowMission={setShowMission}
-          setShowAbout={setShowAbout}
-          closeCheckout={closeCheckout}
-        />
-      )}
+      <Footer
+        setShowMission={setShowMission}
+        setShowAbout={setShowAbout}
+        closeCheckout={closeCheckout}
+      />
     </div>
   );
 }
