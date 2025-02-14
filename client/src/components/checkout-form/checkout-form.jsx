@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import calculateCartTotal from "../../functions/calculateCartTotal";
 import distanceCalculator from "../../functions/distanceCalculator";
 import { submitOrder } from "../../functions/handleOrderSubmit";
+import ServiceFee from "../../functions/serviceFee.js";
 import LoadingIcon from "../loading-icon/loading-icon.jsx";
 import OrderToast from "../toast/order-toast.jsx";
 import ZipDropdown from "../zip-dropdown/zip-dropdown.jsx";
@@ -120,7 +121,11 @@ const CheckoutForm = ({
       {cart.length > 0 && (
         <p className="total-price">
           Total: $
-          {(distanceCalculator(zipcode) + calculateCartTotal(cart)).toFixed(2)}
+          {(
+            distanceCalculator(zipcode) +
+            calculateCartTotal(cart) +
+            ServiceFee
+          ).toFixed(2)}
         </p>
       )}
       <div className="name-container">

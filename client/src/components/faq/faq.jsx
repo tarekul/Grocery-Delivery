@@ -69,7 +69,7 @@ const FAQ = () => {
       <div className="faq-item">
         <h3>What should I do if my order is late?</h3>
         <p>
-          If your order is delayed, please call the delivery driver that is in
+          If your order is delayed, please call the delivery driver that is
           handling your order. The delivery driver info should be sent available
           in the email you used to place the order.
         </p>

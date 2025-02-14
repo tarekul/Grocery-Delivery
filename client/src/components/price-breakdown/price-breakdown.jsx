@@ -1,12 +1,13 @@
 import calculateCartTotal from "../../functions/calculateCartTotal";
 import distanceCalculator from "../../functions/distanceCalculator";
+import serviceFee from "../../functions/serviceFee";
 import "./price-breakdown.styles.css";
 
 const PriceBreakdown = ({ cart, zipcode }) => {
   const totalPrice = calculateCartTotal(cart);
 
   const deliveryFee = distanceCalculator(zipcode);
-  const total = totalPrice + deliveryFee;
+  const total = totalPrice + deliveryFee + serviceFee;
 
   return (
     <div className="price-breakdown">
@@ -16,10 +17,13 @@ const PriceBreakdown = ({ cart, zipcode }) => {
         <span>${totalPrice}</span>
       </p>
       <p>
+        Service Fee: <span>${serviceFee.toFixed(2)}</span>
+      </p>
+      <p>
         Taxes and Fees: <span>$0.00</span>
       </p>
       <p>
-        Delivery Fee: <span>${deliveryFee}</span>
+        Delivery Fee: <span>${deliveryFee.toFixed(2)}</span>
       </p>
       <hr />
       <p className="total-price">

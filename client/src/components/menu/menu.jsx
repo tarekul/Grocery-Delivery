@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import areShoppersAvailable from "../../functions/areShoppersAvailable";
 import "./menu.styles.css";
 
 const Menu = ({
@@ -9,6 +10,8 @@ const Menu = ({
   closeCheckout,
   setShowFAQ,
 }) => {
+  const [isShoppersAvailable, setIsShoppersAvailable] = useState(false);
+
   const handleMenuClick = (shouldShowMobileMenu) => {
     const nav = document.querySelector("nav");
     if (shouldShowMobileMenu) {
@@ -45,10 +48,30 @@ const Menu = ({
     handleMenuClick(false);
   };
 
+  const handleShopperAvailability = async () => {
+    try {
+      await areShoppersAvailable();
+      setIsShoppersAvailable(true);
+    } catch (error) {
+      setIsShoppersAvailable(false);
+    }
+  };
+
+  useEffect(() => {
+    handleShopperAvailability();
+  });
+
   return (
     <>
       <nav>
         <ul>
+          <li>
+            Shoppers Available{" "}
+            <i
+              className="fa-solid fa-circle fa-xs"
+              style={{ color: isShoppersAvailable ? "#63E6BE" : "#f95858" }}
+            ></i>
+          </li>
           <li onClick={handleCheckoutClick}>Checkout</li>
           <li onClick={handleCancelOrderClick}>Cancel Order</li>
           <li onClick={handleFaqClick}>FAQ</li>
