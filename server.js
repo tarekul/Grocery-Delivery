@@ -124,6 +124,7 @@ app.post("/order/cancel", async (req, res) => {
       return res.status(403).send("Forbidden. Email does not match record.");
     }
 
+    const FIVE_MINUTES = 5 * 60 * 1000;
     if (
       orderData.createdAt &&
       Date.now() - orderData.createdAt.toMillis() > FIVE_MINUTES
