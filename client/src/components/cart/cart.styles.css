@@ -117,16 +117,16 @@
 }
 
 .clear-button {
-  background-color: #ff4d4d; /* Red color */
-  color: white; /* Text color */
-  border: none; /* No border */
-  padding: 10px 20px; /* Padding for the button */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .clear-button:hover {
-  background-color: #e60000; /* Darker red on hover */
+  background-color: #e60000;
 }
 
 /* Mobile styles */

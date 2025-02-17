@@ -33,9 +33,9 @@
 
   /* Dark Theme Colors */
   --dark-background-header: #004d40;
-  --dark-background-main: #263238; /* Charcoal */
-  --dark-background-secondary: #2d3748;
-  --dark-background-card: #37474f; /* Dark Gray */
+  --dark-background-main: #263238;
+  --dark-background-secondary: #405579;
+  --dark-background-card: #37474f;
   --dark-background-cart: #2d3748;
   --dark-background-price: #001f3f;
   --dark-background-hover: #4a5568;

@@ -6,8 +6,8 @@
   padding: 8px;
   margin: 6px;
   border-radius: 8px;
-  background-color: var(--light-background-white);
-  border: 1px solid var(--light-border);
+  background-color: var(--background-secondary);
+  border: 1px solid var(--border);
   box-shadow: 0 2px 4px rgba(91, 107, 191, 0.1);
 }
 
@@ -28,7 +28,7 @@
 .cart-item h4 {
   font-size: 15px;
   font-weight: 500;
-  color: var(--light-text-primary);
+  color: var(--text-primary);
   margin: 0 0 2px 0;
   white-space: nowrap;
   overflow: hidden;
@@ -40,7 +40,7 @@
 .cart-item p {
   font-size: 14px;
   margin: 0;
-  color: var(--light-text-secondary);
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
@@ -54,7 +54,7 @@
 .cart-item-quantity span {
   font-size: 14px;
   font-weight: 600;
-  color: var(--light-primary);
+  color: var(--text-secondary);
   min-width: 20px;
   text-align: center;
 }
@@ -66,8 +66,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--light-primary);
-  color: var(--light-text-white);
+  background-color: var(--primary);
+  color: var(--text-white);
   border: none;
   border-radius: 4px;
   cursor: pointer;

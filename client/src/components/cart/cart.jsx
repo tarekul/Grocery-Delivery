@@ -26,21 +26,25 @@ const Cart = ({
   const toggleDropdown = () => {
     if (isDropdownOpen) {
       setIsClosing(true);
-      document.body.style.overflow = "unset";
+      if (window.innerWidth <= 768) {
+        document.body.style.overflow = "unset";
+      }
+
       setTimeout(() => {
         setIsClosing(false);
         setIsDropdownOpen(false);
       }, 500);
     } else {
       setIsDropdownOpen(true);
-      document.body.style.overflow = "hidden";
+      if (window.innerWidth <= 768) {
+        document.body.style.overflow = "hidden";
+      }
     }
   };
 
   const toggleCheckout = () => {
     openCheckout();
     setIsDropdownOpen(false);
-    document.body.style.overflow = "unset";
   };
 
   const clearCart = () => {
@@ -50,7 +54,9 @@ const Cart = ({
 
   useEffect(() => {
     return () => {
-      document.body.style.overflow = "unset";
+      if (window.innerWidth <= 768) {
+        document.body.style.overflow = "unset";
+      }
     };
   }, []);
 
