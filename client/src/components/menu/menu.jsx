@@ -48,18 +48,11 @@ const Menu = ({
     handleMenuClick(false);
   };
 
-  const handleShopperAvailability = async () => {
-    try {
-      await areShoppersAvailable();
-      setIsShoppersAvailable(true);
-    } catch (error) {
-      setIsShoppersAvailable(false);
-    }
-  };
-
   useEffect(() => {
-    handleShopperAvailability();
-  });
+    areShoppersAvailable((available) => {
+      setIsShoppersAvailable(available);
+    });
+  }, []);
 
   return (
     <>

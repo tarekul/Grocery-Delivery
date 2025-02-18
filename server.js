@@ -198,26 +198,6 @@ app.get("/orders", async (req, res) => {
   }
 });
 
-app.get("/shoppers/available", async (req, res) => {
-  try {
-    const shoppersRef = collection(db, "grocery-shopper");
-    const q = query(shoppersRef, where("isAvailable", "==", true));
-
-    const querySnapshot = await getDocs(q);
-
-    if (querySnapshot.empty) {
-      return res.status(404).send("No shopper available.");
-    } else {
-      return res.status(200).send("Shopper Available");
-    }
-  } catch (error) {
-    res.status(500).send({
-      message: "Failed to fetch shopper.",
-      error: error.message,
-    });
-  }
-});
-
 // Start server
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
