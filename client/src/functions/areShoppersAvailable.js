@@ -12,10 +12,8 @@ const areShoppersAvailable = async (callback) => {
         const available = Object.values(shoppers).some(
           (shopper) => shopper.isAvailable === true
         );
-        console.log("Available:", available);
         callback(available);
       } else {
-        console.log("No shoppers found.");
         callback(false); // No shoppers available
       }
     },

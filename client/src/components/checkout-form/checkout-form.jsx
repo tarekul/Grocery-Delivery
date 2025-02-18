@@ -14,6 +14,7 @@ const CheckoutForm = ({
   setCart,
   setZipcode,
   zipcode,
+  isShoppersAvailable,
 }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -271,13 +272,15 @@ const CheckoutForm = ({
       {isProcessingOrder ? (
         <LoadingIcon />
       ) : (
-        <button
-          className={`confirm-button ${disabled ? "disabled" : ""}`}
-          onClick={handleSubmitOrder}
-          disabled={disabled}
-        >
-          Confirm Order
-        </button>
+        isShoppersAvailable && (
+          <button
+            className={`confirm-button ${disabled ? "disabled" : ""}`}
+            onClick={handleSubmitOrder}
+            disabled={disabled}
+          >
+            Confirm Order
+          </button>
+        )
       )}
       {isOrderComplete && (
         <OrderToast onClose={() => setIsOrderComplete(false)} />

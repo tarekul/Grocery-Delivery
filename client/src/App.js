@@ -44,6 +44,7 @@ function App() {
     localStorage.getItem("showFAQ") === "true" ?? false
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [isShoppersAvailable, setIsShoppersAvailable] = useState(false);
 
   const openCheckout = () => {
     setIsCheckoutOpen(true);
@@ -99,6 +100,8 @@ function App() {
           openCheckout={openCheckout}
           closeCheckout={closeCheckout}
           setShowFAQ={setShowFAQ}
+          setIsShoppersAvailable={setIsShoppersAvailable}
+          isShoppersAvailable={isShoppersAvailable}
         />
       </div>
       <div className="main">
@@ -125,6 +128,7 @@ function App() {
                 closeCheckout={closeCheckout}
                 cart={cart}
                 setCart={setCart}
+                isShoppersAvailable={isShoppersAvailable}
               />
             ) : isLoading ? (
               <div className="home-loading-icon">

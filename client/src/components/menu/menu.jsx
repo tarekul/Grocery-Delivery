@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import areShoppersAvailable from "../../functions/areShoppersAvailable";
 import "./menu.styles.css";
 
@@ -9,9 +9,9 @@ const Menu = ({
   openCheckout,
   closeCheckout,
   setShowFAQ,
+  isShoppersAvailable,
+  setIsShoppersAvailable,
 }) => {
-  const [isShoppersAvailable, setIsShoppersAvailable] = useState(false);
-
   const handleMenuClick = (shouldShowMobileMenu) => {
     const nav = document.querySelector("nav");
     if (shouldShowMobileMenu) {

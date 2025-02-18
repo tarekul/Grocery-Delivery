@@ -3,7 +3,12 @@ import CheckoutForm from "../checkout-form/checkout-form";
 import PriceBreakdown from "../price-breakdown/price-breakdown";
 import "./checkout-container.styles.css";
 
-const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
+const CheckoutContainer = ({
+  closeCheckout,
+  cart,
+  setCart,
+  isShoppersAvailable,
+}) => {
   const [zipcode, setZipcode] = useState("11416");
   return (
     <div className="checkout-container">
@@ -13,6 +18,7 @@ const CheckoutContainer = ({ closeCheckout, cart, setCart }) => {
         setCart={setCart}
         setZipcode={setZipcode}
         zipcode={zipcode}
+        isShoppersAvailable={isShoppersAvailable}
       />
       {cart.length > 0 && <PriceBreakdown cart={cart} zipcode={zipcode} />}
     </div>

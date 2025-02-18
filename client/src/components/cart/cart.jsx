@@ -45,6 +45,9 @@ const Cart = ({
   const toggleCheckout = () => {
     openCheckout();
     setIsDropdownOpen(false);
+    if (window.innerWidth <= 768) {
+      document.body.style.overflow = "unset";
+    }
   };
 
   const clearCart = () => {
