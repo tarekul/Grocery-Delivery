@@ -55,7 +55,7 @@ const CancelOrder = () => {
       <div className="cancel-order-instructions">
         <h3>Cancel Your Order</h3>
         <p>
-          An order can only be cancelled up to <strong>5 minutes</strong> after
+          An order can only be cancelled up to <strong>10 minutes</strong> after
           it was placed.
         </p>
         <p>
