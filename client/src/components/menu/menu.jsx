@@ -59,15 +59,26 @@ const Menu = ({
       <nav>
         <ul>
           <li>
-            Shoppers Available{" "}
-            <i
-              className="fa-solid fa-circle fa-xs"
-              style={{ color: isShoppersAvailable ? "#63E6BE" : "#f95858" }}
-            ></i>
+            <span className="tooltip-container">
+              Shoppers Available{" "}
+              <i
+                className="fa-solid fa-circle fa-xs"
+                style={{ color: isShoppersAvailable ? "#63E6BE" : "#f95858" }}
+              ></i>
+              <div className="tooltip">
+                Shows if shoppers are available to deliver your order
+              </div>
+            </span>
           </li>
-          <li onClick={handleCheckoutClick}>Checkout</li>
-          <li onClick={handleCancelOrderClick}>Cancel Order</li>
-          <li onClick={handleFaqClick}>FAQ</li>
+          <li className="menu-item" onClick={handleCheckoutClick}>
+            Checkout
+          </li>
+          <li className="menu-item" onClick={handleCancelOrderClick}>
+            Cancel Order
+          </li>
+          <li className="menu-item" onClick={handleFaqClick}>
+            FAQ
+          </li>
         </ul>
         <button className="close-button" onClick={() => handleMenuClick(false)}>
           X

@@ -86,6 +86,11 @@
   font-style: italic;
 }
 
+.shoppers-not-available {
+  color: red;
+  font-style: italic;
+}
+
 @media screen and (max-width: 768px) {
   .checkout-form input {
     width: 100%;

@@ -282,6 +282,12 @@ const CheckoutForm = ({
           </button>
         )
       )}
+      {!isShoppersAvailable && (
+        <div className="shoppers-not-available">
+          <p>Shoppers are not available at the moment.</p>
+          <p>Please try again later.</p>
+        </div>
+      )}
       {isOrderComplete && (
         <OrderToast onClose={() => setIsOrderComplete(false)} />
       )}
