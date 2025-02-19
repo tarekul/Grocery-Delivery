@@ -14,7 +14,7 @@ const PriceBreakdown = ({ cart, zipcode }) => {
       <h3>Summary</h3>
       <p>
         {`${cart.length} item${cart.length > 1 ? "s" : ""}`}:{" "}
-        <span>${totalPrice}</span>
+        <span>${totalPrice.toFixed(2)}</span>
       </p>
       <p>
         Service Fee: <span>${serviceFee.toFixed(2)}</span>
