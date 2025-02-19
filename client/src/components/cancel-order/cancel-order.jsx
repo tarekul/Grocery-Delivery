@@ -27,6 +27,7 @@ const CancelOrder = () => {
         setIsError(false);
         setEmail("");
         setOrderId("");
+        localStorage.removeItem("orderId");
       } catch (error) {
         if (error.response) {
           if (
@@ -47,6 +48,12 @@ const CancelOrder = () => {
 
         setIsLoading(false);
       }
+    }
+  };
+
+  const handleFocus = () => {
+    if (orderId === "") {
+      setOrderId(localStorage.getItem("orderId") ?? "");
     }
   };
 
@@ -76,12 +83,14 @@ const CancelOrder = () => {
             setEmail(e.target.value);
             validateEmail(e.target.value);
           }}
+          autoComplete="email"
         />
         <input
           className="order-id"
           type="text"
-          placeholder="order ID"
+          placeholder={localStorage.getItem("orderId") ?? "order ID"}
           value={orderId}
+          onFocus={handleFocus}
           onChange={(e) => {
             const value = e.target.value;
             if (value.length <= 25) {
