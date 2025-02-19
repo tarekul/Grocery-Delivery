@@ -63,7 +63,7 @@ const FAQ = () => {
         <h3>How can I contact customer support?</h3>
         <p>
           You can reach our customer support team via email at{" "}
-          <i>rahin6810@gmail.com</i>.
+          <i>grocerygo98@gmail.com</i>.
         </p>
       </div>
       <div className="faq-item">
