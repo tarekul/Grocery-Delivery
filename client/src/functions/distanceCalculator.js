@@ -2,6 +2,8 @@ const distanceCalculator = (zipcode) => {
   switch (zipcode) {
     case "11416":
       return 3.99;
+    case "11414":
+      return 4.99;
     case "11418":
       return 4.99;
     case "11419":

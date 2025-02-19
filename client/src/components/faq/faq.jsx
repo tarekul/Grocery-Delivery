@@ -7,8 +7,8 @@ const FAQ = () => {
       <div className="faq-item">
         <h3>What is the delivery area for your service?</h3>
         <p>
-          We currently offer delivery to the following zip codes 11416, 11418,
-          11419, 11421, 11208
+          We currently offer delivery to the following zip codes 11416, 11414,
+          11418, 11419, 11421, 11208
         </p>
       </div>
       <div className="faq-item">
