@@ -12,7 +12,7 @@ const {
   updateDoc,
   doc,
 } = require("firebase/firestore");
-const orderConfirmationEmail = require("./resend.js");
+const orderConfirmationEmail = require("./mailjet.js");
 const db = require("./firebase-config.js");
 
 const app = express();

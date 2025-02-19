@@ -14,7 +14,6 @@ const emailTemplate = (
       <p>Here are the details of your order:</p>
       <p>Order ID: <strong>${orderId}</strong></p>
       <ul>
-        <li>Name: ${name}</li>
         <li>Email: ${email}</li>
         <li>Address: ${address}</li>
         <li>City: ${city}</li>
