@@ -4,20 +4,20 @@ import React, { useEffect, useState } from "react";
 import "./toggle-theme.styles.css";
 
 const ToggleTheme = () => {
-  const [themeValue, setThemeValue] = useState("light");
+  const [themeValue, setThemeValue] = useState(
+    localStorage.getItem("theme") || "light"
+  );
 
   const toggleTheme = () => {
     const newTheme = themeValue === "light" ? "dark" : "light";
     setThemeValue(newTheme);
+    localStorage.setItem("theme", newTheme);
     document.documentElement.setAttribute("data-theme", newTheme);
   };
 
   useEffect(() => {
-    const hour = new Date().getHours();
-    const initialTheme = hour >= 6 && hour < 18 ? "light" : "dark";
-    setThemeValue(initialTheme);
-    document.documentElement.setAttribute("data-theme", initialTheme);
-  }, []);
+    document.documentElement.setAttribute("data-theme", themeValue);
+  }, [themeValue]);
 
   return (
     <button className="theme-toggle" onClick={toggleTheme}>
