@@ -116,6 +116,7 @@ const CancelOrder = () => {
         )
       )}
       <div className="additional-info">
+        <small>May take up to a minute or more to process cancellation. </small>
         <p>
           If you have any questions about your order, please contact our support
           team.
