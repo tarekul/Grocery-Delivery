@@ -56,8 +56,6 @@ app.get("/inventory", (req, res) => {
   }
 });
 
-app.use("/inventory_images", express.static("inventory_images"));
-
 app.post("/order", verifyInputRequest, async (req, res) => {
   const {
     firstName,
