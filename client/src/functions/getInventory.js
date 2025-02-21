@@ -1,7 +1,7 @@
 import axios from "axios";
 import apiUrl from "../apiUrl";
 
-export const getInventory = () => {
+export const getInventory = async () => {
   return axios
     .get(`${apiUrl}/inventory`)
     .then((res) => {

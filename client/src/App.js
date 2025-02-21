@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { editCart } from "./functions/editCart";
 import { getCart } from "./functions/getCart";
+import { getInventory } from "./functions/getInventory.js";
+import { getTopSelling } from "./functions/getTopSelling.js";
 
 import About from "./components/about/about.jsx";
 import CancelOrder from "./components/cancel-order/cancel-order.jsx";
@@ -17,8 +19,6 @@ import SearchBar from "./components/search-bar/search-bar.jsx";
 import Title from "./components/title/title.jsx";
 import CartToast from "./components/toast/cart-toast.jsx";
 import DarkMode from "./components/toggle-theme/toggle-theme.jsx";
-import { getInventory } from "./functions/getInventory.js";
-import { getTopSelling } from "./functions/getTopSelling.js";
 
 function App() {
   const [inventory, setInventory] = useState({});
@@ -61,10 +61,7 @@ function App() {
     setIsLoading(true);
     if (localStorage.getItem("inventory")) {
       setInventory(JSON.parse(localStorage.getItem("inventory")));
-      setIsLoading(false);
-      return;
-    }
-    Promise.all([
+    } else {
       getInventory()
         .then((res) => {
           setInventory(res);
@@ -72,17 +69,20 @@ function App() {
         })
         .catch((err) => {
           console.error("Error fetching inventory:", err);
-        }),
-      getTopSelling()
-        .then((res) => {
-          setTopSelling(res);
-        })
-        .catch((err) => {
-          console.error("Error fetching top selling:", err);
-        }),
-    ]).finally(() => {
-      setIsLoading(false);
-    });
+          setIsLoading(false);
+        });
+    }
+
+    getTopSelling()
+      .then((res) => {
+        setTopSelling(res);
+      })
+      .catch((err) => {
+        console.error("Error fetching top selling:", err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   useEffect(() => {

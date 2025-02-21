@@ -1,7 +1,7 @@
 import axios from "axios";
 import apiUrl from "../apiUrl";
 
-export const getTopSelling = () => {
+export const getTopSelling = async () => {
   return axios
     .get(`${apiUrl}/top-selling-items`)
     .then((res) => {
