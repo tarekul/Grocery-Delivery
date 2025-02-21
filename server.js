@@ -82,11 +82,19 @@ app.post("/order", verifyInputRequest, async (req, res) => {
       city,
       state,
       zipcode,
-      items,
       total_price,
       created_at: new Date(),
       deleted_at: null,
     });
+
+    for (const itemData of items) {
+      const { item, quantity } = itemData;
+      await addDoc(collection(db, "order-items"), {
+        order_id: orderRef.id,
+        item,
+        quantity,
+      });
+    }
 
     orderConfirmationEmail({ ...req.body, orderId: orderRef.id });
 
@@ -175,21 +183,37 @@ app.get("/order/:id", async (req, res) => {
   }
 });
 
-app.get("/orders", async (req, res) => {
+function sortByQuantity(items) {
+  return Object.entries(items)
+    .sort((a, b) => b[1][0] - a[1][0])
+    .map(([key, value]) => value[1]);
+}
+
+app.get("/top-selling-items", async (req, res) => {
   try {
-    const q = query(collection(db, "orders"));
+    const q = query(collection(db, "order-items"));
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
-      return res.status(404).send("No orders found.");
+      return res.status(404).send("No items found.");
     }
 
-    const orders = [];
+    const itemCount = {};
+
     querySnapshot.forEach((doc) => {
-      orders.push({ ...doc.data(), id: doc.id });
+      const { item, quantity } = doc.data();
+      const itemKey = `${item.name}`;
+
+      if (itemCount[itemKey]) {
+        itemCount[itemKey][0] += quantity;
+      } else {
+        itemCount[itemKey] = [quantity, item];
+      }
     });
 
-    return res.status(200).send(orders);
+    const topSellingItems = sortByQuantity(itemCount).slice(0, 8);
+
+    res.status(200).send(topSellingItems);
   } catch (error) {
     res.status(500).send({
       message: "Failed to fetch orders.",
