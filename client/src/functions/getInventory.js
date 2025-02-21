@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiUrl } from "../apiUrl";
+import apiUrl from "../apiUrl";
 
 export const getInventory = () => {
   return axios
