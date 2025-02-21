@@ -12,12 +12,14 @@ const CarouselContainer = ({ inventory, cart, editCart }) => {
   }, []);
   return (
     <div className="carousel-container">
-      <CardItemsCarousel
-        inventory={topSelling}
-        category="Top Selling"
-        editCart={editCart}
-        cart={cart}
-      />
+      {topSelling.length > 0 && (
+        <CardItemsCarousel
+          inventory={topSelling}
+          category="Top Selling"
+          editCart={editCart}
+          cart={cart}
+        />
+      )}
       {Object.entries(inventory).map(([category, items]) => (
         <CardItemsCarousel
           key={category}
