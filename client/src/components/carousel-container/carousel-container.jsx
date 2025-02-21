@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { getTopSelling } from "../../functions/getTopSelling";
+import React from "react";
 import CardItemsCarousel from "../card-item-carousel/card-items-carousel";
 import "./carousel-container.styles.css";
 
-const CarouselContainer = ({ inventory, cart, editCart }) => {
-  const [topSelling, setTopSelling] = useState([]);
-  useEffect(() => {
-    getTopSelling().then((data) => {
-      setTopSelling(data);
-    });
-  }, []);
+const CarouselContainer = ({ inventory, cart, editCart, topSelling }) => {
   return (
     <div className="carousel-container">
       {topSelling.length > 0 && (

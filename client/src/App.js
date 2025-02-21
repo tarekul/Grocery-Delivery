@@ -1,6 +1,4 @@
-import axios from "axios";
 import React, { useEffect, useMemo, useState } from "react";
-import apiUrl from "./apiUrl.js";
 import "./App.css";
 import { editCart } from "./functions/editCart";
 import { getCart } from "./functions/getCart";
@@ -19,9 +17,12 @@ import SearchBar from "./components/search-bar/search-bar.jsx";
 import Title from "./components/title/title.jsx";
 import CartToast from "./components/toast/cart-toast.jsx";
 import DarkMode from "./components/toggle-theme/toggle-theme.jsx";
+import { getInventory } from "./functions/getInventory.js";
+import { getTopSelling } from "./functions/getTopSelling.js";
 
 function App() {
   const [inventory, setInventory] = useState({});
+  const [topSelling, setTopSelling] = useState([]);
   const [cart, setCart] = useState(getCart());
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
@@ -63,16 +64,25 @@ function App() {
       setIsLoading(false);
       return;
     }
-    axios
-      .get(`${apiUrl}/inventory`)
-      .then((res) => {
-        setInventory(res.data);
-        localStorage.setItem("inventory", JSON.stringify(res.data));
-      })
-      .catch((err) => {
-        console.error("Error fetching inventory:", err);
-      })
-      .finally(() => setIsLoading(false));
+    Promise.all([
+      getInventory()
+        .then((res) => {
+          setInventory(res);
+          localStorage.setItem("inventory", JSON.stringify(res));
+        })
+        .catch((err) => {
+          console.error("Error fetching inventory:", err);
+        }),
+      getTopSelling()
+        .then((res) => {
+          setTopSelling(res);
+        })
+        .catch((err) => {
+          console.error("Error fetching top selling:", err);
+        }),
+    ]).finally(() => {
+      setIsLoading(false);
+    });
   }, []);
 
   useEffect(() => {
@@ -147,6 +157,7 @@ function App() {
                 inventory={inventory}
                 cart={cart}
                 editCart={cartEditor}
+                topSelling={topSelling}
               />
             )}
 
