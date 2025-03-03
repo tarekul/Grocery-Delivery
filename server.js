@@ -85,6 +85,7 @@ app.post("/order", verifyInputRequest, async (req, res) => {
       total_price,
       created_at: new Date(),
       deleted_at: null,
+      is_completed: false,
     });
 
     for (const itemData of items) {
