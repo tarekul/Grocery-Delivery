@@ -71,7 +71,7 @@ app.post("/order", verifyInputRequest, async (req, res) => {
   } = req.body;
 
   const name = `${firstName} ${lastName}`;
-  const total_price = parseFloat(totalPrice);
+  const total_price = parseFloat(totalPrice).toFixed(2);
 
   try {
     const orderRef = await addDoc(collection(db, "orders"), {
