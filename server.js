@@ -86,6 +86,7 @@ app.post("/order", verifyInputRequest, async (req, res) => {
       created_at: new Date(),
       deleted_at: null,
       is_completed: false,
+      num_items: items.length,
     });
 
     for (const itemData of items) {
