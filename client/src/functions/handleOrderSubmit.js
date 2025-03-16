@@ -1,18 +1,18 @@
 import axios from "axios";
 import apiUrl from "../apiUrl";
 
+import calculateCartTotal from "./calculateCartTotal";
+import distanceCalculator from "./distanceCalculator";
 import { refreshCart } from "./refreshCart";
+import ServiceFee from "./serviceFee";
 
 export const submitOrder = (
   { firstName, lastName, address, city, state, zipcode, email, phone },
   cart,
   setCart
 ) => {
-  const totalPrice = cart.reduce(
-    (totalPrice, cartItem) =>
-      (totalPrice += cartItem.quantity * cartItem.item.price),
-    0
-  );
+  const totalPrice =
+    calculateCartTotal(cart) + distanceCalculator(zipcode) + ServiceFee;
 
   return axios
     .post(`${apiUrl}/order`, {

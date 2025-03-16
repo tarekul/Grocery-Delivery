@@ -1,13 +1,13 @@
 const calculateCartTotal = (cart) => {
-  return parseFloat(
-    cart
-      .reduce(
+  return (
+    Math.round(
+      cart.reduce(
         (totalPrice, cartItem) =>
           (totalPrice +=
             parseInt(cartItem.quantity) * parseFloat(cartItem.item.price)),
         0
-      )
-      .toFixed(2)
+      ) * 100
+    ) / 100
   );
 };
 
