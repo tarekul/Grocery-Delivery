@@ -71,7 +71,7 @@ app.post("/order", verifyInputRequest, async (req, res) => {
   } = req.body;
 
   const name = `${firstName} ${lastName}`;
-  const total_price = parseFloat(totalPrice).toFixed(2);
+  const total_price = Math.round(parseFloat(totalPrice) * 100) / 100;
 
   try {
     const orderRef = await addDoc(collection(db, "orders"), {
