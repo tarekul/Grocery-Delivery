@@ -134,6 +134,10 @@ app.post("/order/cancel", async (req, res) => {
       return res.status(403).send("Forbidden. Email does not match record.");
     }
 
+    if (orderData.deleted_at) {
+      return res.status(409).send("Order has already been cancelled.");
+    }
+
     const TEN_MINUTES = 10 * 60 * 1000;
 
     if (
@@ -143,10 +147,6 @@ app.post("/order/cancel", async (req, res) => {
       return res
         .status(403)
         .send("Order cannot be cancelled after 10 minutes.");
-    }
-
-    if (orderData.deleted_at) {
-      return res.status(409).send("Order has already been cancelled.");
     }
 
     await updateDoc(doc(db, "orders", orderDoc.id), {
