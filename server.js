@@ -138,6 +138,10 @@ app.post("/order/cancel", async (req, res) => {
       return res.status(409).send("Order has already been cancelled.");
     }
 
+    if (orderData.is_completed) {
+      return res.status(409).send("Order has already been completed.");
+    }
+
     const TEN_MINUTES = 10 * 60 * 1000;
 
     if (
