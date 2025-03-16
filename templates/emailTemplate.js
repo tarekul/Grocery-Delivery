@@ -49,7 +49,8 @@ const emailTemplate = (
         </tbody>
       </table>
       <p>Total Price: $${total_price}</p>
-      <p>Thank you for your order!</p>`;
+      <p>Thank you for your order!</p>
+      <a href="https://grocery-go.netlify.app">View Order</a>`;
 };
 
 module.exports = emailTemplate;
