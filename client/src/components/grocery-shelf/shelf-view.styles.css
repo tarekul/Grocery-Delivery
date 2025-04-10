@@ -1,0 +1,27 @@
+.shelf-container {
+  position: relative;
+  overflow-x: auto;
+  gap: 16px;
+  width: fit-content;
+}
+
+.shelf-image {
+  height: 100vh;
+  object-fit: contain;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  display: block;
+  width: auto;
+}
+
+.hotspot {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 2px solid #fff;
+  cursor: zoom-in;
+  border-radius: 4px;
+}
+
+.zoomed-image.zoomed .shelf-image {
+  cursor: zoom-out;
+}
