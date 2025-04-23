@@ -1,69 +1,69 @@
 :root {
   /* Light Theme Colors */
-  --light-background-header: #ffe0b2;
-  --light-background-main: #fffaf0; /* Floral White */
-  --light-background-secondary: #f5f5f5;
-  --light-background-card: #fff8e1; /* Light Cream */
-  --light-background-price: #ffcc80;
-  --light-background-cart: #e5e9ff;
-  --light-background-hover: #f0f1f9;
-  --light-background-category-title: #eaf5f3;
-  --light-background-category: #f2f8f7;
-  --light-background-category-selected: #b7f9ee;
-  --light-text-primary: #3e2723; /* Dark Brown */
-  --light-text-secondary: #6d4c41; /* Brown */
+  --light-background-header: #ffe3c1;
+  --light-background-main: #fffaf3; /* Floral White */
+  --light-background-secondary: #f6f6f6;
+  --light-background-card: #fff3dc; /* Light Cream */
+  --light-background-price: #ffda9e;
+  --light-background-cart: #dee3ff;
+  --light-background-hover: #e9ebf5;
+  --light-background-category-title: #e4f5f2;
+  --light-background-category: #eaf9f7;
+  --light-background-category-selected: #a2f2e4;
+  --light-text-primary: #3e2723; /* Deep Brown */
+  --light-text-secondary: #5d4037; /* Medium Brown */
   --light-text-white: #fff;
-  --light-primary: #ff5722; /* Deep Orange */
-  --light-primary-dark: #e64a19; /* Dark Orange */
-  --light-remove-from-cart-hover: rgb(251, 98, 98);
+  --light-primary: #ff7043; /* Softer Deep Orange */
+  --light-primary-dark: #e64a19;
+  --light-remove-from-cart-hover: #fb6262;
   --light-remove-from-cart: #f44336;
-  --light-add-to-cart-hover: #45ae94;
+  --light-add-to-cart-hover: #3dc298;
   --light-add-to-cart: #4caf50;
-  --light-border: #bdbdbd; /* Light Gray */
-  --light-action-orange: #ffc107; /* Amber */
-  --light-action-orange-dark: #e88e0c;
-  --light-action-orange-darker: #e67e22;
-  --light-action-orange-darkest: #d35400;
-  --light-action-orange-deep: #ba4a00;
+  --light-border: #cfcfcf;
+  --light-action-orange: #ffb74d; /* Amber */
+  --light-action-orange-dark: #fb8c00;
+  --light-action-orange-darker: #f57c00;
+  --light-action-orange-darkest: #ef6c00;
+  --light-action-orange-deep: #d84315;
   --light-success: #4caf50;
-  --light-error: #f44336;
+  --light-error: #ef5350;
   --light-order-toast: #ff6f61;
-  --light-progress-bar: #90ee90;
+  --light-progress-bar: #81c784;
   --light-summary: antiquewhite;
 
   /* Dark Theme Colors */
-  --dark-background-header: #004d40;
-  --dark-background-main: #263238;
-  --dark-background-secondary: #405579;
-  --dark-background-card: #37474f;
-  --dark-background-cart: #2d3748;
-  --dark-background-price: #001f3f;
-  --dark-background-hover: #4a5568;
-  --dark-background-category-title: #264d4a;
-  --dark-background-category: #3d7a76;
-  --dark-background-category-selected: #295570;
-  --dark-text-primary: #d7ccc8; /* Light Brown */
-  --dark-text-secondary: #e0e0e0; /* Light Gray */
-  --dark-text-white: #fff;
+  --dark-background-header: #003c36;
+  --dark-background-main: #212b36;
+  --dark-background-secondary: #38495d;
+  --dark-background-card: #2b353c;
+  --dark-background-cart: #1f2933;
+  --dark-background-price: #002b4f;
+  --dark-background-hover: #3a4551;
+  --dark-background-category-title: #1d4d47;
+  --dark-background-category: #2f6d69;
+  --dark-background-category-selected: #355f85;
+  --dark-text-primary: #e0d7d2;
+  --dark-text-secondary: #cccccc;
+  --dark-text-white: #ffffff;
   --dark-primary: #e97451;
-  --dark-primary-dark: #bf360c; /* Dark Red-Orange */
-  --dark-remove-from-cart: crimson;
-  --dark-remove-from-cart-hover: rgb(251, 98, 98);
-  --dark-add-to-cart-hover: #3e9d87;
-  --dark-add-to-cart: #3e9d87;
+  --dark-primary-dark: #bf360c;
+  --dark-remove-from-cart: #ff5c5c;
+  --dark-remove-from-cart-hover: #fb6262;
+  --dark-add-to-cart-hover: #36b089;
+  --dark-add-to-cart: #3dc298;
   --dark-border: #4a5568;
-  --dark-action-orange: #f6ad55;
-  --dark-action-orange-dark: #ed8936;
-  --dark-action-orange-darker: #dd6b20;
-  --dark-action-orange-darkest: #c05621;
-  --dark-action-orange-deep: #9c4221;
-  --dark-success: #4caf50;
-  --dark-error: #f56565;
-  --dark-order-toast: #ff6f61;
-  --dark-progress-bar: #009688;
-  --dark-summary: darkslategray;
+  --dark-action-orange: #f89d51;
+  --dark-action-orange-dark: #dc7733;
+  --dark-action-orange-darker: #c05a2c;
+  --dark-action-orange-darkest: #9e4b1d;
+  --dark-action-orange-deep: #7e3411;
+  --dark-success: #3dc298;
+  --dark-error: #ff6b6b;
+  --dark-order-toast: #ff7a6c;
+  --dark-progress-bar: #00bfa5;
+  --dark-summary: #2e3c40;
 
-  /* Default theme variables - these are what your components actually use */
+  /* Default theme variables */
   --background-header: var(--light-background-header);
   --background-main: var(--light-background-main);
   --background-secondary: var(--light-background-secondary);
@@ -96,7 +96,7 @@
   --summary: var(--light-summary);
 }
 
-/* When dark mode is active, update all the default variables */
+/* Dark theme override */
 [data-theme="dark"] {
   --background-header: var(--dark-background-header);
   --background-main: var(--dark-background-main);
