@@ -25,7 +25,7 @@ ul {
 }
 
 .menu-item:hover {
-  color: var(--primary);
+  color: var(--text-secondary);
 }
 
 .menu-icon {

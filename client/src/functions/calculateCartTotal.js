@@ -4,7 +4,7 @@ const calculateCartTotal = (cart) => {
       cart.reduce(
         (totalPrice, cartItem) =>
           (totalPrice +=
-            parseInt(cartItem.quantity) * parseFloat(cartItem.item.price)),
+            parseInt(cartItem.quantity) * parseFloat(cartItem.price)),
         0
       ) * 100
     ) / 100

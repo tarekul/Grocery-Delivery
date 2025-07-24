@@ -1,0 +1,29 @@
+.shelf-carousel {
+  display: flex;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  gap: 20px;
+}
+
+.shelf-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.shelf-carousel::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.shelf-carousel .shelf-item {
+  flex: 0 0 100%;
+}
+
+@media (min-width: 768px) {
+  .shelf-carousel .shelf-item {
+    flex: 0 0 50%;
+  }
+
+  .shelf-carousel .shelf-item.full-width {
+    flex: 0 0 100%;
+  }
+}

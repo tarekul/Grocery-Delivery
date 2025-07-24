@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { saveCartToLocalStorage } from "../../functions/saveCart";
-import CartButton from "../card-button/cart-button";
+import CartButton from "../cart-button/cart-button";
 import CartItem from "../cart-item/cart-item";
 import "./cart.styles.css";
 
@@ -17,7 +17,7 @@ const Cart = ({
 
   const totalPrice = cart.reduce(
     (totalPrice, cartItem) =>
-      (totalPrice += cartItem.quantity * cartItem.item.price),
+      (totalPrice += cartItem.quantity * cartItem.price),
     0
   );
 
@@ -100,7 +100,7 @@ const Cart = ({
             <div className="cart-items">
               {cart.map((cartItem) => (
                 <CartItem
-                  key={cartItem.item.id}
+                  key={cartItem.id}
                   cartItem={cartItem}
                   editCart={editCart}
                 />

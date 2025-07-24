@@ -10,6 +10,6 @@
 }
 
 .title:hover {
-  color: var(--primary);
+  color: var(--text-secondary);
   transform: scale(0.99);
 }

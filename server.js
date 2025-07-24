@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const path = require("path");
 const verifyInputRequest = require("./middleware/verifyInputRequest.js");
 const {
   collection,
@@ -47,6 +48,8 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => {
   res.send("Welcome to the Grocery MVP App!");
 });
+
+app.use("/shelf-images", express.static(path.join(__dirname, "shelf-images")));
 
 app.get("/inventory", (req, res) => {
   try {
