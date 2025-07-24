@@ -1,107 +1,113 @@
-import React, { useRef, useState } from "react";
+import { ShoppingBag } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 import "./shelf-view.styles.css";
-import shelfImage from "./shelf.jpg";
 
-const ShelfView = () => {
-  const [zoom, setZoom] = useState(false);
-  const [transform, setTransform] = useState(""); // store transform CSS
-  const containerRef = useRef(null);
-  const imageRef = useRef(null);
+const ShelfView = ({ editCart, cart, image, items }) => {
+  const [transform, setTransform] = useState("");
+  const [scale, setScale] = useState(1);
+  const shelfContainerRef = useRef(null);
+  const shelfImageRef = useRef(null);
 
-  const items = [
-    {
-      id: 1,
-      name: "Milk",
-      price: "$3.99",
-      position: { left: "20%", top: "30%" },
-      width: "10%",
-      height: "15%",
-    },
-    {
-      id: 2,
-      name: "Dahi",
-      price: "$4.49",
-      position: { left: "62%", top: "37%" },
-      width: "10%",
-      height: "15%",
-    },
-  ];
-
-  const handleZoomOut = () => {
-    setZoom(false);
-    setTransform("");
-  };
+  const cartMap = useMemo(() => {
+    const map = {};
+    cart.forEach((item) => {
+      map[item.id] = item.quantity;
+    });
+    return map;
+  }, [cart]);
 
   const handleZoomIn = (item) => {
-    if (!containerRef.current || !imageRef.current) return;
+    if (!shelfContainerRef.current || !shelfImageRef.current) return;
 
-    const container = containerRef.current;
-    const image = imageRef.current;
+    if (scale > 1) {
+      handleZoomOut();
+      return;
+    }
 
-    // Calculate actual pixel position of the hotspot
-    const itemLeftPercent = parseFloat(item.position.left) / 100;
-    const itemTopPercent = parseFloat(item.position.top) / 100;
+    const newScale = scale + 1.5;
 
-    const itemX = image.offsetWidth * itemLeftPercent;
-    const itemY = image.offsetHeight * itemTopPercent;
+    const container = shelfContainerRef.current;
+    const image = shelfImageRef.current;
 
-    // Center of the viewport
+    const itemLeft = parseFloat(item.shelf.position.left);
+    const itemTop = parseFloat(item.shelf.position.top);
+    const itemWidth = parseFloat(item.shelf.width);
+    const itemHeight = parseFloat(item.shelf.height);
+
+    // Convert percentages to pixels, and add half the width/height to get center
+    const itemX = (image.offsetWidth * (itemLeft + itemWidth)) / 100;
+    const itemY = (image.offsetHeight * (itemTop + itemHeight)) / 100;
+
     const centerX = container.offsetWidth / 2;
     const centerY = container.offsetHeight / 2;
 
-    // Translate such that the clicked item moves to the center
-    const scale = 2; // or any zoom level
-    const translateX = centerX - itemX * scale;
-    const translateY = centerY - itemY * scale;
+    const translateX = centerX - itemX * newScale;
+    const translateY = centerY - itemY * newScale;
 
     setTransform(
-      `scale(${scale}) translate(${translateX / scale}px, ${
-        translateY / scale
+      `scale(${newScale}) translate(${translateX / newScale}px, ${
+        translateY / newScale
       }px)`
     );
-    setZoom(true);
+    setScale(newScale);
+  };
+
+  const handleZoomOut = () => {
+    setTransform("");
+    setScale(1);
+  };
+
+  const handleAddToCart = (item) => {
+    editCart(item.id, "card", "add");
   };
 
   return (
-    <div className="shelf-container" ref={containerRef}>
+    <div className="shelf-container" ref={shelfContainerRef}>
       <div
-        className={`zoomed-image ${zoom ? "zoomed" : ""}`}
-        onClick={handleZoomOut}
-        style={{ position: "relative" }}
+        className="zoom-wrapper"
+        style={{
+          transform: transform,
+          transformOrigin: "top left",
+          transition: "transform 0.7s ease",
+          position: "relative",
+        }}
       >
-        <div
-          className="zoom-wrapper"
-          style={{
-            transform: transform,
-            transformOrigin: "top left",
-            transition: "transform 0.3s ease",
-            position: "relative",
-          }}
-        >
-          <img
-            ref={imageRef}
-            src={shelfImage}
-            alt="Grocery Shelf"
-            className="shelf-image"
-          />
-          {items.map((item) => (
-            <div
-              key={item.id}
-              className="hotspot"
-              style={{
-                left: item.position.left,
-                top: item.position.top,
-                width: item.width,
-                height: item.height,
-              }}
-              title={`Add ${item.name}`}
+        <img
+          src={image}
+          alt="Grocery Shelf"
+          className="shelf-image"
+          ref={shelfImageRef}
+        />
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className={`hotspot ${scale > 1 ? "full-zoomed" : ""}`}
+            style={{
+              left: item.shelf.position.left,
+              top: item.shelf.position.top,
+              width: item.shelf.width,
+              height: item.shelf.height,
+            }}
+            title={`Add ${item.name}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleZoomIn(item);
+            }}
+          >
+            <button
+              className="add-to-cart-btn"
               onClick={(e) => {
-                e.stopPropagation(); // prevent zoom-out
-                handleZoomIn(item);
+                e.stopPropagation();
+                handleAddToCart(item);
               }}
-            />
-          ))}
-        </div>
+            >
+              <ShoppingBag size="1em" title="Add to Cart" color="green" />
+              {cartMap[item.id] && (
+                <span className="item-badge">{cartMap[item.id]}</span>
+              )}
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );

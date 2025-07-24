@@ -1,6 +1,20 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./App.css";
-import ShelfView from "./components/grocery-shelf/shelf-view";
+import About from "./components/about/about";
+import CancelOrder from "./components/cancel-order/cancel-order";
+import Cart from "./components/cart/cart";
+import CheckoutContainer from "./components/checkout-container/checkout-container";
+import FAQ from "./components/faq/faq";
+import Footer from "./components/footer/footer";
+import LoadingIcon from "./components/loading-icon/loading-icon";
+import Menu from "./components/menu/menu";
+import Mission from "./components/mission/mission";
+import SearchBar from "./components/search-bar/search-bar";
+import ShelfCarousel from "./components/shelf-carousel/shelf-carousel";
+import Title from "./components/title/title";
+import CartToast from "./components/toast/cart-toast.jsx";
+import DarkMode from "./components/toggle-theme/toggle-theme.jsx";
+
 import { editCart } from "./functions/editCart";
 import { getCart } from "./functions/getCart";
 import { getInventory } from "./functions/getInventory.js";
@@ -89,8 +103,7 @@ function App() {
 
   return (
     <div className="App">
-      <ShelfView />
-      {/* <div className="header">
+      <div className="header">
         <Title
           closeCheckout={closeCheckout}
           setMission={setShowMission}
@@ -121,7 +134,7 @@ function App() {
         ) : (
           <>
             <SearchBar
-              inventory={Object.values(inventory).flat()}
+              inventory={inventory}
               editCart={cartEditor}
               setIsSearchBarActive={setIsSearchBarActive}
               isSearchBarActive={isSearchBarActive}
@@ -140,11 +153,10 @@ function App() {
                 <LoadingIcon />
               </div>
             ) : (
-              <CategoryCarousel
-                inventory={inventory}
-                cart={cart}
+              <ShelfCarousel
                 editCart={cartEditor}
-                topSelling={topSelling}
+                cart={cart}
+                inventory={inventory}
               />
             )}
 
@@ -173,7 +185,7 @@ function App() {
         setShowMission={setShowMission}
         setShowAbout={setShowAbout}
         closeCheckout={closeCheckout}
-      /> */}
+      />
     </div>
   );
 }

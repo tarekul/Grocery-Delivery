@@ -48,6 +48,8 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Grocery MVP App!");
 });
 
+app.use("/shelf-images", express.static("assets"));
+
 app.get("/inventory", (req, res) => {
   try {
     res.json(inventory);

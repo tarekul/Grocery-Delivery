@@ -1,69 +1,73 @@
 :root {
   /* Light Theme Colors */
-  --light-background-header: #ffe0b2;
-  --light-background-main: #fffaf0; /* Floral White */
+  --light-background-header: #f8d4ad;
+  --light-background-main: #fbf8ee; /* Off-white / Cream */
   --light-background-secondary: #f5f5f5;
-  --light-background-card: #fff8e1; /* Light Cream */
-  --light-background-price: #ffcc80;
-  --light-background-cart: #e5e9ff;
-  --light-background-hover: #f0f1f9;
-  --light-background-category-title: #eaf5f3;
-  --light-background-category: #f2f8f7;
-  --light-background-category-selected: #b7f9ee;
-  --light-text-primary: #3e2723; /* Dark Brown */
-  --light-text-secondary: #6d4c41; /* Brown */
-  --light-text-white: #fff;
-  --light-primary: #ff5722; /* Deep Orange */
-  --light-primary-dark: #e64a19; /* Dark Orange */
-  --light-remove-from-cart-hover: rgb(251, 98, 98);
-  --light-remove-from-cart: #f44336;
-  --light-add-to-cart-hover: #45ae94;
-  --light-add-to-cart: #4caf50;
-  --light-border: #bdbdbd; /* Light Gray */
-  --light-action-orange: #ffc107; /* Amber */
-  --light-action-orange-dark: #e88e0c;
-  --light-action-orange-darker: #e67e22;
-  --light-action-orange-darkest: #d35400;
-  --light-action-orange-deep: #ba4a00;
-  --light-success: #4caf50;
-  --light-error: #f44336;
-  --light-order-toast: #ff6f61;
-  --light-progress-bar: #90ee90;
-  --light-summary: antiquewhite;
+  --light-background-card: #ffffff;
+  --light-background-price: #f9a825; /* Mustard yellow */
+  --light-background-cart: #fff8e1;
+  --light-background-hover: #f0f0f0;
+  --light-text-primary: #21211f; /* Dark charcoal */
+  --light-text-secondary: #4a5568;
+  --light-text-white: #ffffff;
+  --light-primary: #d97706;
+  --light-primary-dark: #b45309;
+  --light-remove-from-cart-hover: #c62828; /* Deep red */
+  --light-remove-from-cart: #b71c1c;
+  --light-add-to-cart-hover: #388e3c;
+  --light-add-to-cart: #2e7d32;
+  --light-card-badge: #f9a825; /* Mustard yellow */
+  --light-card-badge-hover: #ffd54f;
+  --light-border: #e2e8f0;
+  --light-action-orange: #ed8936;
+  --light-action-orange-dark: #dd6b20;
+  --light-action-orange-darker: #c05621;
+  --light-action-orange-darkest: #9c4221;
+  --light-action-orange-deep: #7b341e;
+  --light-success: #48bb78;
+  --light-error: #f56565;
+  --light-order-toast: #c62828;
+  --light-progress-bar: #2e7d32;
+  --light-summary: #fff8e1;
+  --light-search-input-bg: #ffffff;
+  --light-search-input-border: #cbd5e1;
+  --light-search-input-text: #4a5568;
 
   /* Dark Theme Colors */
-  --dark-background-header: #004d40;
-  --dark-background-main: #263238;
-  --dark-background-secondary: #405579;
-  --dark-background-card: #37474f;
+  --dark-background-header: #1b5e20;
+  --dark-background-main: #1a202c;
+  --dark-background-secondary: #2d3748;
+  --dark-background-card: #2d3748;
   --dark-background-cart: #2d3748;
-  --dark-background-price: #001f3f;
+  --dark-background-price: #f9a825;
   --dark-background-hover: #4a5568;
-  --dark-background-category-title: #264d4a;
-  --dark-background-category: #3d7a76;
-  --dark-background-category-selected: #295570;
-  --dark-text-primary: #d7ccc8; /* Light Brown */
-  --dark-text-secondary: #e0e0e0; /* Light Gray */
-  --dark-text-white: #fff;
-  --dark-primary: #e97451;
-  --dark-primary-dark: #bf360c; /* Dark Red-Orange */
-  --dark-remove-from-cart: crimson;
-  --dark-remove-from-cart-hover: rgb(251, 98, 98);
-  --dark-add-to-cart-hover: #3e9d87;
-  --dark-add-to-cart: #3e9d87;
+  --dark-text-primary: #f7fafc;
+  --dark-text-secondary: #e2e8f0;
+  --dark-text-white: #ffffff;
+  --dark-primary: #539c57;
+  --dark-primary-dark: #347f39;
+  --dark-remove-from-cart: #c62828;
+  --dark-remove-from-cart-hover: #e53935;
+  --dark-add-to-cart-hover: #388e3c;
+  --dark-add-to-cart: #2e7d32;
+  --dark-card-badge: #ffd54f;
+  --dark-card-badge-hover: #f9a825;
   --dark-border: #4a5568;
-  --dark-action-orange: #f6ad55;
-  --dark-action-orange-dark: #ed8936;
-  --dark-action-orange-darker: #dd6b20;
-  --dark-action-orange-darkest: #c05621;
-  --dark-action-orange-deep: #9c4221;
-  --dark-success: #4caf50;
+  --dark-action-orange: #ed8936;
+  --dark-action-orange-dark: #dd6b20;
+  --dark-action-orange-darker: #c05621;
+  --dark-action-orange-darkest: #9c4221;
+  --dark-action-orange-deep: #7b341e;
+  --dark-success: #48bb78;
   --dark-error: #f56565;
-  --dark-order-toast: #ff6f61;
-  --dark-progress-bar: #009688;
-  --dark-summary: darkslategray;
+  --dark-order-toast: #c62828;
+  --dark-progress-bar: #2e7d32;
+  --dark-summary: #2d3748;
+  --dark-search-input-bg: #2d3748;
+  --dark-search-input-border: #4a5568;
+  --dark-search-input-text: #e2e8f0;
 
-  /* Default theme variables - these are what your components actually use */
+  /* Default theme variables */
   --background-header: var(--light-background-header);
   --background-main: var(--light-background-main);
   --background-secondary: var(--light-background-secondary);
@@ -71,9 +75,6 @@
   --background-price: var(--light-background-price);
   --background-cart: var(--light-background-cart);
   --background-hover: var(--light-background-hover);
-  --background-category-title: var(--light-background-category-title);
-  --background-category: var(--light-background-category);
-  --background-category-selected: var(--light-background-category-selected);
   --text-primary: var(--light-text-primary);
   --text-secondary: var(--light-text-secondary);
   --text-white: var(--light-text-white);
@@ -83,6 +84,8 @@
   --add-to-cart-hover: var(--light-add-to-cart-hover);
   --remove-from-cart: var(--light-remove-from-cart);
   --remove-from-cart-hover: var(--light-remove-from-cart-hover);
+  --card-badge: var(--light-card-badge);
+  --card-badge-hover: var(--light-card-badge-hover);
   --border: var(--light-border);
   --action-orange: var(--light-action-orange);
   --action-orange-dark: var(--light-action-orange-dark);
@@ -94,9 +97,11 @@
   --order-toast: var(--light-order-toast);
   --progress-bar: var(--light-progress-bar);
   --summary: var(--light-summary);
+  --search-input-bg: var(--light-search-input-bg);
+  --search-input-border: var(--light-search-input-border);
+  --search-input-text: var(--light-search-input-text);
 }
 
-/* When dark mode is active, update all the default variables */
 [data-theme="dark"] {
   --background-header: var(--dark-background-header);
   --background-main: var(--dark-background-main);
@@ -105,9 +110,6 @@
   --background-price: var(--dark-background-price);
   --background-cart: var(--dark-background-cart);
   --background-hover: var(--dark-background-hover);
-  --background-category-title: var(--dark-background-category-title);
-  --background-category: var(--dark-background-category);
-  --background-category-selected: var(--dark-background-category-selected);
   --text-primary: var(--dark-text-primary);
   --text-secondary: var(--dark-text-secondary);
   --text-white: var(--dark-text-white);
@@ -117,6 +119,8 @@
   --add-to-cart-hover: var(--dark-add-to-cart-hover);
   --remove-from-cart: var(--dark-remove-from-cart);
   --remove-from-cart-hover: var(--dark-remove-from-cart-hover);
+  --card-badge: var(--dark-card-badge);
+  --card-badge-hover: var(--dark-card-badge-hover);
   --border: var(--dark-border);
   --action-orange: var(--dark-action-orange);
   --action-orange-dark: var(--dark-action-orange-dark);
@@ -128,4 +132,7 @@
   --order-toast: var(--dark-order-toast);
   --progress-bar: var(--dark-progress-bar);
   --summary: var(--dark-summary);
+  --search-input-bg: var(--dark-search-input-bg);
+  --search-input-border: var(--dark-search-input-border);
+  --search-input-text: var(--dark-search-input-text);
 }
