@@ -3,6 +3,7 @@
   overflow-x: scroll;
   scroll-behavior: smooth;
   gap: 20px;
+  margin: -20px;
 }
 
 .shelf-carousel::-webkit-scrollbar {
