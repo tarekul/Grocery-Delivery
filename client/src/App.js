@@ -56,8 +56,8 @@ function App() {
   };
 
   useEffect(() => {
+    localStorage.removeItem("inventory");
     if (localStorage.getItem("inventory")) {
-      localStorage.removeItem("inventory");
       setInventory(JSON.parse(localStorage.getItem("inventory")));
     } else {
       setIsLoading(true);
