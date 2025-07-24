@@ -68,6 +68,8 @@ function App() {
         })
         .catch((err) => {
           console.error("Error fetching inventory:", err);
+        })
+        .finally(() => {
           setIsLoading(false);
         });
     }
