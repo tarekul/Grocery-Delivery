@@ -1,4 +1,4 @@
-import { ShoppingBag, X } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./shelf-view.styles.css";
 
@@ -115,12 +115,6 @@ const ShelfView = ({ editCart, cart, image, items }) => {
               </button>
             </div>
           </div>
-          <button
-            className="close-modal-btn"
-            onClick={() => setSelectedItem(null)}
-          >
-            <X size="1em" title="Close" color="var(--primary)" />
-          </button>
         </div>
       )}
     </>
