@@ -18,11 +18,9 @@ import DarkMode from "./components/toggle-theme/toggle-theme.jsx";
 import { editCart } from "./functions/editCart";
 import { getCart } from "./functions/getCart";
 import { getInventory } from "./functions/getInventory.js";
-import { getTopSelling } from "./functions/getTopSelling.js";
 
 function App() {
   const [inventory, setInventory] = useState({});
-  const [topSelling, setTopSelling] = useState([]);
   const [cart, setCart] = useState(getCart());
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
@@ -69,20 +67,11 @@ function App() {
         })
         .catch((err) => {
           console.error("Error fetching inventory:", err);
+        })
+        .finally(() => {
           setIsLoading(false);
         });
     }
-
-    getTopSelling()
-      .then((res) => {
-        setTopSelling(res);
-      })
-      .catch((err) => {
-        console.error("Error fetching top selling:", err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
   }, []);
 
   useEffect(() => {
