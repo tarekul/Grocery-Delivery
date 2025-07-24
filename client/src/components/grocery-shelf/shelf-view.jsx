@@ -1,11 +1,11 @@
-import { ShoppingBag } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { ShoppingBag, X } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "./shelf-view.styles.css";
 
 const ShelfView = ({ editCart, cart, image, items }) => {
   const [transform, setTransform] = useState("");
-  const [scale, setScale] = useState(1);
-  const shelfContainerRef = useRef(null);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const modalOverlayRef = useRef(null);
   const shelfImageRef = useRef(null);
 
   const cartMap = useMemo(() => {
@@ -16,45 +16,37 @@ const ShelfView = ({ editCart, cart, image, items }) => {
     return map;
   }, [cart]);
 
-  const handleZoomIn = (item) => {
-    if (!shelfContainerRef.current || !shelfImageRef.current) return;
-
-    if (scale > 1) {
-      handleZoomOut();
-      return;
+  useEffect(() => {
+    if (selectedItem && modalOverlayRef.current && shelfImageRef.current) {
+      handleZoomIn(selectedItem);
     }
+  }, [selectedItem]);
 
-    const newScale = scale + 1.5;
+  const handleZoomIn = (item) => {
+    if (!modalOverlayRef.current || !shelfImageRef.current) return;
 
-    const container = shelfContainerRef.current;
+    const scale = 2.5;
+
+    const container = modalOverlayRef.current;
     const image = shelfImageRef.current;
 
     const itemLeft = parseFloat(item.shelf.position.left);
     const itemTop = parseFloat(item.shelf.position.top);
-    const itemWidth = parseFloat(item.shelf.width);
-    const itemHeight = parseFloat(item.shelf.height);
 
-    // Convert percentages to pixels, and add half the width/height to get center
-    const itemX = (image.offsetWidth * (itemLeft + itemWidth)) / 100;
-    const itemY = (image.offsetHeight * (itemTop + itemHeight)) / 100;
+    const itemX = (image.offsetWidth * itemLeft) / 100;
+    const itemY = (image.offsetHeight * itemTop) / 100;
 
     const centerX = container.offsetWidth / 2;
     const centerY = container.offsetHeight / 2;
 
-    const translateX = centerX - itemX * newScale;
-    const translateY = centerY - itemY * newScale;
+    const translateX = centerX - itemX * scale;
+    const translateY = centerY - itemY * scale;
 
     setTransform(
-      `scale(${newScale}) translate(${translateX / newScale}px, ${
-        translateY / newScale
+      `scale(${scale}) translate(${translateX / scale}px, ${
+        translateY / scale
       }px)`
     );
-    setScale(newScale);
-  };
-
-  const handleZoomOut = () => {
-    setTransform("");
-    setScale(1);
   };
 
   const handleAddToCart = (item) => {
@@ -62,26 +54,16 @@ const ShelfView = ({ editCart, cart, image, items }) => {
   };
 
   return (
-    <div className="shelf-container" ref={shelfContainerRef}>
+    <>
       <div
-        className="zoom-wrapper"
-        style={{
-          transform: transform,
-          transformOrigin: "top left",
-          transition: "transform 0.7s ease",
-          position: "relative",
-        }}
+        className={`shelf-container ${selectedItem ? "dimmed" : ""}`}
+        onClick={() => setSelectedItem(null)}
       >
-        <img
-          src={image}
-          alt="Grocery Shelf"
-          className="shelf-image"
-          ref={shelfImageRef}
-        />
+        <img src={image} alt="Grocery Shelf" className="shelf-image" />
         {items.map((item) => (
           <div
             key={item.id}
-            className={`hotspot ${scale > 1 ? "full-zoomed" : ""}`}
+            className="hotspot"
             style={{
               left: item.shelf.position.left,
               top: item.shelf.position.top,
@@ -90,26 +72,58 @@ const ShelfView = ({ editCart, cart, image, items }) => {
             }}
             title={`Add ${item.name}`}
             onClick={(e) => {
-              e.stopPropagation();
-              handleZoomIn(item);
-            }}
-          >
-            <button
-              className="add-to-cart-btn"
-              onClick={(e) => {
+              if (!selectedItem) {
                 e.stopPropagation();
-                handleAddToCart(item);
-              }}
-            >
-              <ShoppingBag size="1em" title="Add to Cart" color="green" />
-              {cartMap[item.id] && (
-                <span className="item-badge">{cartMap[item.id]}</span>
-              )}
-            </button>
-          </div>
+                setSelectedItem(item);
+              }
+            }}
+          ></div>
         ))}
       </div>
-    </div>
+      {selectedItem && (
+        <div className="modal-overlay" ref={modalOverlayRef}>
+          <div
+            className="zoom-wrapper"
+            style={{
+              transform: transform,
+              transformOrigin: "top left",
+              transition: "transform 0.7s ease",
+              position: "relative",
+            }}
+          >
+            <img src={image} alt={selectedItem.imageId} ref={shelfImageRef} />
+            <div
+              className="hotspot"
+              style={{
+                left: selectedItem.shelf.position.left,
+                top: selectedItem.shelf.position.top,
+                width: selectedItem.shelf.width,
+                height: selectedItem.shelf.height,
+              }}
+            >
+              <button
+                className="add-to-cart-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAddToCart(selectedItem);
+                }}
+              >
+                <ShoppingBag size="1em" title="Add to Cart" color="green" />
+                {cartMap[selectedItem.id] && (
+                  <span className="item-badge">{cartMap[selectedItem.id]}</span>
+                )}
+              </button>
+            </div>
+          </div>
+          <button
+            className="close-modal-btn"
+            onClick={() => setSelectedItem(null)}
+          >
+            <X size="1em" title="Close" color="var(--primary)" />
+          </button>
+        </div>
+      )}
+    </>
   );
 };
 

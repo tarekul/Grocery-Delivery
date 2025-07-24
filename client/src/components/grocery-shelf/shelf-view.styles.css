@@ -5,6 +5,11 @@
   width: 100%;
 }
 
+.shelf-container.dimmed {
+  opacity: 0.2;
+  transition: opacity 0.3s ease;
+}
+
 .shelf-image {
   border-bottom: 1px solid #eee;
   width: 100%;
@@ -14,11 +19,6 @@
   position: absolute;
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid #fff;
-  cursor: zoom-in;
-}
-
-.hotspot.full-zoomed {
-  cursor: zoom-out;
 }
 
 .add-to-cart-btn {
@@ -30,7 +30,7 @@
   cursor: pointer;
   border: none;
   background: var(--card-badge);
-  font-size: 2vw;
+  font-size: 1.5vw;
   z-index: 1;
 }
 
@@ -54,13 +54,57 @@
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 }
 
+.modal-overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.modal-overlay img {
+  width: 100%;
+  height: auto;
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  border: none;
+  color: var(--primary);
+  font-size: 2vw;
+  cursor: pointer;
+}
+
+.close-modal-btn:hover {
+  transform: scale(0.9);
+}
+
+.close-modal-btn:active {
+  transform: scale(0.94);
+}
+
 @media (max-width: 768px) {
   .add-to-cart-btn {
     font-size: 1.8vw;
   }
 
   .item-badge {
-    font-size: 1vw;
+    font-size: 1.5vw;
+    padding: 2px 5px;
+    top: -6px;
+    right: -6px;
   }
 }
 
@@ -70,6 +114,9 @@
   }
 
   .item-badge {
-    font-size: 0.8vw;
+    font-size: 1.2vw;
+    padding: 2px 4px;
+    top: -4px;
+    right: -4px;
   }
 }
