@@ -1,5 +1,5 @@
-import { ShoppingBag } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import ZoomedCrop from "../zoomed-crop/zoomed-crop";
 import "./shelf-view.styles.css";
 
 const ShelfView = ({ editCart, cart, image, items }) => {
@@ -16,37 +16,21 @@ const ShelfView = ({ editCart, cart, image, items }) => {
     return map;
   }, [cart]);
 
-  useEffect(() => {
-    if (selectedItem && modalOverlayRef.current && shelfImageRef.current) {
-      handleZoomIn(selectedItem);
-    }
-  }, [selectedItem]);
+  const getItemBox = (item) => {
+    if (!shelfImageRef.current) return null;
 
-  const handleZoomIn = (item) => {
-    if (!modalOverlayRef.current || !shelfImageRef.current) return;
-
-    const scale = 2.5;
-
-    const container = modalOverlayRef.current;
     const image = shelfImageRef.current;
+    const { width, height } = item.shelf;
+    const { left, top } = item.shelf.position;
+    const imageWidth = image.offsetWidth;
+    const imageHeight = image.offsetHeight;
 
-    const itemLeft = parseFloat(item.shelf.position.left);
-    const itemTop = parseFloat(item.shelf.position.top);
+    const x = (parseFloat(left) / 100) * imageWidth;
+    const y = (parseFloat(top) / 100) * imageHeight;
+    const w = (parseFloat(width) / 100) * imageWidth;
+    const h = (parseFloat(height) / 100) * imageHeight;
 
-    const itemX = (image.offsetWidth * itemLeft) / 100;
-    const itemY = (image.offsetHeight * itemTop) / 100;
-
-    const centerX = container.offsetWidth / 2;
-    const centerY = container.offsetHeight / 2;
-
-    const translateX = centerX - itemX * scale;
-    const translateY = centerY - itemY * scale;
-
-    setTransform(
-      `scale(${scale}) translate(${translateX / scale}px, ${
-        translateY / scale
-      }px)`
-    );
+    return { x, y, w, h };
   };
 
   const handleAddToCart = (item) => {
@@ -57,9 +41,17 @@ const ShelfView = ({ editCart, cart, image, items }) => {
     <>
       <div
         className={`shelf-container ${selectedItem ? "dimmed" : ""}`}
-        onClick={() => setSelectedItem(null)}
+        onClick={() => {
+          setSelectedItem(null);
+          setTransform("");
+        }}
       >
-        <img src={image} alt="Grocery Shelf" className="shelf-image" />
+        <img
+          src={image}
+          alt="Grocery Shelf"
+          className="shelf-image"
+          ref={shelfImageRef}
+        />
         {items.map((item) => (
           <div
             key={item.id}
@@ -74,7 +66,9 @@ const ShelfView = ({ editCart, cart, image, items }) => {
             onClick={(e) => {
               if (!selectedItem) {
                 e.stopPropagation();
-                setSelectedItem(item);
+                const box = getItemBox(item);
+                console.log(box);
+                setSelectedItem({ ...item, box });
               }
             }}
           ></div>
@@ -82,39 +76,12 @@ const ShelfView = ({ editCart, cart, image, items }) => {
       </div>
       {selectedItem && (
         <div className="modal-overlay" ref={modalOverlayRef}>
-          <div
-            className="zoom-wrapper"
-            style={{
-              transform: transform,
-              transformOrigin: "top left",
-              transition: "transform 0.7s ease",
-              position: "relative",
-            }}
-          >
-            <img src={image} alt={selectedItem.imageId} ref={shelfImageRef} />
-            <div
-              className="hotspot"
-              style={{
-                left: selectedItem.shelf.position.left,
-                top: selectedItem.shelf.position.top,
-                width: selectedItem.shelf.width,
-                height: selectedItem.shelf.height,
-              }}
-            >
-              <button
-                className="add-to-cart-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleAddToCart(selectedItem);
-                }}
-              >
-                <ShoppingBag size="1em" title="Add to Cart" color="green" />
-                {cartMap[selectedItem.id] && (
-                  <span className="item-badge">{cartMap[selectedItem.id]}</span>
-                )}
-              </button>
-            </div>
-          </div>
+          <ZoomedCrop
+            imageSrc={image}
+            box={selectedItem.box}
+            imageWidth={shelfImageRef.current.offsetWidth}
+            imageHeight={shelfImageRef.current.offsetHeight}
+          />
         </div>
       )}
     </>
