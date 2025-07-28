@@ -2,8 +2,7 @@ import "./zommed-crop.styles.css";
 
 const ZoomedCrop = ({ imageSrc, box, imageWidth, imageHeight }) => {
   const cropSize = 400;
-  const scale = (cropSize / imageWidth) * 4; // This will scale image to fit crop window
-
+  const scale = (cropSize / imageWidth) * 3;
   if (!box) return null;
 
   const style = {
