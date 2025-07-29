@@ -71,7 +71,6 @@ const ShelfView = ({ editCart, cart, image, items }) => {
           className="modal-overlay"
           ref={modalOverlayRef}
           onClick={() => {
-            console.log("click on overlay");
             setSelectedItem(null);
           }}
         >
