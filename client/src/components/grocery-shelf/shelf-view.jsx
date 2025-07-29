@@ -3,7 +3,6 @@ import ZoomedCrop from "../zoomed-crop/zoomed-crop";
 import "./shelf-view.styles.css";
 
 const ShelfView = ({ editCart, cart, image, items }) => {
-  const [transform, setTransform] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
   const modalOverlayRef = useRef(null);
   const shelfImageRef = useRef(null);
@@ -33,19 +32,13 @@ const ShelfView = ({ editCart, cart, image, items }) => {
     return { x, y, w, h };
   };
 
-  const handleAddToCart = (item) => {
-    editCart(item.id, "card", "add");
+  const handleAddToCart = (itemId) => {
+    editCart(itemId, "card", "add");
   };
 
   return (
     <>
-      <div
-        className={`shelf-container ${selectedItem ? "dimmed" : ""}`}
-        onClick={() => {
-          setSelectedItem(null);
-          setTransform("");
-        }}
-      >
+      <div className={`shelf-container ${selectedItem ? "dimmed" : ""}`}>
         <img
           src={image}
           alt="Grocery Shelf"
@@ -67,7 +60,6 @@ const ShelfView = ({ editCart, cart, image, items }) => {
               if (!selectedItem) {
                 e.stopPropagation();
                 const box = getItemBox(item);
-                console.log(box);
                 setSelectedItem({ ...item, box });
               }
             }}
@@ -75,12 +67,22 @@ const ShelfView = ({ editCart, cart, image, items }) => {
         ))}
       </div>
       {selectedItem && (
-        <div className="modal-overlay" ref={modalOverlayRef}>
+        <div
+          className="modal-overlay"
+          ref={modalOverlayRef}
+          onClick={() => {
+            console.log("click on overlay");
+            setSelectedItem(null);
+          }}
+        >
           <ZoomedCrop
             imageSrc={image}
             box={selectedItem.box}
+            itemId={selectedItem.id}
             imageWidth={shelfImageRef.current.offsetWidth}
             imageHeight={shelfImageRef.current.offsetHeight}
+            handleAddToCart={handleAddToCart}
+            cartMap={cartMap}
           />
         </div>
       )}

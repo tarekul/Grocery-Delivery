@@ -30,7 +30,7 @@
   cursor: pointer;
   border: none;
   background: var(--card-badge);
-  font-size: 1.5vw;
+  font-size: 2vw;
   z-index: 1;
 }
 
@@ -77,11 +77,11 @@
 
 @media (max-width: 768px) {
   .add-to-cart-btn {
-    font-size: 1.8vw;
+    font-size: 3vw;
   }
 
   .item-badge {
-    font-size: 1.5vw;
+    font-size: 2vw;
     padding: 2px 5px;
     top: -6px;
     right: -6px;
@@ -90,11 +90,11 @@
 
 @media (max-width: 480px) {
   .add-to-cart-btn {
-    font-size: 1.6vw;
+    font-size: 4vw;
   }
 
   .item-badge {
-    font-size: 1.2vw;
+    font-size: 3vw;
     padding: 2px 4px;
     top: -4px;
     right: -4px;

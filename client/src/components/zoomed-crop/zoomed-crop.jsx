@@ -1,6 +1,16 @@
+import { ShoppingBag } from "lucide-react";
+import { useMemo } from "react";
 import "./zommed-crop.styles.css";
 
-const ZoomedCrop = ({ imageSrc, box, imageWidth, imageHeight }) => {
+const ZoomedCrop = ({
+  imageSrc,
+  box,
+  imageWidth,
+  imageHeight,
+  itemId,
+  handleAddToCart,
+  cartMap,
+}) => {
   const cropSize = 400;
   const scale = (cropSize / imageWidth) * 3;
   if (!box) return null;
@@ -13,7 +23,6 @@ const ZoomedCrop = ({ imageSrc, box, imageWidth, imageHeight }) => {
     border: "1px solid #ccc",
     backgroundColor: "#fff",
   };
-
   const left = -box.x * scale + cropSize / 2 - (box.w * scale) / 2;
   const top = -box.y * scale + cropSize / 2 - (box.h * scale) / 2;
 
@@ -38,7 +47,20 @@ const ZoomedCrop = ({ imageSrc, box, imageWidth, imageHeight }) => {
           width: box.w * scale,
           height: box.h * scale,
         }}
-      ></div>
+      >
+        <button
+          className="add-to-cart-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleAddToCart(itemId);
+          }}
+        >
+          <ShoppingBag size="1em" title="Add to Cart" color="green" />
+          {cartMap[itemId] && (
+            <span className="item-badge">{cartMap[itemId]}</span>
+          )}
+        </button>
+      </div>
     </div>
   );
 };
