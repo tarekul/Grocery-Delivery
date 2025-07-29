@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ZoomedCrop from "../zoomed-crop/zoomed-crop";
 import "./shelf-view.styles.css";
 
@@ -35,6 +35,13 @@ const ShelfView = ({ editCart, cart, image, items }) => {
   const handleAddToCart = (itemId) => {
     editCart(itemId, "card", "add");
   };
+
+  useEffect(() => {
+    document.body.style.overflow = selectedItem ? "hidden" : "unset";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [selectedItem]);
 
   return (
     <>

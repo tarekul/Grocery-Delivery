@@ -1,5 +1,5 @@
 import { ShoppingBag } from "lucide-react";
-import { useMemo } from "react";
+import { useState } from "react";
 import "./zommed-crop.styles.css";
 
 const ZoomedCrop = ({
@@ -11,6 +11,7 @@ const ZoomedCrop = ({
   handleAddToCart,
   cartMap,
 }) => {
+  const [loaded, setLoaded] = useState(false);
   const cropSize = 400;
   const scale = (cropSize / imageWidth) * 3;
   if (!box) return null;
@@ -34,33 +35,42 @@ const ZoomedCrop = ({
     transformOrigin: "top left",
     width: `${imageWidth}px`,
     height: `${imageHeight}px`,
+    opacity: loaded ? 1 : 0,
+    transition: "opacity 0.2s ease-in-out",
   };
 
   return (
     <div style={style}>
-      <img src={imageSrc} alt="Zoomed Item" style={imageStyle} />
-      <div
-        className="modal-hotspot"
-        style={{
-          left: box.x * scale + (left > 0 ? 0 : left),
-          top: box.y * scale + (top > 0 ? 0 : top),
-          width: box.w * scale,
-          height: box.h * scale,
-        }}
-      >
-        <button
-          className="add-to-cart-btn"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleAddToCart(itemId);
+      <img
+        src={imageSrc}
+        alt="Zoomed Item"
+        style={imageStyle}
+        onLoad={() => setLoaded(true)}
+      />
+      {loaded && (
+        <div
+          className="modal-hotspot"
+          style={{
+            left: box.x * scale + (left > 0 ? 0 : left),
+            top: box.y * scale + (top > 0 ? 0 : top),
+            width: box.w * scale,
+            height: box.h * scale,
           }}
         >
-          <ShoppingBag size="1em" title="Add to Cart" color="green" />
-          {cartMap[itemId] && (
-            <span className="item-badge">{cartMap[itemId]}</span>
-          )}
-        </button>
-      </div>
+          <button
+            className="add-to-cart-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleAddToCart(itemId);
+            }}
+          >
+            <ShoppingBag size="1em" title="Add to Cart" color="green" />
+            {cartMap[itemId] && (
+              <span className="item-badge">{cartMap[itemId]}</span>
+            )}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

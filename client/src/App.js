@@ -10,17 +10,19 @@ import LoadingIcon from "./components/loading-icon/loading-icon";
 import Menu from "./components/menu/menu";
 import Mission from "./components/mission/mission";
 import SearchBar from "./components/search-bar/search-bar";
-import ShelfCarousel from "./components/shelf-carousel/shelf-carousel";
 import Title from "./components/title/title";
 import CartToast from "./components/toast/cart-toast.jsx";
 import DarkMode from "./components/toggle-theme/toggle-theme.jsx";
 
+import Categories from "./components/categories/categories.jsx";
+import ShelfCarousel from "./components/shelf-carousel/shelf-carousel.jsx";
 import { editCart } from "./functions/editCart";
 import { getCart } from "./functions/getCart";
 import { getInventory } from "./functions/getInventory.js";
 
 function App() {
   const [inventory, setInventory] = useState({});
+  const [category, setCategory] = useState(null);
   const [cart, setCart] = useState(getCart());
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
@@ -56,7 +58,6 @@ function App() {
   };
 
   useEffect(() => {
-    localStorage.removeItem("inventory");
     if (localStorage.getItem("inventory")) {
       setInventory(JSON.parse(localStorage.getItem("inventory")));
     } else {
@@ -100,6 +101,7 @@ function App() {
           setShowAbout={setShowAbout}
           setShowCancelOrder={setShowCancelOrder}
           setShowFAQ={setShowFAQ}
+          setCategory={setCategory}
         />
         <Menu
           setShowMission={setShowMission}
@@ -143,11 +145,17 @@ function App() {
                 <LoadingIcon />
               </div>
             ) : (
-              <ShelfCarousel
-                editCart={cartEditor}
-                cart={cart}
-                inventory={inventory}
-              />
+              <>
+                {category ? (
+                  <ShelfCarousel
+                    editCart={cartEditor}
+                    cart={cart}
+                    inventory={inventory[category]}
+                  />
+                ) : (
+                  <Categories setCategory={setCategory} />
+                )}
+              </>
             )}
 
             <Cart

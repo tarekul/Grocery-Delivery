@@ -3,9 +3,7 @@ import ShelfView from "../grocery-shelf/shelf-view.jsx";
 import "./shelf-carousel.styles.css";
 
 const ShelfCarousel = ({ editCart, cart, inventory }) => {
-  const allItems = Object.values(inventory).flatMap((shelf) =>
-    Object.values(shelf)
-  );
+  const allItems = Object.values(inventory);
 
   const isSingleShelf = Object.keys(shelfImageMap).length === 1;
 

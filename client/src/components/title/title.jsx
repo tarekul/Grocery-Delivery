@@ -6,6 +6,7 @@ const Title = ({
   setShowAbout,
   setShowCancelOrder,
   setShowFAQ,
+  setCategory,
 }) => {
   const handleTitleClick = () => {
     closeCheckout();
@@ -13,6 +14,7 @@ const Title = ({
     setShowAbout(false);
     setShowCancelOrder(false);
     setShowFAQ(false);
+    setCategory(null);
   };
   return (
     <h1 className="title" onClick={handleTitleClick}>

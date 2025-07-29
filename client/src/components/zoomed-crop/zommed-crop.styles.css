@@ -1,5 +1,6 @@
 .modal-hotspot {
   position: absolute;
   background: rgba(255, 255, 255, 0.2);
-  border: 2px solid #d22a2a;
+  border: 2px solid #39ff14;
+  box-shadow: 0 0 8px #39ff14;
 }
