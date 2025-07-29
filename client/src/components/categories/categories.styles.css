@@ -12,6 +12,7 @@
   gap: 8px;
   padding: 8px;
   font-size: 1rem;
+  color: brown;
 }
 
 .categories button.disabled {
