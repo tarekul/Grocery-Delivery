@@ -1,3 +1,10 @@
+.title-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 15px;
+}
+
 .title {
   color: var(--text-primary);
   font-size: 1.7rem;
@@ -5,8 +12,6 @@
   text-align: center;
   margin: 0;
   cursor: pointer;
-  width: fit-content;
-  padding: 5px 20px;
 }
 
 .title:hover {

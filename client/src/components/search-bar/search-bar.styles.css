@@ -12,11 +12,14 @@
 
 .search-icon {
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 12px;
-  transform: translateY(-50%);
-  pointer-events: none;
+  font-size: 20px;
   color: var(--search-input-icon, #888);
+}
+
+.search-icon:active {
+  transform: scale(0.9);
 }
 
 .search-input {
@@ -24,11 +27,11 @@
   border-bottom: 2px solid var(--primary);
   background-color: var(--search-input-bg);
   color: var(--search-input-text);
-  padding: 8px 12px 8px 35px;
+  padding: 8px 12px 8px 46px;
   border-radius: 4px;
   font-size: 18px;
   width: 100%;
-  max-width: 300px;
+  width: 300px;
   box-sizing: border-box;
   outline: none;
   height: 50px;
@@ -100,11 +103,11 @@
     width: 100%;
     border-bottom: 1px solid var(--primary);
     height: 70px;
-    padding-left: 40px;
+    padding-left: 60px;
   }
 
   .search-icon {
-    font-size: 20px;
+    font-size: 25px;
   }
 
   .search-items {

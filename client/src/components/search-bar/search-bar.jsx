@@ -1,4 +1,4 @@
-import { faArrowLeft, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef, useState } from "react";
 import SearchItem from "../search-bar/search-item";
@@ -55,9 +55,12 @@ const SearchBar = ({
       <div className={`search-container ${isSearchBarActive ? "active" : ""}`}>
         <div className="search">
           <FontAwesomeIcon
-            icon={isSearchBarActive ? faArrowLeft : faSearch}
+            icon={isSearchBarActive ? faCircleXmark : faSearch}
             className="search-icon"
-            onClick={closeSearchBar}
+            onClick={(e) => {
+              e.stopPropagation();
+              closeSearchBar();
+            }}
           />
           <input
             ref={inputRef}

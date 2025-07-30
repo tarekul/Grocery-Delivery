@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import LoadingIcon from "../loading-icon/loading-icon";
 import ZoomedCrop from "../zoomed-crop/zoomed-crop";
 import "./shelf-view.styles.css";
 
@@ -58,6 +59,7 @@ const ShelfView = ({ editCart, cart, image, items }) => {
           ref={shelfImageRef}
           onLoad={() => setLoaded(true)}
         />
+        {!loaded && <LoadingIcon />}
         {loaded &&
           items.map((item) => (
             <div

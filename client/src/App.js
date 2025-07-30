@@ -12,7 +12,6 @@ import Mission from "./components/mission/mission";
 import SearchBar from "./components/search-bar/search-bar";
 import Title from "./components/title/title";
 import CartToast from "./components/toast/cart-toast.jsx";
-import DarkMode from "./components/toggle-theme/toggle-theme.jsx";
 
 import Categories from "./components/categories/categories.jsx";
 import ShelfCarousel from "./components/shelf-carousel/shelf-carousel.jsx";
@@ -176,8 +175,6 @@ function App() {
             )}
           </>
         )}
-
-        <DarkMode />
       </div>
       <Footer
         setShowMission={setShowMission}
