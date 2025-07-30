@@ -3,6 +3,7 @@ import ZoomedCrop from "../zoomed-crop/zoomed-crop";
 import "./shelf-view.styles.css";
 
 const ShelfView = ({ editCart, cart, image, items }) => {
+  const [loaded, setLoaded] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const modalOverlayRef = useRef(null);
   const shelfImageRef = useRef(null);
@@ -50,28 +51,34 @@ const ShelfView = ({ editCart, cart, image, items }) => {
           src={image}
           alt="Grocery Shelf"
           className="shelf-image"
+          style={{
+            opacity: loaded ? 1 : 0,
+            transition: "opacity 0.2s ease-in-out",
+          }}
           ref={shelfImageRef}
+          onLoad={() => setLoaded(true)}
         />
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className="hotspot"
-            style={{
-              left: item.shelf.position.left,
-              top: item.shelf.position.top,
-              width: item.shelf.width,
-              height: item.shelf.height,
-            }}
-            title={`Add ${item.name}`}
-            onClick={(e) => {
-              if (!selectedItem) {
-                e.stopPropagation();
-                const box = getItemBox(item);
-                setSelectedItem({ ...item, box });
-              }
-            }}
-          ></div>
-        ))}
+        {loaded &&
+          items.map((item) => (
+            <div
+              key={item.id}
+              className="hotspot"
+              style={{
+                left: item.shelf.position.left,
+                top: item.shelf.position.top,
+                width: item.shelf.width,
+                height: item.shelf.height,
+              }}
+              title={`Add ${item.name}`}
+              onClick={(e) => {
+                if (!selectedItem) {
+                  e.stopPropagation();
+                  const box = getItemBox(item);
+                  setSelectedItem({ ...item, box });
+                }
+              }}
+            ></div>
+          ))}
       </div>
       {selectedItem && (
         <div
@@ -83,8 +90,7 @@ const ShelfView = ({ editCart, cart, image, items }) => {
         >
           <ZoomedCrop
             imageSrc={image}
-            box={selectedItem.box}
-            itemId={selectedItem.id}
+            selectedItem={selectedItem}
             imageWidth={shelfImageRef.current.offsetWidth}
             imageHeight={shelfImageRef.current.offsetHeight}
             handleAddToCart={handleAddToCart}

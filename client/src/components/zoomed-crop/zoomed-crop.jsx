@@ -4,18 +4,20 @@ import "./zommed-crop.styles.css";
 
 const ZoomedCrop = ({
   imageSrc,
-  box,
+  selectedItem,
   imageWidth,
   imageHeight,
-  itemId,
   handleAddToCart,
   cartMap,
 }) => {
   const [loaded, setLoaded] = useState(false);
   const cropSize = 400;
   const scale = (cropSize / imageWidth) * 3;
-  if (!box) return null;
-
+  if (!selectedItem.box) return null;
+  const box = selectedItem.box;
+  const itemId = selectedItem.id;
+  const price = selectedItem.price;
+  
   const style = {
     width: cropSize,
     height: cropSize,
@@ -69,6 +71,7 @@ const ZoomedCrop = ({
               <span className="item-badge">{cartMap[itemId]}</span>
             )}
           </button>
+          <p>{price}</p>
         </div>
       )}
     </div>

@@ -1,38 +1,16 @@
 .search-item {
   position: relative;
   display: flex;
-  align-items: center;
-  padding: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 15px;
   margin: 6px;
   border-radius: 8px;
   background-color: var(--background-secondary);
   border: 1.5px solid var(--border);
   box-shadow: 0 2px 4px rgba(91, 107, 191, 0.1);
-}
-
-.search-item-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 1;
-  z-index: 1000;
-}
-
-.full-size-image {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 8px;
-}
-
-.search-item-details {
-  flex: 1;
-  min-width: 0;
-  padding-right: 8px;
+  width: fit-content;
 }
 
 .search-item h4 {
@@ -48,14 +26,14 @@
 }
 
 .search-item-price {
+  position: absolute;
   font-size: 14px;
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--text-price);
   font-weight: 600;
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  background-color: var(--background-card);
+  bottom: 76px;
+  right: 0px;
+  background-color: var(--background-price);
   padding: 5px 10px;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -65,7 +43,6 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-left: auto;
 }
 
 .search-item-quantity-button {
@@ -102,4 +79,10 @@
 
 .search-item-quantity-button.green:hover {
   background-color: var(--add-to-cart-hover);
+}
+
+@media screen and (max-width: 768px) {
+  .search-item {
+    width: 90%;
+  }
 }
