@@ -17,7 +17,7 @@ const ZoomedCrop = ({
   const box = selectedItem.box;
   const itemId = selectedItem.id;
   const price = selectedItem.price;
-  
+
   const style = {
     width: cropSize,
     height: cropSize,
@@ -71,7 +71,7 @@ const ZoomedCrop = ({
               <span className="item-badge">{cartMap[itemId]}</span>
             )}
           </button>
-          <p>{price}</p>
+          <p className="zoomed-price">{price}</p>
         </div>
       )}
     </div>

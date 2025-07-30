@@ -4,3 +4,16 @@
   border: 2px solid #39ff14;
   box-shadow: 0 0 8px #39ff14;
 }
+
+.zoomed-price {
+  position: absolute;
+  font-size: 12px;
+  margin: 0;
+  color: var(--text-price);
+  font-weight: 600;
+  top: 0;
+  left: 0;
+  background-color: var(--background-price);
+  padding: 5px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
