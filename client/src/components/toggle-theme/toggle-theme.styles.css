@@ -2,12 +2,12 @@
   padding: 10px;
   border: none;
   border-radius: 50%;
-  background-color: var(--background-secondary);
+  background-color: var(--toggle-theme-background);
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,7 +39,7 @@
 
 @media screen and (max-width: 768px) {
   .theme-toggle {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
   }
 }

@@ -81,6 +81,10 @@
   background-color: var(--add-to-cart-hover);
 }
 
+.search-item-quantity-button:active {
+  transform: scale(1.1);
+}
+
 @media screen and (max-width: 768px) {
   .search-item {
     width: 90%;
