@@ -13,6 +13,7 @@ export const submitOrder = (
 ) => {
   const totalPrice =
     calculateCartTotal(cart) + distanceCalculator(zipcode) + ServiceFee;
+  console.log(cart);
 
   return axios
     .post(`${apiUrl}/order`, {

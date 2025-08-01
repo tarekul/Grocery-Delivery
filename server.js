@@ -6,6 +6,7 @@ const verifyInputRequest = require("./middleware/verifyInputRequest.js");
 const {
   collection,
   addDoc,
+  deleteDoc,
   getDoc,
   getDocs,
   query,
@@ -93,11 +94,12 @@ app.post("/order", verifyInputRequest, async (req, res) => {
     });
 
     for (const itemData of items) {
-      const { item, quantity } = itemData;
       await addDoc(collection(db, "order-items"), {
         order_id: orderRef.id,
-        item,
-        quantity,
+        item_id: itemData.id,
+        item_name: itemData.name,
+        item_price: itemData.price,
+        quantity: itemData.quantity,
       });
     }
 
@@ -108,6 +110,11 @@ app.post("/order", verifyInputRequest, async (req, res) => {
       orderId: orderRef.id,
     });
   } catch (error) {
+    // Rollback the order if it was created
+    if (orderRef?.id) {
+      await deleteDoc(doc(db, "orders", orderRef.id));
+    }
+
     res.status(500).send({
       message: "Failed to place order.",
       error: error.message,
