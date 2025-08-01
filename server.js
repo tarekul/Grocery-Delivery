@@ -97,8 +97,8 @@ app.post("/order", verifyInputRequest, async (req, res) => {
       await addDoc(collection(db, "order-items"), {
         order_id: orderRef.id,
         item_id: itemData.id,
-        item_name: itemData.name,
-        item_price: itemData.price,
+        name: itemData.name,
+        price: itemData.price,
         quantity: itemData.quantity,
       });
     }
