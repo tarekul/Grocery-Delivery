@@ -75,6 +75,10 @@
   height: 100%;
 }
 
+.skeleton-wrapper {
+  display: flex;
+}
+
 @media (max-width: 768px) {
   .add-to-cart-btn {
     font-size: 4vw;

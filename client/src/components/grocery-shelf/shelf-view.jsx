@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import LoadingIcon from "../loading-icon/loading-icon";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import ZoomedCrop from "../zoomed-crop/zoomed-crop";
 import "./shelf-view.styles.css";
 
@@ -59,7 +60,7 @@ const ShelfView = ({ editCart, cart, image, items }) => {
           ref={shelfImageRef}
           onLoad={() => setLoaded(true)}
         />
-        {!loaded && <LoadingIcon />}
+        {!loaded && <Skeleton count={5} width={"90%"} height={100} />}
         {loaded &&
           items.map((item) => (
             <div
