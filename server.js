@@ -50,7 +50,15 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Grocery MVP App!");
 });
 
-app.use("/shelf-images", express.static(path.join(__dirname, "shelf-images")));
+app.use(
+  "/shelf-images",
+  express.static(path.join(__dirname, "shelf-images"), {
+    maxAge: "30d",
+    setHeaders: (res) => {
+      res.set("Cache-Control", "public, max-age=2592000");
+    },
+  })
+);
 
 app.get("/inventory", (req, res) => {
   try {
