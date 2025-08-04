@@ -35,8 +35,7 @@
   --light-search-input-border: #cbd5e1;
   --light-search-input-text: #4a5568;
 
-  /* Dark Theme Colors - Grocery-Appropriate */
-  /* Dark Theme Colors - Cool Pantry */
+  /* Dark Theme Colors*/
   --dark-background-header: #2c3e50; /* Deep slate blue (like a pantry shelf) */
   --dark-background-main: #121212;
   --dark-background-secondary: #1a1a1a;
@@ -59,6 +58,10 @@
   --dark-card-badge-hover: #81d4fa;
   --dark-border: #37474f; /* Dark blue-gray */
   --dark-action-orange: #ffa726; /* Warm orange for contrast */
+  --dark-action-orange-dark: #fb8c00; /* darker than #ffa726 */
+  --dark-action-orange-darker: #ef6c00; /* deeper orange, more contrast */
+  --dark-action-orange-darkest: #e65100; /* darkest tone, strong emphasis */
+  --dark-action-orange-deep: #bf360c;
   --dark-success: #66bb6a;
   --dark-error: #ef5350;
   --dark-order-toast: #d32f2f;
