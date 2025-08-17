@@ -1,5 +1,6 @@
-const { initializeApp } = require("firebase/app");
-const { getDatabase } = require("firebase/database");
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -15,6 +16,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app); // Correctly initialize Firestore
 
-export { app, db };
+// ✅ Exports
+const db = getDatabase(app);
+const auth = getAuth(app);
+
+export { app, auth, db };

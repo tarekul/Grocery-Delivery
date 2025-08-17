@@ -1,13 +1,41 @@
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { useState } from "react";
+import { auth } from "../../firebase-config";
 import "./home-page.styles.css";
 
 const HomePage = ({ setIsUserLoggedIn }) => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoginPage, setIsLoginPage] = useState(true);
 
   const handleLogin = (e) => {
     e.preventDefault();
+    if (isLoginPage) {
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          setIsUserLoggedIn(true);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+        });
+    } else {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          setIsUserLoggedIn(true);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+        });
+    }
   };
 
   return (
@@ -17,10 +45,10 @@ const HomePage = ({ setIsUserLoggedIn }) => {
         <form className="login-form" onSubmit={handleLogin}>
           <input
             className="login-input"
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             className="login-input"
