@@ -1,3 +1,4 @@
+import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import About from "./components/about/about";
@@ -12,6 +13,7 @@ import Mission from "./components/mission/mission";
 import SearchBar from "./components/search-bar/search-bar";
 import Title from "./components/title/title";
 import CartToast from "./components/toast/cart-toast.jsx";
+import { auth } from "./firebase-config";
 
 import Categories from "./components/categories/categories.jsx";
 import HomePage from "./components/home-page/home-page.jsx";
@@ -21,7 +23,7 @@ import { getCart } from "./functions/getCart";
 import { getInventory } from "./functions/getInventory.js";
 
 function App() {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [userType, setUserType] = useState(null);
   const [inventory, setInventory] = useState({});
   const [category, setCategory] = useState(null);
   const [cart, setCart] = useState(getCart());
@@ -57,6 +59,17 @@ function App() {
     setIsCheckoutOpen(false);
     localStorage.setItem("isCheckoutOpen", false);
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserType("user");
+      } else {
+        setUserType(null);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     if (localStorage.getItem("inventory")) {
@@ -104,7 +117,7 @@ function App() {
           setShowFAQ={setShowFAQ}
           setCategory={setCategory}
         />
-        {isUserLoggedIn && (
+        {userType !== null && (
           <Menu
             setShowMission={setShowMission}
             setShowAbout={setShowAbout}
@@ -128,7 +141,7 @@ function App() {
           <FAQ />
         ) : (
           <>
-            {isUserLoggedIn && (
+            {userType !== null && (
               <SearchBar
                 inventory={inventory}
                 editCart={cartEditor}
@@ -150,7 +163,7 @@ function App() {
                 <LoadingIcon />
               </div>
             ) : (
-              isUserLoggedIn && (
+              userType !== null && (
                 <>
                   {category ? (
                     <ShelfCarousel
@@ -164,10 +177,8 @@ function App() {
                 </>
               )
             )}
-            {!isUserLoggedIn && (
-              <HomePage setIsUserLoggedIn={setIsUserLoggedIn} />
-            )}
-            {isUserLoggedIn && (
+            {userType === null && <HomePage setUserType={setUserType} />}
+            {userType !== null && (
               <Cart
                 cart={cart}
                 editCart={cartEditor}

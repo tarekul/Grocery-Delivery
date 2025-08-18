@@ -6,7 +6,7 @@ import { useState } from "react";
 import { auth } from "../../firebase-config";
 import "./home-page.styles.css";
 
-const HomePage = ({ setIsUserLoggedIn }) => {
+const HomePage = ({ setUserType }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoginPage, setIsLoginPage] = useState(true);
@@ -17,7 +17,7 @@ const HomePage = ({ setIsUserLoggedIn }) => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          setIsUserLoggedIn(true);
+          setUserType("authenticated");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -28,7 +28,7 @@ const HomePage = ({ setIsUserLoggedIn }) => {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          setIsUserLoggedIn(true);
+          setUserType("authenticated");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -78,7 +78,7 @@ const HomePage = ({ setIsUserLoggedIn }) => {
         </p>
       </div>
       <div className="guest-container">
-        <button onClick={() => setIsUserLoggedIn(true)}>
+        <button onClick={() => setUserType("guest")}>
           Continue as a guest
         </button>
       </div>

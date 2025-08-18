@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import React, { useEffect, useState } from "react";
+import { auth } from "../../firebase-config";
 import areShoppersAvailable from "../../functions/areShoppersAvailable";
 import "./menu.styles.css";
 
@@ -12,6 +14,8 @@ const Menu = ({
   isShoppersAvailable,
   setIsShoppersAvailable,
 }) => {
+  const [userType, setUserType] = useState(null);
+
   const handleMenuClick = (shouldShowMobileMenu) => {
     const nav = document.querySelector("nav");
     if (shouldShowMobileMenu) {
@@ -54,10 +58,35 @@ const Menu = ({
     });
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserType("user");
+      } else {
+        setUserType(null);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogoutClick = () => {
+    auth.signOut();
+    setUserType(null);
+    handleMenuClick(false);
+  };
+
   return (
     <>
       <nav>
         <ul>
+          {userType === "user" && (
+            <li>
+              <span className="tooltip-container">
+                <i className="fa-solid fa-user fa-xs"></i>
+                <div className="tooltip">View your profile. Coming soon!</div>
+              </span>
+            </li>
+          )}
           <li>
             <span className="tooltip-container">
               Shoppers Available{" "}
@@ -79,6 +108,11 @@ const Menu = ({
           <li className="menu-item" onClick={handleFaqClick}>
             FAQ
           </li>
+          {userType === "user" && (
+            <li className="menu-item" onClick={handleLogoutClick}>
+              Logout
+            </li>
+          )}
         </ul>
         <button className="close-button" onClick={() => handleMenuClick(false)}>
           X
