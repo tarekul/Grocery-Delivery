@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useState } from "react";
@@ -38,6 +39,22 @@ const HomePage = ({ setUserType }) => {
     }
   };
 
+  const handleForgotPassword = () => {
+    if (!email) {
+      alert("Please enter your email first.");
+      return;
+    }
+
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        alert("Password reset email sent! Check your inbox.");
+      })
+      .catch((error) => {
+        console.error(error.code, error.message);
+        alert("Error sending password reset email: " + error.message);
+      });
+  };
+
   return (
     <div className="home-page">
       <div className="login-container">
@@ -69,7 +86,8 @@ const HomePage = ({ setUserType }) => {
         </p>
         {isLoginPage && (
           <p>
-            Forgot Password? <a href="/forgot-password">Forgot Password</a>
+            Forgot Password?{" "}
+            <button onClick={handleForgotPassword}>Forgot Password</button>
           </p>
         )}
         <p>
