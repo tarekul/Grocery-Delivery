@@ -91,6 +91,13 @@ const FAQ = () => {
           assigned delivery person to change the delivery address.
         </p>
       </div>
+      <div className="faq-item">
+        <h3>What if there are no shoppers available? Can I still place an order?</h3>
+        <p>
+          Yes you can still place an order. However, it will be processed when there
+          is a shopper available.
+        </p>
+      </div>
     </div>
   );
 };
