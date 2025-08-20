@@ -3,6 +3,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+  background-color: var(--background-home);
+  height: 70dvh;
 }
 
 .login-container {
@@ -68,6 +70,22 @@
 }
 
 .guest-container button:active {
+  border: 1px solid var(--primary);
+}
+
+a {
+  color: var(--ahref-link);
+}
+
+a:hover {
+  color: var(--primary);
+}
+
+a:focus {
+  border: 1px solid var(--primary);
+}
+
+a:active {
   border: 1px solid var(--primary);
 }
 

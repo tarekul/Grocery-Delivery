@@ -13,8 +13,9 @@ const Menu = ({
   setShowFAQ,
   isShoppersAvailable,
   setIsShoppersAvailable,
+  setUserType,
 }) => {
-  const [userType, setUserType] = useState(null);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   const handleMenuClick = (shouldShowMobileMenu) => {
     const nav = document.querySelector("nav");
@@ -61,9 +62,9 @@ const Menu = ({
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUserType("user");
+        setIsUserLoggedIn(true);
       } else {
-        setUserType(null);
+        setIsUserLoggedIn(false);
       }
     });
     return () => unsubscribe();
@@ -79,7 +80,7 @@ const Menu = ({
     <>
       <nav>
         <ul>
-          {userType === "user" && (
+          {isUserLoggedIn && (
             <li>
               <span className="tooltip-container">
                 <i className="fa-solid fa-user fa-xs"></i>
@@ -108,9 +109,14 @@ const Menu = ({
           <li className="menu-item" onClick={handleFaqClick}>
             FAQ
           </li>
-          {userType === "user" && (
+          {isUserLoggedIn && (
             <li className="menu-item" onClick={handleLogoutClick}>
               Logout
+            </li>
+          )}
+          {!isUserLoggedIn && (
+            <li className="menu-item" onClick={() => setUserType(null)}>
+              Login
             </li>
           )}
         </ul>

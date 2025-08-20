@@ -3,6 +3,7 @@
   --light-background-header: #f8d4ad;
   --light-background-main: #fbf8ee; /* Off-white / Cream */
   --light-background-secondary: #f5f5f5;
+  --light-background-home: ghostwhite;
   --light-background-card: #ffffff;
   --light-background-price: gold; /* Mustard yellow */
   --light-text-price: black;
@@ -34,11 +35,13 @@
   --light-search-input-bg: #ffffff;
   --light-search-input-border: #cbd5e1;
   --light-search-input-text: #4a5568;
+  --light-ahref-link: #144a95;
 
   /* Dark Theme Colors*/
   --dark-background-header: #2c3e50; /* Deep slate blue (like a pantry shelf) */
-  --dark-background-main: #121212;
+  --dark-background-main: darkslategray;
   --dark-background-secondary: #1a1a1a;
+  --dark-background-home: rgb(56, 72, 96);
   --dark-background-card: #252525;
   --dark-background-cart: #1e1e1e;
   --dark-background-price: #4fc3f7; /* Icy blue (stands out like a price tag) */
@@ -70,11 +73,13 @@
   --dark-search-input-bg: #2d3748;
   --dark-search-input-border: #4a5568;
   --dark-search-input-text: #e2e8f0;
+  --dark-ahref-link: #609ff8;
 
   /* Default theme variables */
   --background-header: var(--light-background-header);
   --background-main: var(--light-background-main);
   --background-secondary: var(--light-background-secondary);
+  --background-home: var(--light-background-home);
   --background-card: var(--light-background-card);
   --background-price: var(--light-background-price);
   --text-price: var(--light-text-price);
@@ -106,12 +111,14 @@
   --search-input-bg: var(--light-search-input-bg);
   --search-input-border: var(--light-search-input-border);
   --search-input-text: var(--light-search-input-text);
+  --ahref-link: var(--light-ahref-link);
 }
 
 [data-theme="dark"] {
   --background-header: var(--dark-background-header);
   --background-main: var(--dark-background-main);
   --background-secondary: var(--dark-background-secondary);
+  --background-home: var(--dark-background-home);
   --background-card: var(--dark-background-card);
   --background-price: var(--dark-background-price);
   --text-price: var(--dark-text-price);
@@ -143,4 +150,5 @@
   --search-input-bg: var(--dark-search-input-bg);
   --search-input-border: var(--dark-search-input-border);
   --search-input-text: var(--dark-search-input-text);
+  --ahref-link: var(--dark-ahref-link);
 }

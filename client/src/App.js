@@ -127,6 +127,7 @@ function App() {
             setShowFAQ={setShowFAQ}
             setIsShoppersAvailable={setIsShoppersAvailable}
             isShoppersAvailable={isShoppersAvailable}
+            setUserType={setUserType}
           />
         )}
       </div>
