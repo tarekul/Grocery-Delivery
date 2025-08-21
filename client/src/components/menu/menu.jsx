@@ -74,6 +74,11 @@ const Menu = ({
     auth.signOut();
     setUserType(null);
     handleMenuClick(false);
+    setShowAbout(false);
+    setShowMission(false);
+    setShowCancelOrder(false);
+    setShowFAQ(false);
+    closeCheckout();
   };
 
   return (
