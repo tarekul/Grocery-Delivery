@@ -3,6 +3,8 @@ import calculateCartTotal from "../../functions/calculateCartTotal";
 import distanceCalculator from "../../functions/distanceCalculator";
 import { submitOrder } from "../../functions/handleOrderSubmit";
 import ServiceFee from "../../functions/serviceFee.js";
+import validateEmail from "../../functions/validateEmail";
+import validatePhone from "../../functions/validatePhone";
 import LoadingIcon from "../loading-icon/loading-icon.jsx";
 import OrderToast from "../toast/order-toast.jsx";
 import ZipDropdown from "../zip-dropdown/zip-dropdown.jsx";
@@ -70,16 +72,6 @@ const CheckoutForm = ({
       }
     };
   }, [isOrderComplete]);
-
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setIsInvalidEmail(!emailRegex.test(email));
-  };
-
-  const validatePhone = (phone) => {
-    const phoneRegex = /^\d{10}$/;
-    setIsInvalidPhone(!phoneRegex.test(phone));
-  };
 
   const handleSubmitOrder = async (e) => {
     e.preventDefault();
@@ -186,7 +178,7 @@ const CheckoutForm = ({
             onChange={(e) => {
               const newEmail = e.target.value;
               setEmail(newEmail);
-              validateEmail(newEmail);
+              setIsInvalidEmail(!validateEmail(newEmail));
               setIsEmailVerified(verifyEmail === newEmail);
             }}
             disabled={isInputsDisabled}
@@ -232,7 +224,7 @@ const CheckoutForm = ({
               const value = e.target.value.replace(/\D/g, "");
               if (value.length <= 10) {
                 setPhone(value);
-                validatePhone(value);
+                setIsInvalidPhone(!validatePhone(value));
                 setIsPhoneVerified(verifyPhone === value);
               }
             }}

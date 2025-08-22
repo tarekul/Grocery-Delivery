@@ -1,42 +1,27 @@
 import {
-  createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../../firebase-config";
-import "./home-page.styles.css";
+import "./sign-in.styles.css";
 
-const HomePage = ({ setUserType }) => {
+const SignIn = ({ setUserType, setShowAuthForm }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoginPage, setIsLoginPage] = useState(true);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (isLoginPage) {
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          setUserType("authenticated");
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
-        });
-    } else {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          setUserType("authenticated");
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
-        });
-    }
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        setUserType("authenticated");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
   };
 
   const handleForgotPassword = () => {
@@ -56,9 +41,9 @@ const HomePage = ({ setUserType }) => {
   };
 
   return (
-    <div className="home-page">
+    <div className="sign-in">
       <div className="login-container">
-        <h1>{isLoginPage ? "Log In" : "Register"}</h1>
+        <h1>Log In</h1>
         <form className="login-form" onSubmit={handleLogin}>
           <input
             className="login-input"
@@ -75,21 +60,17 @@ const HomePage = ({ setUserType }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className="login-button" type="submit">
-            {isLoginPage ? "Log In" : "Register"}
+            Log In
           </button>
         </form>
         <p>
           Don't have an account?{" "}
-          <button onClick={() => setIsLoginPage(!isLoginPage)}>
-            {isLoginPage ? "Register" : "Log In"}
-          </button>
+          <button onClick={() => setShowAuthForm("register")}>Register</button>
         </p>
-        {isLoginPage && (
-          <p>
-            Forgot Password?{" "}
-            <button onClick={handleForgotPassword}>Forgot Password</button>
-          </p>
-        )}
+        <p>
+          Forgot Password?{" "}
+          <button onClick={handleForgotPassword}>Forgot Password</button>
+        </p>
         <p>
           Customer Support:{" "}
           <a href="mailto:grocerygo98@gmail.com">grocerygo98@gmail.com</a>
@@ -104,4 +85,4 @@ const HomePage = ({ setUserType }) => {
   );
 };
 
-export default HomePage;
+export default SignIn;

@@ -16,14 +16,16 @@ import CartToast from "./components/toast/cart-toast.jsx";
 import { auth } from "./firebase-config";
 
 import Categories from "./components/categories/categories.jsx";
-import HomePage from "./components/home-page/home-page.jsx";
+import Register from "./components/register/register.jsx";
 import ShelfCarousel from "./components/shelf-carousel/shelf-carousel.jsx";
+import SignIn from "./components/sign-in/sign-in";
 import { editCart } from "./functions/editCart";
 import { getCart } from "./functions/getCart";
 import { getInventory } from "./functions/getInventory.js";
 
 function App() {
   const [userType, setUserType] = useState(null);
+  const [showAuthForm, setShowAuthForm] = useState("signin");
   const [inventory, setInventory] = useState({});
   const [category, setCategory] = useState(null);
   const [cart, setCart] = useState(getCart());
@@ -178,7 +180,18 @@ function App() {
                 </>
               )
             )}
-            {userType === null && <HomePage setUserType={setUserType} />}
+            {userType === null && showAuthForm === "signin" && (
+              <SignIn
+                setUserType={setUserType}
+                setShowAuthForm={setShowAuthForm}
+              />
+            )}
+            {userType === null && showAuthForm === "register" && (
+              <Register
+                setUserType={setUserType}
+                setShowAuthForm={setShowAuthForm}
+              />
+            )}
             {userType !== null && (
               <Cart
                 cart={cart}
