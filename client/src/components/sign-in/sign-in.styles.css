@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: space-around;
   background-color: var(--background-home);
-  height: 70dvh;
+  background: var(--background-home-gradient);
 }
 
 .login-container {
@@ -95,6 +95,7 @@ a:active {
     align-items: center;
     justify-content: center;
     width: 100%;
+    padding: 0.5rem;
   }
 
   .login-container {
