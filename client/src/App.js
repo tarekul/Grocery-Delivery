@@ -1,5 +1,4 @@
-import { onAuthStateChanged } from "firebase/auth";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import About from "./components/about/about";
 import CancelOrder from "./components/cancel-order/cancel-order";
@@ -13,65 +12,28 @@ import Mission from "./components/mission/mission";
 import SearchBar from "./components/search-bar/search-bar";
 import Title from "./components/title/title";
 import CartToast from "./components/toast/cart-toast.jsx";
-import { auth } from "./firebase-config";
 
 import AuthGate from "./components/auth-gate/auth-gate.jsx";
 import Categories from "./components/categories/categories.jsx";
 import ShelfCarousel from "./components/shelf-carousel/shelf-carousel.jsx";
-import { editCart } from "./functions/editCart";
-import { getCart } from "./functions/getCart";
 import { getInventory } from "./functions/getInventory.js";
 
+import { useAuth } from "./contexts/authContext";
+import { useCart } from "./contexts/cartContext";
+import { useUI } from "./contexts/UIContext";
+
 function App() {
-  const [firebaseUser, setFirebaseUser] = useState(null);
-  const [userType, setUserType] = useState(null);
-  const [showAuthForm, setShowAuthForm] = useState("signin");
-  const [inventory, setInventory] = useState({});
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [category, setCategory] = useState(null);
-  const [cart, setCart] = useState(getCart());
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isSearchBarActive, setIsSearchBarActive] = useState(false);
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(
-    localStorage.getItem("isCheckoutOpen") === "true" ?? false
-  );
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastColor, setToastColor] = useState("");
-  const [showMission, setShowMission] = useState(
-    localStorage.getItem("showMission") === "true" ?? false
-  );
-  const [showAbout, setShowAbout] = useState(
-    localStorage.getItem("showAbout") === "true" ?? false
-  );
-  const [showCancelOrder, setShowCancelOrder] = useState(
-    localStorage.getItem("showCancelOrder") === "true" ?? false
-  );
-  const [showFAQ, setShowFAQ] = useState(
-    localStorage.getItem("showFAQ") === "true" ?? false
-  );
-  const [isLoading, setIsLoading] = useState(false);
-  const [isShoppersAvailable, setIsShoppersAvailable] = useState(false);
-
-  const openCheckout = () => {
-    setIsCheckoutOpen(true);
-    localStorage.setItem("isCheckoutOpen", true);
-  };
-
-  const closeCheckout = () => {
-    setIsCheckoutOpen(false);
-    localStorage.setItem("isCheckoutOpen", false);
-  };
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!isRegistering) {
-        setFirebaseUser(user);
-        setUserType(user ? "authenticated" : null);
-      }
-    });
-    return () => unsubscribe();
-  }, [isRegistering]);
+  const { firebaseUser, userType, isRegistering } = useAuth();
+  const { showToast } = useCart();
+  const {
+    isCheckoutOpen,
+    category,
+    setCategory,
+    isLoading,
+    setIsLoading,
+    setInventory,
+    activeMenu,
+  } = useUI();
 
   useEffect(() => {
     if (localStorage.getItem("inventory")) {
@@ -92,75 +54,23 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    setCart(getCart());
-  }, [isDropdownOpen]);
-
-  const cartEditor = useMemo(
-    () =>
-      editCart({
-        inventory,
-        setCart,
-        setShowToast,
-        setToastMessage,
-        setToastColor,
-      }),
-    [inventory]
-  );
-
   return (
     <div className="App">
       <div className="header">
-        <Title
-          closeCheckout={closeCheckout}
-          setMission={setShowMission}
-          setShowAbout={setShowAbout}
-          setShowCancelOrder={setShowCancelOrder}
-          setShowFAQ={setShowFAQ}
-          setCategory={setCategory}
-        />
-        {(firebaseUser || userType === "guest") && (
-          <Menu
-            setShowMission={setShowMission}
-            setShowAbout={setShowAbout}
-            setShowCancelOrder={setShowCancelOrder}
-            openCheckout={openCheckout}
-            closeCheckout={closeCheckout}
-            setShowFAQ={setShowFAQ}
-            setIsShoppersAvailable={setIsShoppersAvailable}
-            isShoppersAvailable={isShoppersAvailable}
-            setUserType={setUserType}
-          />
-        )}
+        <Title />
+        {(firebaseUser || userType === "guest") && <Menu />}
       </div>
       <div className="main">
-        {showMission ? (
-          <Mission />
-        ) : showAbout ? (
-          <About />
-        ) : showCancelOrder ? (
-          <CancelOrder />
-        ) : showFAQ ? (
-          <FAQ />
-        ) : (
+        {activeMenu === "mission" && <Mission />}
+        {activeMenu === "about" && <About />}
+        {activeMenu === "cancel-order" && <CancelOrder />}
+        {activeMenu === "faq" && <FAQ />}
+        {activeMenu === "checkout" && <CheckoutContainer />}
+        {activeMenu === null && (
           <>
-            {(firebaseUser || userType === "guest") && (
-              <SearchBar
-                inventory={inventory}
-                editCart={cartEditor}
-                setIsSearchBarActive={setIsSearchBarActive}
-                isSearchBarActive={isSearchBarActive}
-                cart={cart}
-                isDropdownOpen={isDropdownOpen}
-              />
-            )}
+            {(firebaseUser || userType === "guest") && <SearchBar />}
             {isCheckoutOpen ? (
-              <CheckoutContainer
-                closeCheckout={closeCheckout}
-                cart={cart}
-                setCart={setCart}
-                isShoppersAvailable={isShoppersAvailable}
-              />
+              <CheckoutContainer />
             ) : isLoading ? (
               <div className="home-loading-icon">
                 <LoadingIcon />
@@ -170,53 +80,21 @@ function App() {
               !isRegistering && (
                 <>
                   {category ? (
-                    <ShelfCarousel
-                      editCart={cartEditor}
-                      cart={cart}
-                      inventory={inventory[category]}
-                    />
+                    <ShelfCarousel category={category} />
                   ) : (
                     <Categories setCategory={setCategory} />
                   )}
                 </>
               )
             )}
-            {!firebaseUser && userType == null && (
-              <AuthGate
-                userType={userType}
-                showAuthForm={showAuthForm}
-                setUserType={setUserType}
-                setShowAuthForm={setShowAuthForm}
-                setIsRegistering={setIsRegistering}
-              />
-            )}
+            {!firebaseUser && userType == null && <AuthGate />}
 
-            {(firebaseUser || userType === "guest") && (
-              <Cart
-                cart={cart}
-                editCart={cartEditor}
-                setCart={setCart}
-                setIsDropdownOpen={setIsDropdownOpen}
-                isDropdownOpen={isDropdownOpen}
-                openCheckout={openCheckout}
-                isSearchBarActive={isSearchBarActive}
-              />
-            )}
-            {showToast && (
-              <CartToast
-                message={toastMessage}
-                onClose={() => setShowToast(false)}
-                color={toastColor}
-              />
-            )}
+            {(firebaseUser || userType === "guest") && <Cart />}
+            {showToast && <CartToast />}
           </>
         )}
       </div>
-      <Footer
-        setShowMission={setShowMission}
-        setShowAbout={setShowAbout}
-        closeCheckout={closeCheckout}
-      />
+      <Footer />
     </div>
   );
 }

@@ -1,22 +1,23 @@
 import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { useCart } from "../../contexts/cartContext";
+import { useUI } from "../../contexts/UIContext";
 import SearchItem from "../search-bar/search-item";
 import "./search-bar.styles.css";
 
-const SearchBar = ({
-  inventory,
-  editCart,
-  setIsSearchBarActive,
-  isSearchBarActive,
-  cart,
-  isDropdownOpen,
-}) => {
+const SearchBar = () => {
+  const { inventory } = useUI();
+  const { cart, cartEditor } = useCart();
+  const { isSearchBarActive, setIsSearchBarActive, isDropdownOpen } = useUI();
+
   const [filteredInventory, setFilteredInventory] = useState([]);
   const inputRef = useRef(null);
 
-  const flattenedInventory = Object.values(inventory).flatMap((category) =>
-    Object.values(category)
+  const flattenedInventory = useMemo(
+    () =>
+      Object.values(inventory).flatMap((category) => Object.values(category)),
+    [inventory]
   );
 
   const handleSearchChange = (e) => {
@@ -27,15 +28,16 @@ const SearchBar = ({
       return;
     }
     setIsSearchBarActive(true);
-    const filteredInventory = flattenedInventory.filter((item) =>
+    const filtered = flattenedInventory.filter((item) =>
       item.name.toLowerCase().includes(e.target.value.toLowerCase())
     );
-    if (filteredInventory.length > 0) {
+
+    if (filtered.length > 0) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-    setFilteredInventory(filteredInventory);
+    setFilteredInventory(filtered);
   };
 
   const closeSearchBar = () => {
@@ -82,7 +84,7 @@ const SearchBar = ({
             <SearchItem
               key={item.id}
               item={item}
-              editCart={editCart}
+              editCart={cartEditor}
               cart={cart}
             />
           ))}

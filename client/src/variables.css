@@ -1,79 +1,80 @@
 :root {
   /* Light Theme Colors */
-  --light-background-header: #f8d4ad;
-  --light-background-main: #fbf8ee; /* Off-white / Cream */
-  --light-background-secondary: #f5f5f5;
-  --light-background-home: ghostwhite;
-  --light-background-card: #ffffff;
-  --light-background-price: gold; /* Mustard yellow */
-  --light-text-price: black;
-  --light-toggle-theme-background: black;
-  --light-background-cart: #fff8e1;
-  --light-background-hover: #f0f0f0;
-  --light-text-primary: #21211f; /* Dark charcoal */
-  --light-text-secondary: #4a5568;
+  /* Light Theme Colors - Fresh & Modern */
+  --light-background-header: #f5f7fa; /* Soft cool gray */
+  --light-background-main: #ffffff; /* Clean white */
+  --light-background-secondary: #f0f2f5; /* Light neutral gray */
+  --light-background-home: #e6f0ff; /* Soft sky blue accent */
+  --light-background-card: #ffffff; /* Clean white */
+  --light-background-price: #4fc3f7; /* Light blue price highlight */
+  --light-text-price: #1a1a1a; /* Dark gray for readability */
+  --light-toggle-theme-background: #1f1f1f; /* Dark toggle contrast */
+  --light-background-cart: #f0f8ff; /* Light airy cart background */
+  --light-background-hover: #e6f2ff; /* Subtle hover effect */
+  --light-text-primary: #1a1a1a; /* Nearly black text */
+  --light-text-secondary: #606060; /* Soft gray */
   --light-text-white: #ffffff;
-  --light-primary: #d97706;
-  --light-primary-dark: #b45309;
-  --light-remove-from-cart-hover: #c62828; /* Deep red */
-  --light-remove-from-cart: #b71c1c;
-  --light-add-to-cart-hover: #388e3c;
-  --light-add-to-cart: #2e7d32;
-  --light-card-badge: #f9a825; /* Mustard yellow */
-  --light-card-badge-hover: #ffd54f;
-  --light-border: #e2e8f0;
-  --light-action-orange: #ed8936;
-  --light-action-orange-dark: #dd6b20;
-  --light-action-orange-darker: #c05621;
-  --light-action-orange-darkest: #9c4221;
-  --light-action-orange-deep: #7b341e;
-  --light-success: #48bb78;
-  --light-error: #f56565;
-  --light-order-toast: #c62828;
-  --light-progress-bar: #2e7d32;
-  --light-summary: #fff8e1;
+  --light-primary: #1976d2; /* Blue highlight */
+  --light-primary-dark: #115293;
+  --light-remove-from-cart-hover: #e53935; /* Red alert */
+  --light-remove-from-cart: #c62828; /* Deep red */
+  --light-add-to-cart-hover: #43a047; /* Fresh green hover */
+  --light-add-to-cart: #388e3c; /* Leafy green */
+  --light-card-badge: #29b6f6; /* Soft blue badge */
+  --light-card-badge-hover: #03a9f4;
+  --light-border: #dcdcdc; /* Light gray border */
+  --light-action-orange: #fb8c00; /* Orange accent for actions */
+  --light-action-orange-dark: #ef6c00;
+  --light-action-orange-darker: #d84315;
+  --light-action-orange-darkest: #bf360c;
+  --light-action-orange-deep: #a34100;
+  --light-success: #66bb6a; /* Green success */
+  --light-error: #f44336; /* Red error */
+  --light-order-toast: #d32f2f; /* Red toast */
+  --light-progress-bar: #43a047; /* Green progress */
+  --light-summary: #f0f8ff; /* Matches cart background */
   --light-search-input-bg: #ffffff;
-  --light-search-input-border: #cbd5e1;
-  --light-search-input-text: #4a5568;
-  --light-ahref-link: #144a95;
+  --light-search-input-border: #cfd8dc;
+  --light-search-input-text: #424242;
+  --light-ahref-link: #1976d2; /* Blue link */
 
-  /* Dark Theme Colors*/
-  --dark-background-header: #2c3e50; /* Deep slate blue (like a pantry shelf) */
-  --dark-background-main: darkslategray;
-  --dark-background-secondary: #1a1a1a;
-  --dark-background-home: rgb(56, 72, 96);
-  --dark-background-card: #252525;
-  --dark-background-cart: #1e1e1e;
-  --dark-background-price: #4fc3f7; /* Icy blue (stands out like a price tag) */
-  --dark-text-price: #121212;
-  --dark-toggle-theme-background: white;
-  --dark-background-hover: #333333;
-  --dark-text-primary: #f5f5f5; /* Crisp white */
-  --dark-text-secondary: #e0e0e0;
+  /* Dark Theme Colors (Same as before) */
+  --dark-background-header: #1f2937; /* Deep indigo-gray */
+  --dark-background-main: #121622; /* Almost black */
+  --dark-background-secondary: #1c1f2b;
+  --dark-background-home: #2d3748; /* Muted navy */
+  --dark-background-card: #252934;
+  --dark-background-cart: #23232f;
+  --dark-background-price: #ffd54f; /* Bright yellow highlight */
+  --dark-text-price: #e0e0e0;
+  --dark-toggle-theme-background: #ffffff;
+  --dark-background-hover: #3a3850;
+  --dark-text-primary: #e0e0e0;
+  --dark-text-secondary: #b0b0c0;
   --dark-text-white: #ffffff;
-  --dark-primary: #4db6ac; /* Soft mint teal (fresh accent) */
-  --dark-primary-dark: #00897b;
+  --dark-primary: #ff8f00; /* Golden orange accent */
+  --dark-primary-dark: #ff6f00;
   --dark-remove-from-cart: #ef5350; /* Coral red */
-  --dark-remove-from-cart-hover: #ff7043;
-  --dark-add-to-cart: #66bb6a; /* Leaf green */
+  --dark-remove-from-cart-hover: #f44336;
+  --dark-add-to-cart: #66bb6a; /* Fresh green */
   --dark-add-to-cart-hover: #81c784;
-  --dark-card-badge: #4fc3f7; /* Matching price-tag blue */
-  --dark-card-badge-hover: #81d4fa;
-  --dark-border: #37474f; /* Dark blue-gray */
-  --dark-action-orange: #ffa726; /* Warm orange for contrast */
-  --dark-action-orange-dark: #fb8c00; /* darker than #ffa726 */
-  --dark-action-orange-darker: #ef6c00; /* deeper orange, more contrast */
-  --dark-action-orange-darkest: #e65100; /* darkest tone, strong emphasis */
+  --dark-card-badge: #ffd54f; /* Bright yellow badge */
+  --dark-card-badge-hover: #ffca28;
+  --dark-border: #444461; /* Dark gray border */
+  --dark-action-orange: #ffa726;
+  --dark-action-orange-dark: #fb8c00;
+  --dark-action-orange-darker: #ef6c00;
+  --dark-action-orange-darkest: #d84315;
   --dark-action-orange-deep: #bf360c;
   --dark-success: #66bb6a;
   --dark-error: #ef5350;
   --dark-order-toast: #d32f2f;
-  --dark-progress-bar: #4db6ac; /* Mint teal */
-  --dark-summary: #2d3748;
-  --dark-search-input-bg: #2d3748;
-  --dark-search-input-border: #4a5568;
-  --dark-search-input-text: #e2e8f0;
-  --dark-ahref-link: #609ff8;
+  --dark-progress-bar: #66bb6a;
+  --dark-summary: #1f2937;
+  --dark-search-input-bg: #252934;
+  --dark-search-input-border: #3c3f51;
+  --dark-search-input-text: #e0e0e0;
+  --dark-ahref-link: #64b5f6;
 
   /* Default theme variables */
   --background-header: var(--light-background-header);
