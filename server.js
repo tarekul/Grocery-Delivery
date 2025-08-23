@@ -13,6 +13,7 @@ const {
   where,
   updateDoc,
   doc,
+  setDoc,
 } = require("firebase/firestore");
 const orderConfirmationEmail = require("./mailjet.js");
 const db = require("./firebase-config.js");
@@ -69,10 +70,20 @@ app.get("/inventory", (req, res) => {
 });
 
 app.post("/register", verifyInputRequest, async (req, res) => {
-  const { email, password, firstName, lastName, address, zipcode, city, phone } = req.body;
-  res.send({ email, password, firstName, lastName, address, zipcode, city, phone })
+  const {
+    uid,
+    email,
+    password,
+    firstName,
+    lastName,
+    address,
+    zipcode,
+    city,
+    phone,
+  } = req.body;
+
   try {
-    const orderRef = await addDoc(collection(db, "customers"), {
+    await setDoc(doc(db, "customers", uid), {
       email,
       password,
       firstName,
@@ -134,7 +145,7 @@ app.post("/order", verifyInputRequest, async (req, res) => {
       });
     }
 
-    //orderConfirmationEmail({ ...req.body, orderId: orderRef.id });
+    orderConfirmationEmail({ ...req.body, orderId: orderRef.id });
 
     res.status(201).send({
       message: "Order placed successfully.",

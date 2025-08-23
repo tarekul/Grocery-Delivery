@@ -1,47 +1,21 @@
-.register {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  background-color: var(--background-home);
-  height: 70dvh;
-}
-
-.register-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 .register-form {
   display: flex;
   flex-direction: column;
+  gap: 10px;
   align-items: center;
-  justify-content: center;
+  box-sizing: border-box;
+  width: fit-content;
+  margin: 0 auto;
+  height: 70dvh;
 }
 
-.form-group {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.register-input {
+.register-form input {
+  font-size: 1.2rem;
   padding: 10px;
-  margin: 10px;
-}
-
-.register-input:hover {
-  border: 1px solid var(--primary);
-}
-
-.register-input:focus {
-  border: 1px solid var(--primary);
-}
-
-.register-input:active {
-  border: 1px solid var(--primary);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 300px;
 }
 
 .register-button {
@@ -78,14 +52,7 @@ a:active {
 }
 
 @media screen and (max-width: 600px) {
-  .register {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .register-container {
+  .register-form {
     flex-direction: column;
     align-items: center;
     justify-content: center;

@@ -1,9 +1,21 @@
 import axios from "axios";
 import apiUrl from "../apiUrl";
 
-export const registerUser = ({ email, password, firstName, lastName, phone, address, city, state, zipcode }) => {
+export const registerUser = async ({
+  uid,
+  email,
+  password,
+  firstName,
+  lastName,
+  phone,
+  address,
+  city,
+  state,
+  zipcode,
+}) => {
   return axios
     .post(`${apiUrl}/register`, {
+      uid,
       email,
       password,
       firstName,
