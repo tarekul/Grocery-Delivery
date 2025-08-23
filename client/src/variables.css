@@ -6,7 +6,7 @@
   --light-background-secondary: #f0f2f5; /* Light neutral gray */
   --light-background-home: #e6f0ff; /* Soft sky blue accent */
   --light-background-card: #ffffff; /* Clean white */
-  --light-background-price: #4fc3f7; /* Light blue price highlight */
+  --light-background-price: azure; /* Light blue price highlight */
   --light-text-price: #1a1a1a; /* Dark gray for readability */
   --light-toggle-theme-background: #1f1f1f; /* Dark toggle contrast */
   --light-background-cart: #f0f8ff; /* Light airy cart background */
@@ -20,8 +20,8 @@
   --light-remove-from-cart: #c62828; /* Deep red */
   --light-add-to-cart-hover: #43a047; /* Fresh green hover */
   --light-add-to-cart: #388e3c; /* Leafy green */
-  --light-card-badge: #29b6f6; /* Soft blue badge */
-  --light-card-badge-hover: #03a9f4;
+  --light-card-badge: white; /* Soft blue badge */
+  --light-card-badge-hover: #384c67;
   --light-border: #dcdcdc; /* Light gray border */
   --light-action-orange: #fb8c00; /* Orange accent for actions */
   --light-action-orange-dark: #ef6c00;
@@ -45,7 +45,7 @@
   --dark-background-home: #2d3748; /* Muted navy */
   --dark-background-card: #252934;
   --dark-background-cart: #23232f;
-  --dark-background-price: #ffd54f; /* Bright yellow highlight */
+  --dark-background-price: #384c67;
   --dark-text-price: #e0e0e0;
   --dark-toggle-theme-background: #ffffff;
   --dark-background-hover: #3a3850;
@@ -58,8 +58,8 @@
   --dark-remove-from-cart-hover: #f44336;
   --dark-add-to-cart: #66bb6a; /* Fresh green */
   --dark-add-to-cart-hover: #81c784;
-  --dark-card-badge: #ffd54f; /* Bright yellow badge */
-  --dark-card-badge-hover: #ffca28;
+  --dark-card-badge: #384c67;
+  --dark-card-badge-hover: #384c67;
   --dark-border: #444461; /* Dark gray border */
   --dark-action-orange: #ffa726;
   --dark-action-orange-dark: #fb8c00;
