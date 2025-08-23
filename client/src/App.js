@@ -15,16 +15,19 @@ import Title from "./components/title/title";
 import CartToast from "./components/toast/cart-toast.jsx";
 import { auth } from "./firebase-config";
 
+import AuthGate from "./components/auth-gate/auth-gate.jsx";
 import Categories from "./components/categories/categories.jsx";
-import HomePage from "./components/home-page/home-page.jsx";
 import ShelfCarousel from "./components/shelf-carousel/shelf-carousel.jsx";
 import { editCart } from "./functions/editCart";
 import { getCart } from "./functions/getCart";
 import { getInventory } from "./functions/getInventory.js";
 
 function App() {
+  const [firebaseUser, setFirebaseUser] = useState(null);
   const [userType, setUserType] = useState(null);
+  const [showAuthForm, setShowAuthForm] = useState("signin");
   const [inventory, setInventory] = useState({});
+  const [isRegistering, setIsRegistering] = useState(false);
   const [category, setCategory] = useState(null);
   const [cart, setCart] = useState(getCart());
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -62,14 +65,13 @@ function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserType("user");
-      } else {
-        setUserType(null);
+      if (!isRegistering) {
+        setFirebaseUser(user);
+        setUserType(user ? "authenticated" : null);
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [isRegistering]);
 
   useEffect(() => {
     if (localStorage.getItem("inventory")) {
@@ -117,7 +119,7 @@ function App() {
           setShowFAQ={setShowFAQ}
           setCategory={setCategory}
         />
-        {userType !== null && (
+        {(firebaseUser || userType === "guest") && (
           <Menu
             setShowMission={setShowMission}
             setShowAbout={setShowAbout}
@@ -142,7 +144,7 @@ function App() {
           <FAQ />
         ) : (
           <>
-            {userType !== null && (
+            {(firebaseUser || userType === "guest") && (
               <SearchBar
                 inventory={inventory}
                 editCart={cartEditor}
@@ -164,7 +166,8 @@ function App() {
                 <LoadingIcon />
               </div>
             ) : (
-              userType !== null && (
+              (firebaseUser || userType === "guest") &&
+              !isRegistering && (
                 <>
                   {category ? (
                     <ShelfCarousel
@@ -178,8 +181,17 @@ function App() {
                 </>
               )
             )}
-            {userType === null && <HomePage setUserType={setUserType} />}
-            {userType !== null && (
+            {!firebaseUser && userType == null && (
+              <AuthGate
+                userType={userType}
+                showAuthForm={showAuthForm}
+                setUserType={setUserType}
+                setShowAuthForm={setShowAuthForm}
+                setIsRegistering={setIsRegistering}
+              />
+            )}
+
+            {(firebaseUser || userType === "guest") && (
               <Cart
                 cart={cart}
                 editCart={cartEditor}

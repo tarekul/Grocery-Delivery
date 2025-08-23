@@ -13,6 +13,7 @@ const {
   where,
   updateDoc,
   doc,
+  setDoc,
 } = require("firebase/firestore");
 const orderConfirmationEmail = require("./mailjet.js");
 const db = require("./firebase-config.js");
@@ -65,6 +66,30 @@ app.get("/inventory", (req, res) => {
     res.json(inventory);
   } catch (error) {
     res.status(500).json({ success: false, error: "Internal server error" });
+  }
+});
+
+app.post("/register", verifyInputRequest, async (req, res) => {
+  const { uid, email, firstName, lastName, address, zipcode, city, phone } =
+    req.body;
+
+  try {
+    await setDoc(doc(db, "customers", uid), {
+      email,
+      firstName,
+      lastName,
+      address,
+      zipcode,
+      city,
+      phone,
+    });
+    res.status(201).send("User registered successfully.");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Failed to register user.",
+      error: error.message,
+    });
   }
 });
 
