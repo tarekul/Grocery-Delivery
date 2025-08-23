@@ -1,18 +1,25 @@
 import React, { useEffect } from "react";
+import { useUI } from "../../contexts/UIContext";
 import "./toast.styles.css";
 
-const CartToast = ({ message, onClose, color }) => {
+const CartToast = () => {
+  const { toastMessage, toastColor, showToast, setShowToast } = useUI();
+
   useEffect(() => {
+    if (!showToast) return;
+
     const timer = setTimeout(() => {
-      onClose();
+      setShowToast(false);
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [onClose]);
+  }, [showToast, setShowToast]);
+
+  if (!showToast) return null;
 
   return (
-    <div className={`toast ${color === "green" ? "success" : "error"}`}>
-      {message}
+    <div className={`toast ${toastColor === "green" ? "success" : "error"}`}>
+      {toastMessage}
     </div>
   );
 };

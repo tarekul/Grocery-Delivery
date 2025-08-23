@@ -1,13 +1,12 @@
+import { useAuth } from "../../contexts/authContext";
+import { useUI } from "../../contexts/UIContext";
 import Register from "../register/register";
 import SignIn from "../sign-in/sign-in";
 
-const AuthGate = ({
-  userType,
-  showAuthForm,
-  setUserType,
-  setShowAuthForm,
-  setIsRegistering,
-}) => {
+const AuthGate = () => {
+  const { userType, setUserType, setIsRegistering } = useAuth();
+
+  const { showAuthForm, setShowAuthForm } = useUI();
   if (userType !== null) return null;
 
   if (showAuthForm === "signin") {

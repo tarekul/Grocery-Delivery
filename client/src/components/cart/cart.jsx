@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react";
+import { useCart } from "../../contexts/cartContext";
+import { useUI } from "../../contexts/UIContext";
 import { saveCartToLocalStorage } from "../../functions/saveCart";
 import CartButton from "../cart-button/cart-button";
 import CartItem from "../cart-item/cart-item";
 import "./cart.styles.css";
 
-const Cart = ({
-  cart,
-  editCart,
-  setCart,
-  isDropdownOpen,
-  setIsDropdownOpen,
-  openCheckout,
-  isSearchBarActive,
-}) => {
+const Cart = () => {
   const [isClosing, setIsClosing] = useState(false);
 
+  const { cart, setCart, cartEditor } = useCart();
+  const { isDropdownOpen, setIsDropdownOpen, openCheckout, isSearchBarActive } =
+    useUI();
+
   const totalPrice = cart.reduce(
-    (totalPrice, cartItem) =>
-      (totalPrice += cartItem.quantity * cartItem.price),
+    (totalPrice, cartItem) => totalPrice + cartItem.quantity * cartItem.price,
     0
   );
 
@@ -102,7 +99,7 @@ const Cart = ({
                 <CartItem
                   key={cartItem.id}
                   cartItem={cartItem}
-                  editCart={editCart}
+                  editCart={cartEditor}
                 />
               ))}
               <button className="checkout-button" onClick={toggleCheckout}>

@@ -1,21 +1,23 @@
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
+import { useUI } from "../../contexts/UIContext";
+import { useAuth } from "../../contexts/authContext";
 import { auth } from "../../firebase-config";
 import areShoppersAvailable from "../../functions/areShoppersAvailable";
 import "./menu.styles.css";
 
-const Menu = ({
-  setShowMission,
-  setShowAbout,
-  setShowCancelOrder,
-  openCheckout,
-  closeCheckout,
-  setShowFAQ,
-  isShoppersAvailable,
-  setIsShoppersAvailable,
-  setUserType,
-}) => {
+const Menu = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+  const {
+    openCheckout,
+    closeCheckout,
+    isShoppersAvailable,
+    setIsShoppersAvailable,
+    setActiveMenu,
+  } = useUI();
+
+  const { setUserType } = useAuth();
 
   const handleMenuClick = (shouldShowMobileMenu) => {
     const nav = document.querySelector("nav");
@@ -29,28 +31,19 @@ const Menu = ({
   const handleCheckoutClick = () => {
     openCheckout();
     handleMenuClick(false);
-    setShowAbout(false);
-    setShowMission(false);
-    setShowCancelOrder(false);
-    setShowFAQ(false);
+    setActiveMenu("checkout");
   };
 
   const handleCancelOrderClick = () => {
-    setShowCancelOrder(true);
-    setShowAbout(false);
-    setShowMission(false);
     closeCheckout();
-    setShowFAQ(false);
     handleMenuClick(false);
+    setActiveMenu("cancel-order");
   };
 
   const handleFaqClick = () => {
-    setShowFAQ(true);
-    setShowAbout(false);
-    setShowCancelOrder(false);
-    setShowMission(false);
     closeCheckout();
     handleMenuClick(false);
+    setActiveMenu("faq");
   };
 
   useEffect(() => {
@@ -74,11 +67,15 @@ const Menu = ({
     auth.signOut();
     setUserType(null);
     handleMenuClick(false);
-    setShowAbout(false);
-    setShowMission(false);
-    setShowCancelOrder(false);
-    setShowFAQ(false);
     closeCheckout();
+    setActiveMenu(null);
+  };
+
+  const handleLoginClick = () => {
+    setUserType(null);
+    handleMenuClick(false);
+    closeCheckout();
+    setActiveMenu(null);
   };
 
   return (
@@ -120,7 +117,7 @@ const Menu = ({
             </li>
           )}
           {!isUserLoggedIn && (
-            <li className="menu-item" onClick={() => setUserType(null)}>
+            <li className="menu-item" onClick={handleLoginClick}>
               Login
             </li>
           )}
