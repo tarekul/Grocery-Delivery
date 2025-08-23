@@ -1,15 +1,15 @@
 :root {
   /* Light Theme Colors */
   /* Light Theme Colors - Fresh & Modern */
-  --light-background-header: #f5f7fa; /* Soft cool gray */
-  --light-background-main: #ffffff; /* Clean white */
-  --light-background-secondary: #f0f2f5; /* Light neutral gray */
-  --light-background-home: #e6f0ff; /* Soft sky blue accent */
-  --light-background-card: #ffffff; /* Clean white */
-  --light-background-price: azure; /* Light blue price highlight */
-  --light-text-price: #1a1a1a; /* Dark gray for readability */
-  --light-toggle-theme-background: #1f1f1f; /* Dark toggle contrast */
-  --light-background-cart: #f0f8ff; /* Light airy cart background */
+  --light-background-header: darkseagreen;
+  --light-background-main: floralwhite;
+  --light-background-secondary: #f0f2f5;
+  --light-background-home: #e6f0ff;
+  --light-background-card: #ffffff;
+  --light-background-price: azure;
+  --light-text-price: #1a1a1a;
+  --light-toggle-theme-background: #1f1f1f;
+  --light-background-cart: #f0f8ff;
   --light-background-hover: #e6f2ff; /* Subtle hover effect */
   --light-text-primary: #1a1a1a; /* Nearly black text */
   --light-text-secondary: #606060; /* Soft gray */
