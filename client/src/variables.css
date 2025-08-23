@@ -81,6 +81,12 @@
   --background-main: var(--light-background-main);
   --background-secondary: var(--light-background-secondary);
   --background-home: var(--light-background-home);
+  --background-home-gradient: linear-gradient(
+    135deg,
+    #e8f9f1,
+    #fdf6e3,
+    #ffe8d6
+  );
   --background-card: var(--light-background-card);
   --background-price: var(--light-background-price);
   --text-price: var(--light-text-price);
@@ -120,6 +126,12 @@
   --background-main: var(--dark-background-main);
   --background-secondary: var(--dark-background-secondary);
   --background-home: var(--dark-background-home);
+  --background-home-gradient: linear-gradient(
+    135deg,
+    #0f3d2e,
+    #1a4d4a,
+    #332521
+  );
   --background-card: var(--dark-background-card);
   --background-price: var(--dark-background-price);
   --text-price: var(--dark-text-price);
