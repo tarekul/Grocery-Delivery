@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { auth } from "../../firebase-config";
 import { registerUser } from "../../functions/registerUser";
 import validateEmail from "../../functions/validateEmail.js";
@@ -7,7 +7,8 @@ import validatePhone from "../../functions/validatePhone";
 import ZipDropdown from "../zip-dropdown/zip-dropdown.jsx";
 import "./register.styles.css";
 
-const Register = ({ setUserType, setShowAuthForm }) => {
+const Register = ({ setShowAuthForm, setIsRegistering }) => {
+  const [errorMsg, setErrorMsg] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,43 +24,20 @@ const Register = ({ setUserType, setShowAuthForm }) => {
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isInvalidPhone, setIsInvalidPhone] = useState(false);
-  const [areFieldsFilled, setAreFieldsFilled] = useState(false);
 
-  useEffect(() => {
-    const checkAreFieldsFilled = () => {
-      return (
-        firstName &&
-        lastName &&
-        email &&
-        phone &&
-        zipcode &&
-        address &&
-        city &&
-        !isInvalidEmail &&
-        !isInvalidPhone &&
-        isEmailVerified &&
-        isPhoneVerified &&
-        password
-      );
-    };
-
-    setAreFieldsFilled(checkAreFieldsFilled());
-  }, [
-    firstName,
-    lastName,
-    email,
-    verifyEmail,
-    phone,
-    verifyPhone,
-    zipcode,
-    address,
-    city,
-    isInvalidEmail,
-    isInvalidPhone,
-    isEmailVerified,
-    isPhoneVerified,
-    password,
-  ]);
+  const areFieldsFilled =
+    firstName &&
+    lastName &&
+    email &&
+    phone &&
+    zipcode &&
+    address &&
+    city &&
+    !isInvalidEmail &&
+    !isInvalidPhone &&
+    isEmailVerified &&
+    isPhoneVerified &&
+    password;
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -67,46 +45,82 @@ const Register = ({ setUserType, setShowAuthForm }) => {
       return;
     }
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        setUserType("authenticated");
-        registerUser({
-          uid: user.uid,
-          email,
-          password,
-          firstName,
-          lastName,
-          phone,
-          address,
-          city,
-          state,
-          zipcode,
-        });
-      })
-      .catch(async (error) => {
-        console.error("Registration error:", error);
+    setIsRegistering(true);
 
-        // Rollback if Firestore write failed after user was created
-        if (auth.currentUser) {
-          try {
-            await auth.currentUser.delete();
-            console.log(
-              "Rolled back user creation due to failure in registerUser"
-            );
-          } catch (deleteError) {
-            console.error(
-              "Failed to delete user after registration failure:",
-              deleteError
-            );
-          }
-        }
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      await registerUser({
+        uid: user.uid,
+        email,
+        firstName,
+        lastName,
+        phone,
+        address,
+        city,
+        state,
+        zipcode,
       });
+    } catch (error) {
+      console.error("Registration error:", error?.message);
+      if (error?.message === "Firebase: Error (auth/email-already-in-use).") {
+        setErrorMsg("Email already in use");
+        return;
+      }
+
+      if (error?.message === "Firebase: Error (auth/invalid-email).") {
+        setErrorMsg("Invalid email");
+        return;
+      }
+
+      if (error?.message === "Firebase: Error (auth/weak-password).") {
+        setErrorMsg("Weak password");
+        return;
+      }
+
+      if (
+        error?.message ===
+        "Firebase: Password should be at least 6 characters (auth/weak-password)."
+      ) {
+        setErrorMsg("Password should be at least 6 characters");
+        return;
+      }
+
+      // Rollback if Firestore write failed after user was created
+      if (auth.currentUser) {
+        try {
+          await auth.currentUser.delete();
+          setErrorMsg("Registration failed. Please try again.");
+          console.log(
+            "Rolled back user creation due to failure in registerUser"
+          );
+        } catch (deleteError) {
+          console.error(
+            "Failed to delete user after registration failure:",
+            deleteError
+          );
+        } finally {
+          setIsRegistering(false);
+        }
+      }
+    } finally {
+      setIsRegistering(false);
+    }
   };
 
   return (
     <div className="register-form">
       <h1>Register</h1>
+      {/* Error message block */}
+      {errorMsg && (
+        <p style={{ color: "red", fontSize: "0.9rem", marginBottom: "10px" }}>
+          {errorMsg}
+        </p>
+      )}
       <div className="name-container">
         <input
           className="first-name"
@@ -153,7 +167,9 @@ const Register = ({ setUserType, setShowAuthForm }) => {
       <div className="phone-container">
         <div className="phone-input-container">
           <input
-            className={`phone ${isInvalidPhone ? "invalid" : "valid"}`}
+            className={`phone ${
+              isInvalidPhone ? "invalid" : phone.trim() === "" ? "" : "valid"
+            }`}
             type="tel"
             name="phone"
             placeholder="phone number"
@@ -176,7 +192,13 @@ const Register = ({ setUserType, setShowAuthForm }) => {
         </div>
         <div className="phone-input-container">
           <input
-            className={`phone ${!isPhoneVerified ? "invalid" : "valid"}`}
+            className={`phone ${
+              verifyPhone.trim() === ""
+                ? ""
+                : !isPhoneVerified
+                ? "invalid"
+                : "valid"
+            }`}
             type="tel"
             name="verifyPhone"
             placeholder="verify phone number"
@@ -185,12 +207,14 @@ const Register = ({ setUserType, setShowAuthForm }) => {
               const value = e.target.value.replace(/\D/g, "");
               if (value.length <= 10) {
                 setVerifyPhone(value);
-                setIsPhoneVerified(value === phone);
+                setIsPhoneVerified(value.trim() === phone.trim());
               }
             }}
           />
           <small
-            className={isPhoneVerified ? "hidden" : ""}
+            className={
+              isPhoneVerified || verifyPhone.trim() === "" ? "hidden" : ""
+            }
             style={{ color: "red" }}
           >
             Phone numbers not matched
@@ -201,7 +225,9 @@ const Register = ({ setUserType, setShowAuthForm }) => {
       <div className="email-container">
         <div className="email-input-container">
           <input
-            className={`email ${isInvalidEmail ? "invalid" : "valid"}`}
+            className={`email ${
+              isInvalidEmail ? "invalid" : email.trim() === "" ? "" : "valid"
+            }`}
             type="email"
             value={email}
             placeholder="email"
@@ -221,18 +247,29 @@ const Register = ({ setUserType, setShowAuthForm }) => {
         </div>
         <div className="email-input-container">
           <input
-            className={`email ${!isEmailVerified ? "invalid" : "valid"}`}
+            className={`email ${
+              verifyEmail.trim() === ""
+                ? ""
+                : !isEmailVerified
+                ? "invalid"
+                : "valid"
+            }`}
             type="email"
             value={verifyEmail}
             placeholder="verify email"
             onChange={(e) => {
               const newVerifyEmail = e.target.value;
               setVerifyEmail(newVerifyEmail);
-              setIsEmailVerified(newVerifyEmail === email);
+              setIsEmailVerified(
+                newVerifyEmail.trim().toLowerCase() ===
+                  email.trim().toLowerCase()
+              );
             }}
           />
           <small
-            className={isEmailVerified ? "hidden" : ""}
+            className={
+              isEmailVerified || verifyEmail.trim() === "" ? "hidden" : ""
+            }
             style={{ color: "red" }}
           >
             Email Address not matched

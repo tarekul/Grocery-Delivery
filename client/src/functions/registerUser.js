@@ -4,7 +4,6 @@ import apiUrl from "../apiUrl";
 export const registerUser = async ({
   uid,
   email,
-  password,
   firstName,
   lastName,
   phone,
@@ -17,7 +16,6 @@ export const registerUser = async ({
     .post(`${apiUrl}/register`, {
       uid,
       email,
-      password,
       firstName,
       lastName,
       phone,
@@ -32,6 +30,6 @@ export const registerUser = async ({
     })
     .catch((err) => {
       console.log(err);
-      return err;
+      throw err;
     });
 };

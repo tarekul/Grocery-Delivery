@@ -1,2 +1,2 @@
-const apiUrl = process.env.API_URL || "http://localhost:5001";
+const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5001";
 export default apiUrl;

@@ -70,22 +70,12 @@ app.get("/inventory", (req, res) => {
 });
 
 app.post("/register", verifyInputRequest, async (req, res) => {
-  const {
-    uid,
-    email,
-    password,
-    firstName,
-    lastName,
-    address,
-    zipcode,
-    city,
-    phone,
-  } = req.body;
+  const { uid, email, firstName, lastName, address, zipcode, city, phone } =
+    req.body;
 
   try {
     await setDoc(doc(db, "customers", uid), {
       email,
-      password,
       firstName,
       lastName,
       address,
@@ -95,6 +85,7 @@ app.post("/register", verifyInputRequest, async (req, res) => {
     });
     res.status(201).send("User registered successfully.");
   } catch (error) {
+    console.log(error);
     res.status(500).send({
       message: "Failed to register user.",
       error: error.message,

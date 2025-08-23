@@ -12,16 +12,11 @@ const SignIn = ({ setUserType, setShowAuthForm }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        setUserType("authenticated");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
+    signInWithEmailAndPassword(auth, email, password).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
   };
 
   const handleForgotPassword = () => {
