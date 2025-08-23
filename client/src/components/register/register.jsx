@@ -26,22 +26,6 @@ const Register = ({ setUserType, setShowAuthForm }) => {
   const [areFieldsFilled, setAreFieldsFilled] = useState(false);
 
   useEffect(() => {
-    console.log({
-      firstName,
-      lastName,
-      email,
-      verifyEmail,
-      phone,
-      verifyPhone,
-      address,
-      city,
-      zipcode,
-      password,
-      isInvalidEmail,
-      isInvalidPhone,
-      isEmailVerified,
-      isPhoneVerified,
-    });
     const checkAreFieldsFilled = () => {
       return (
         firstName &&
@@ -87,7 +71,7 @@ const Register = ({ setUserType, setShowAuthForm }) => {
       .then((userCredential) => {
         const user = userCredential.user;
         setUserType("authenticated");
-        registerUser({ email, password, firstName, lastName });
+        registerUser({ email, password, firstName, lastName, phone,address,city,state,zipcode, });
       })
       .catch((error) => {
         const errorCode = error.code;

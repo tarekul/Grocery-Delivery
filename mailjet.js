@@ -1,4 +1,4 @@
-const Mailjet = require("node-mailjet");
+/* const Mailjet = require("node-mailjet");
 const dotenv = require("dotenv");
 const emailTemplate = require("./templates/emailTemplate");
 dotenv.config();
@@ -58,4 +58,4 @@ const orderConfirmationEmail = async ({
   }
 };
 
-module.exports = orderConfirmationEmail;
+module.exports = orderConfirmationEmail; */

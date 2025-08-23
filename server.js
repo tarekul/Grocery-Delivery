@@ -68,6 +68,29 @@ app.get("/inventory", (req, res) => {
   }
 });
 
+app.post("/register", verifyInputRequest, async (req, res) => {
+  const { email, password, firstName, lastName, address, zipcode, city, phone } = req.body;
+  res.send({ email, password, firstName, lastName, address, zipcode, city, phone })
+  try {
+    const orderRef = await addDoc(collection(db, "customers"), {
+      email,
+      password,
+      firstName,
+      lastName,
+      address,
+      zipcode,
+      city,
+      phone,
+    });
+    res.status(201).send("User registered successfully.");
+  } catch (error) {
+    res.status(500).send({
+      message: "Failed to register user.",
+      error: error.message,
+    });
+  }
+});
+
 app.post("/order", verifyInputRequest, async (req, res) => {
   const {
     firstName,
@@ -111,7 +134,7 @@ app.post("/order", verifyInputRequest, async (req, res) => {
       });
     }
 
-    orderConfirmationEmail({ ...req.body, orderId: orderRef.id });
+    //orderConfirmationEmail({ ...req.body, orderId: orderRef.id });
 
     res.status(201).send({
       message: "Order placed successfully.",

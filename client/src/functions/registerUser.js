@@ -1,13 +1,18 @@
 import axios from "axios";
 import apiUrl from "../apiUrl";
 
-export const registerUser = ({ email, password, firstName, lastName }) => {
+export const registerUser = ({ email, password, firstName, lastName, phone, address, city, state, zipcode }) => {
   return axios
     .post(`${apiUrl}/register`, {
       email,
       password,
       firstName,
       lastName,
+      phone,
+      address,
+      city,
+      state,
+      zipcode,
     })
     .then((res) => {
       console.log("User registered successfully:", res.data);

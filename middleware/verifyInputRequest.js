@@ -1,4 +1,5 @@
 const verifyInputRequest = async (req, res, next) => {
+  const isRegister = req.path?.includes("/register") || req.originalUrl?.includes("/register");
   const {
     firstName,
     lastName,
@@ -11,6 +12,7 @@ const verifyInputRequest = async (req, res, next) => {
     items,
     totalPrice,
   } = req.body;
+  console.log("Request body:", req.body);
 
   // Check for required fields and respond with specific error messages
   if (!firstName) {
@@ -37,6 +39,7 @@ const verifyInputRequest = async (req, res, next) => {
   if (!zipcode) {
     return res.status(400).send("Zip code is required.");
   }
+  if (!isRegister) {
   if (!items || items.length === 0) {
     return res.status(400).send("At least one item is required.");
   }
@@ -48,7 +51,7 @@ const verifyInputRequest = async (req, res, next) => {
   const total_price = parseFloat(totalPrice);
   if (isNaN(total_price)) {
     return res.status(400).send("Invalid total price.");
-  }
+  }}
 
   // Validate email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
