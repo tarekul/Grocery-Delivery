@@ -12,6 +12,10 @@ const CancelOrder = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const validateEmail = (email) => {
+    if (email.trim() === "") {
+      setIsInvalidEmail(false);
+      return;
+    }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setIsInvalidEmail(!emailRegex.test(email));
   };
@@ -75,7 +79,9 @@ const CancelOrder = () => {
       </div>
       <div className="cancel-order-form">
         <input
-          className={`email ${isInvalidEmail ? "invalid" : "valid"}`}
+          className={`email ${
+            isInvalidEmail ? "invalid" : email.trim() === "" ? "" : "valid"
+          }`}
           type="email"
           placeholder="email"
           value={email}
