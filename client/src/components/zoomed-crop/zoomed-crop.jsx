@@ -66,7 +66,11 @@ const ZoomedCrop = ({
               handleAddToCart(itemId);
             }}
           >
-            <ShoppingBag size="1em" title="Add to Cart" color="green" />
+            <ShoppingBag
+              size="1em"
+              title="Add to Cart"
+              color="var(--primary)"
+            />
             {cartMap[itemId] && (
               <span className="item-badge">{cartMap[itemId]}</span>
             )}
