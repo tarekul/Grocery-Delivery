@@ -14,8 +14,8 @@
   --light-text-primary: #1a1a1a; /* Nearly black text */
   --light-text-secondary: #606060; /* Soft gray */
   --light-text-white: #ffffff;
-  --light-primary: #1976d2; /* Blue highlight */
-  --light-primary-dark: #115293;
+  --light-primary: #d9665b; /* Warm coral */
+  --light-primary-dark: #b33c32; /* Deep terracotta */
   --light-remove-from-cart-hover: #e53935; /* Red alert */
   --light-remove-from-cart: #c62828; /* Deep red */
   --light-add-to-cart-hover: #43a047; /* Fresh green hover */
@@ -52,8 +52,8 @@
   --dark-text-primary: #e0e0e0;
   --dark-text-secondary: #b0b0c0;
   --dark-text-white: #ffffff;
-  --dark-primary: #ff8f00; /* Golden orange accent */
-  --dark-primary-dark: #ff6f00;
+  --dark-primary: #ff7043; /* Vibrant orange-coral */
+  --dark-primary-dark: #e64a19;
   --dark-remove-from-cart: #ef5350; /* Coral red */
   --dark-remove-from-cart-hover: #f44336;
   --dark-add-to-cart: #66bb6a; /* Fresh green */
