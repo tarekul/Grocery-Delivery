@@ -6,7 +6,7 @@
   box-sizing: border-box;
   width: fit-content;
   margin: 0 auto;
-  background: var(--background-home-gradient);
+  padding: 20px;
 }
 
 .register-form input {
@@ -15,6 +15,11 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.register-form .phone-container {
+  display: flex;
+  flex-direction: row;
 }
 
 .register-button {
@@ -60,6 +65,7 @@ a:active {
 
   .register-form input {
     width: 100%;
+    font-size: 1rem;
   }
 
   .register-form {

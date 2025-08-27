@@ -1,3 +1,4 @@
 .auth-gate {
   margin: -12px;
+  background: var(--background-home-gradient);
 }
