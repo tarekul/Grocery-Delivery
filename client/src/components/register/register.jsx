@@ -12,7 +12,6 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [verifyEmail, setVerifyEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [verifyPhone, setVerifyPhone] = useState("");
   const [address, setAddress] = useState("");
@@ -20,7 +19,6 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
   const [state] = useState("NY");
   const [zipcode, setZipcode] = useState("11416");
   const [password, setPassword] = useState("");
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isInvalidPhone, setIsInvalidPhone] = useState(false);
@@ -35,7 +33,6 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
     city &&
     !isInvalidEmail &&
     !isInvalidPhone &&
-    isEmailVerified &&
     isPhoneVerified &&
     password;
 
@@ -155,13 +152,31 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
       </div>
       <div className="zip-state-container">
         <ZipDropdown setZipcode={setZipcode} />
-        <input
-          className="state"
-          type="text"
-          placeholder="State"
-          value={state}
-          disabled={true}
-        />
+        <span className="state-display">{state}</span>
+      </div>
+
+      <div className="email-container">
+        <div className="email-input-container">
+          <input
+            className={`email ${
+              isInvalidEmail ? "invalid" : email.trim() === "" ? "" : "valid"
+            }`}
+            type="email"
+            value={email}
+            placeholder="email"
+            onChange={(e) => {
+              const newEmail = e.target.value;
+              setEmail(newEmail);
+              setIsInvalidEmail(!validateEmail(newEmail));
+            }}
+          />
+          <small
+            className={isInvalidEmail && email !== "" ? "" : "hidden"}
+            style={{ color: "red" }}
+          >
+            Invalid email address
+          </small>
+        </div>
       </div>
 
       <div className="phone-container">
@@ -222,60 +237,6 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
         </div>
       </div>
 
-      <div className="email-container">
-        <div className="email-input-container">
-          <input
-            className={`email ${
-              isInvalidEmail ? "invalid" : email.trim() === "" ? "" : "valid"
-            }`}
-            type="email"
-            value={email}
-            placeholder="email"
-            onChange={(e) => {
-              const newEmail = e.target.value;
-              setEmail(newEmail);
-              setIsInvalidEmail(!validateEmail(newEmail));
-              setIsEmailVerified(verifyEmail === newEmail);
-            }}
-          />
-          <small
-            className={isInvalidEmail && email !== "" ? "" : "hidden"}
-            style={{ color: "red" }}
-          >
-            Invalid email address
-          </small>
-        </div>
-        <div className="email-input-container">
-          <input
-            className={`email ${
-              verifyEmail.trim() === ""
-                ? ""
-                : !isEmailVerified
-                ? "invalid"
-                : "valid"
-            }`}
-            type="email"
-            value={verifyEmail}
-            placeholder="verify email"
-            onChange={(e) => {
-              const newVerifyEmail = e.target.value;
-              setVerifyEmail(newVerifyEmail);
-              setIsEmailVerified(
-                newVerifyEmail.trim().toLowerCase() ===
-                  email.trim().toLowerCase()
-              );
-            }}
-          />
-          <small
-            className={
-              isEmailVerified || verifyEmail.trim() === "" ? "hidden" : ""
-            }
-            style={{ color: "red" }}
-          >
-            Email Address not matched
-          </small>
-        </div>
-      </div>
       <div className="password-container">
         <input
           type="password"

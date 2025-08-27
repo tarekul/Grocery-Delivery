@@ -15,7 +15,6 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  width: 300px;
 }
 
 .register-button {
@@ -56,6 +55,10 @@ a:active {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
+  }
+
+  .register-form input {
     width: 100%;
   }
 
