@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import About from "./components/about/about";
+import AuthGate from "./components/auth-gate/auth-gate.jsx";
 import CancelOrder from "./components/cancel-order/cancel-order";
 import Cart from "./components/cart/cart";
+import Categories from "./components/categories/categories.jsx";
 import CheckoutContainer from "./components/checkout-container/checkout-container";
 import FAQ from "./components/faq/faq";
 import Footer from "./components/footer/footer";
@@ -10,12 +12,9 @@ import LoadingIcon from "./components/loading-icon/loading-icon";
 import Menu from "./components/menu/menu";
 import Mission from "./components/mission/mission";
 import SearchBar from "./components/search-bar/search-bar";
+import ShelfCarousel from "./components/shelf-carousel/shelf-carousel.jsx";
 import Title from "./components/title/title";
 import CartToast from "./components/toast/cart-toast.jsx";
-
-import AuthGate from "./components/auth-gate/auth-gate.jsx";
-import Categories from "./components/categories/categories.jsx";
-import ShelfCarousel from "./components/shelf-carousel/shelf-carousel.jsx";
 import { getInventory } from "./functions/getInventory.js";
 
 import { useAuth } from "./contexts/authContext";
@@ -61,6 +60,7 @@ function App() {
         {(firebaseUser || userType === "guest") && <Menu />}
       </div>
       <div className="main">
+        {(firebaseUser || userType === "guest") && <Cart />}
         {activeMenu === "mission" && <Mission />}
         {activeMenu === "about" && <About />}
         {activeMenu === "cancel-order" && <CancelOrder />}
@@ -89,7 +89,6 @@ function App() {
             )}
             {!firebaseUser && userType == null && <AuthGate />}
 
-            {(firebaseUser || userType === "guest") && <Cart />}
             {showToast && <CartToast />}
           </>
         )}

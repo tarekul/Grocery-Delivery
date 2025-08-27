@@ -20,7 +20,7 @@ const PriceBreakdown = ({ cart, zipcode }) => {
         Service Fee: <span>${serviceFee.toFixed(2)}</span>
       </p>
       <p>
-        Taxes and Fees: <span>$0.00</span>
+        Taxes: <span>$0.00</span>
       </p>
       <p>
         Delivery Fee: <span>${deliveryFee.toFixed(2)}</span>

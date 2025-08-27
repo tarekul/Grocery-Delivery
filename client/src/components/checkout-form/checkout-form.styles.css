@@ -13,7 +13,6 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  width: 300px;
 }
 
 .checkout-form input:disabled {
@@ -43,10 +42,6 @@
   color: #019d01;
 }
 
-.hidden {
-  visibility: hidden;
-}
-
 .name-container {
   display: flex;
   gap: 10px;
@@ -55,32 +50,48 @@
 .address-container {
   display: flex;
   gap: 10px;
-}
-
-.address {
-  width: 400px;
+  align-items: center;
 }
 
 .zip-state-container {
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
-.email-container,
+.state-display {
+  display: inline-block;
+  min-width: 2ch;
+  padding: 0.25rem 0.5rem;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
 .phone-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 10px;
   margin-bottom: 10px;
 }
 
-.phone-input-container,
-.email-input-container {
+.email-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.phone-input-container {
   display: flex;
   flex-direction: column;
   width: 100%;
   align-items: center;
-  gap: 10px;
+}
+
+.hidden {
+  visibility: hidden;
+  transition: visibility 0.2s ease-in-out;
 }
 
 .checkout-info {
@@ -98,14 +109,11 @@
     width: 100%;
   }
 
-  .email-container,
-  .phone-container,
   .address-container,
   .zip-state-container,
   .name-container {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    width: 100%;
   }
 }
 
