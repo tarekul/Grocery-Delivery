@@ -156,27 +156,25 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
       </div>
 
       <div className="email-container">
-        <div className="email-input-container">
-          <input
-            className={`email ${
-              isInvalidEmail ? "invalid" : email.trim() === "" ? "" : "valid"
-            }`}
-            type="email"
-            value={email}
-            placeholder="email"
-            onChange={(e) => {
-              const newEmail = e.target.value;
-              setEmail(newEmail);
-              setIsInvalidEmail(!validateEmail(newEmail));
-            }}
-          />
-          <small
-            className={isInvalidEmail && email !== "" ? "" : "hidden"}
-            style={{ color: "red" }}
-          >
-            Invalid email address
-          </small>
-        </div>
+        <input
+          className={`email ${
+            isInvalidEmail ? "invalid" : email.trim() === "" ? "" : "valid"
+          }`}
+          type="email"
+          value={email}
+          placeholder="email"
+          onChange={(e) => {
+            const newEmail = e.target.value;
+            setEmail(newEmail);
+            setIsInvalidEmail(!validateEmail(newEmail));
+          }}
+        />
+        <small
+          className={isInvalidEmail && email !== "" ? "" : "hidden"}
+          style={{ color: "red" }}
+        >
+          Invalid email address
+        </small>
       </div>
 
       <div className="phone-container">
@@ -216,7 +214,7 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
             }`}
             type="tel"
             name="verifyPhone"
-            placeholder="verify phone number"
+            placeholder="confirm phone"
             value={verifyPhone}
             onChange={(e) => {
               const value = e.target.value.replace(/\D/g, "");
@@ -240,7 +238,7 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
       <div className="password-container">
         <input
           type="password"
-          placeholder="Password"
+          placeholder="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
