@@ -93,6 +93,27 @@ app.post("/register", verifyInputRequest, async (req, res) => {
   }
 });
 
+app.get("/user", async (req, res) => {
+  const uid = req.query.uid;
+
+  try {
+    const docRef = doc(db, "customers", uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      res.status(200).send(docSnap.data());
+    } else {
+      res.status(404).send("User not found.");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Failed to fetch user info.",
+      error: error.message,
+    });
+  }
+});
+
 app.post("/order", verifyInputRequest, async (req, res) => {
   const {
     firstName,
