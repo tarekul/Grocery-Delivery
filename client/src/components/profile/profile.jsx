@@ -1,20 +1,42 @@
+import React, { useState } from "react";
+import { useAuth } from "../../contexts/authContext";
+import { getUser } from "../../functions/getUser";
 const Profile = () => {
-  return (
-    <div>
-      <h1>User Profile</h1>
-      <h2>Welcome Sangram Mathews</h2>
-      <p>Your Email: mathews0171@gmail.com</p>
-      <p>Your Phone: 6467644467</p>
-      <p>Your Address: 8907 89th ave</p>
-      <p>Your City: Queens</p>
-      <p>Your State: New York</p>
-      <p>Your Zipcode: 11373</p>
+  const [user, setUser] = useState(null);
+  const { firebaseUser } = useAuth();
+  React.useEffect(() => {
+    if (firebaseUser) {
+      getUser(firebaseUser.uid)
+        .then((data) => {
+          setUser(data);
+        })
+        .catch((err) => {
+          console.error("Error fetching user data:", err);
+        });
+    }
+  }, [firebaseUser]);
+  if (!user) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <div>
+        <h1>User Profile</h1>
+        <h2>
+          Welcome {user.firstName} {user.lastName}
+        </h2>
+        <p>Your Email: {user.email}</p>
+        <p>Your Phone: {user.phone}</p>
+        <p>Your Address: {user.address}</p>
+        <p>Your City: {user.city}</p>
+        <p>Your State: NY</p>
+        <p>Your Zipcode: {user.zipcode}</p>
 
-      <button>Edit Profile</button>
-      
-      <button>Save Changes</button>
-    </div>
-  );
+        <button>Edit Profile</button>
+
+        <button>Save Changes</button>
+      </div>
+    );
+  }
 };
 
 export default Profile;
