@@ -46,6 +46,12 @@ const Menu = () => {
     setActiveMenu("faq");
   };
 
+  const handleProfileClick = () => {
+    closeCheckout();
+    handleMenuClick(false);
+    setActiveMenu("profile");
+  };
+
   useEffect(() => {
     areShoppersAvailable((available) => {
       setIsShoppersAvailable(available);
@@ -85,7 +91,7 @@ const Menu = () => {
           {isUserLoggedIn && (
             <li>
               <span className="tooltip-container">
-                <i className="fa-solid fa-user fa-xs"></i>
+                <i className="fa-solid fa-user fa-xs" onClick={handleProfileClick}></i>
                 <div className="tooltip">View your profile. Coming soon!</div>
               </span>
             </li>

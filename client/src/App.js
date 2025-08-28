@@ -15,6 +15,7 @@ import SearchBar from "./components/search-bar/search-bar";
 import ShelfCarousel from "./components/shelf-carousel/shelf-carousel.jsx";
 import Title from "./components/title/title";
 import CartToast from "./components/toast/cart-toast.jsx";
+import Profile from "./components/profile/profile.jsx";
 import { getInventory } from "./functions/getInventory.js";
 
 import { useAuth } from "./contexts/authContext";
@@ -66,6 +67,7 @@ function App() {
         {activeMenu === "cancel-order" && <CancelOrder />}
         {activeMenu === "faq" && <FAQ />}
         {activeMenu === "checkout" && <CheckoutContainer />}
+        {activeMenu === "profile" && <Profile />}
         {activeMenu === null && (
           <>
             {(firebaseUser || userType === "guest") && <SearchBar />}
