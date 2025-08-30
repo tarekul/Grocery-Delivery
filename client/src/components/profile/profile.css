@@ -1,0 +1,9 @@
+/* client/src/components/profile/profile.css */
+.profile .grid {
+  display: grid;
+  gap: .75rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.profile label { display:flex; flex-direction:column; font-size:.9rem; gap:.25rem; }
+.profile input { padding:.5rem; border:1px solid #ddd; border-radius:8px; }
+.profile button { margin-right:.5rem; padding:.6rem 1rem; border-radius:10px; }
