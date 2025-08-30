@@ -2,11 +2,10 @@ import { useUI } from "../../contexts/UIContext";
 import "./footer.styles.css";
 
 const Footer = () => {
-  const { setActiveMenu, closeCheckout } = useUI();
+  const { setActiveView } = useUI();
 
   const handleClick = (menu) => {
-    setActiveMenu(menu);
-    closeCheckout();
+    setActiveView(menu);
   };
 
   const links = [

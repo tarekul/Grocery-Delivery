@@ -8,20 +8,16 @@ import "./checkout-container.styles.css";
 const CheckoutContainer = () => {
   const [showPriceBreakdown, setShowPriceBreakdown] = useState(false);
   const { cart, setCart } = useCart();
-  const { closeCheckout, isShoppersAvailable, setIsDropdownOpen } = useUI();
+  const { setActiveView, isShoppersAvailable } = useUI();
   const [zipcode, setZipcode] = useState("11416");
 
   const isMobile = window.innerWidth <= 820;
-
-  const handleOpenCart = () => {
-    setIsDropdownOpen(true);
-  };
 
   return (
     <div className="checkout-container">
       {(!isMobile || !showPriceBreakdown) && (
         <CheckoutForm
-          closeCheckout={closeCheckout}
+          setActiveView={setActiveView}
           cart={cart}
           setCart={setCart}
           setZipcode={setZipcode}

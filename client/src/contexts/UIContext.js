@@ -4,10 +4,14 @@ import { getInventory } from "../functions/getInventory";
 const UIContext = createContext();
 
 export const UIProvider = ({ children }) => {
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(
-    localStorage.getItem("isCheckoutOpen") === "true"
+  const [activeView, setActiveView] = useState(
+    localStorage.getItem("activeView") || "home"
   );
-  const [activeMenu, setActiveMenu] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem("activeView", activeView);
+  }, [activeView]);
+
   const [category, setCategory] = useState(null);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -37,17 +41,11 @@ export const UIProvider = ({ children }) => {
     }
   }, []);
 
-  const openCheckout = () => setIsCheckoutOpen(true);
-  const closeCheckout = () => setIsCheckoutOpen(false);
-
   return (
     <UIContext.Provider
       value={{
-        isCheckoutOpen,
-        openCheckout,
-        closeCheckout,
-        activeMenu,
-        setActiveMenu,
+        activeView,
+        setActiveView,
         category,
         setCategory,
         isLoading,

@@ -10,8 +10,12 @@ const Cart = () => {
   const [isClosing, setIsClosing] = useState(false);
 
   const { cart, setCart, cartEditor } = useCart();
-  const { isDropdownOpen, setIsDropdownOpen, openCheckout, isSearchBarActive } =
-    useUI();
+  const {
+    isDropdownOpen,
+    setIsDropdownOpen,
+    setActiveView,
+    isSearchBarActive,
+  } = useUI();
 
   const totalPrice = cart.reduce(
     (totalPrice, cartItem) => totalPrice + cartItem.quantity * cartItem.price,
@@ -40,7 +44,7 @@ const Cart = () => {
   };
 
   const toggleCheckout = () => {
-    openCheckout();
+    setActiveView("checkout");
     setIsDropdownOpen(false);
     if (window.innerWidth <= 768) {
       document.body.style.overflow = "unset";

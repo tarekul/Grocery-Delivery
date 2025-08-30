@@ -8,7 +8,7 @@ import ZipDropdown from "../zip-dropdown/zip-dropdown.jsx";
 import "./checkout-form.styles.css";
 
 const CheckoutForm = ({
-  closeCheckout,
+  setActiveView,
   cart,
   setCart,
   setZipcode,
@@ -58,7 +58,7 @@ const CheckoutForm = ({
     let timeoutId;
     if (isOrderComplete) {
       timeoutId = setTimeout(() => {
-        closeCheckout();
+        setActiveView("home");
       }, 4000);
     }
     return () => {
@@ -66,7 +66,7 @@ const CheckoutForm = ({
         clearTimeout(timeoutId);
       }
     };
-  }, [isOrderComplete]);
+  }, [isOrderComplete, setActiveView]);
 
   const handleSubmitOrder = async (e) => {
     e.preventDefault();
