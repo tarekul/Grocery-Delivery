@@ -22,6 +22,7 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 const inventory = require("./inventory.js");
+const verifyUpdateUserRequest = require("./middleware/verifyUpdateUser.js");
 
 const allowedOrigins = [
   "http://localhost:3000", // Local development
@@ -110,6 +111,32 @@ app.get("/user", async (req, res) => {
     console.log(error);
     res.status(500).send({
       message: "Failed to fetch user info.",
+      error: error.message,
+    });
+  }
+});
+
+app.put("/update-user", verifyUpdateUserRequest, async (req, res) => {
+  const { uid, ...rest } = req.body;
+  try {
+    const docRef = doc(db, "customers", uid);
+    const updateData = {};
+    for (const [key, value] of Object.entries(rest)) {
+      if (value !== undefined) {
+        updateData[key] = value;
+      }
+    }
+
+    if (Object.keys(updateData).length === 0) {
+      return res.status(400).send({ message: "No fields provided to update." });
+    }
+
+    await updateDoc(docRef, updateData);
+    res.status(200).send("User updated successfully.");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Failed to update user.",
       error: error.message,
     });
   }
