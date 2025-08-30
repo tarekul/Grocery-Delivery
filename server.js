@@ -40,6 +40,7 @@ const corsOptions = {
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   preflightContinue: false,
+  allowedHeaders: ["Content-Type","Authorization"],
   optionsSuccessStatus: 204,
 };
 app.options("*", cors(corsOptions));
