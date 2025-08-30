@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
-import { getUser } from "../../functions/getUser";
-//import { updateUser } from "../../functions/updateUser"; // (add this file below)     // you already have this
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/authContext";
+import { getUser } from "../../functions/getUser";
 import { updateUser } from "../../functions/updateUser";
-import "./profile.css"; // optional
+import "./profile.css";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -15,6 +13,7 @@ const Profile = () => {
     phone: "",
     address: "",
     city: "",
+    state: "NY",
     zipcode: "",
   });
   const [saving, setSaving] = useState(false);
@@ -45,11 +44,19 @@ const Profile = () => {
   };
 
   const onSave = async () => {
+    const hasChanges = Object.keys(form).some(
+      (key) => form[key] !== (user[key] || "")
+    );
+
+    if (!hasChanges) {
+      setEditing(false);
+      return;
+    }
     setSaving(true);
     setError("");
     try {
-      const updated = await updateUser(form);
-      setUser(updated);
+      const updatedUser = await updateUser(firebaseUser.uid, form);
+      setUser(updatedUser);
       setEditing(false);
     } catch (e) {
       setError(e?.response?.data || "Failed to save profile.");

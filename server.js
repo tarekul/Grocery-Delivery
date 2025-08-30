@@ -72,8 +72,17 @@ app.get("/inventory", (req, res) => {
 });
 
 app.post("/register", verifyInputRequest, async (req, res) => {
-  const { uid, email, firstName, lastName, address, zipcode, city, phone } =
-    req.body;
+  const {
+    uid,
+    email,
+    firstName,
+    lastName,
+    address,
+    zipcode,
+    city,
+    state,
+    phone,
+  } = req.body;
 
   try {
     await setDoc(doc(db, "customers", uid), {
@@ -83,6 +92,7 @@ app.post("/register", verifyInputRequest, async (req, res) => {
       address,
       zipcode,
       city,
+      state,
       phone,
     });
     res.status(201).send("User registered successfully.");
