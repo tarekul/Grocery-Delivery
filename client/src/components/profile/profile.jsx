@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { getUser } from "../../functions/getUser";  
+import { getUser } from "../../functions/getUser";
 //import { updateUser } from "../../functions/updateUser"; // (add this file below)     // you already have this
-import "./profile.css"; // optional
 import React from "react";
 import { useAuth } from "../../contexts/authContext";
+import { updateUser } from "../../functions/updateUser";
+import "./profile.css"; // optional
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [editing, setEditing] = useState(false);
-  const { firebaseUser } = useAuth();
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -20,19 +20,21 @@ const Profile = () => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
+  const { firebaseUser } = useAuth();
+
   useEffect(() => {
     (async () => {
-    if (!firebaseUser) return;
-      const u = await getUser(firebaseUser.uid);            // returns the logged-in user
-      setUser(u);
+      if (!firebaseUser) return;
+      const user = await getUser(firebaseUser.uid);
+      setUser(user);
       setForm({
-        firstName: u.firstName || "",
-        lastName:  u.lastName  || "",
-        phone:     u.phone     || "",
-        address:   u.address   || "",
-        city:      u.city      || "",
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        phone: user.phone || "",
+        address: user.address || "",
+        city: user.city || "",
         state: "NY",
-        zipcode:   u.zipcode   || "",
+        zipcode: user.zipcode || "",
       });
     })();
   }, []);
@@ -46,8 +48,8 @@ const Profile = () => {
     setSaving(true);
     setError("");
     try {
-      //const updated = await updateUser(form);  // PUT to your API
-      //setUser(updated);
+      const updated = await updateUser(form);
+      setUser(updated);
       setEditing(false);
     } catch (e) {
       setError(e?.response?.data || "Failed to save profile.");
@@ -63,7 +65,9 @@ const Profile = () => {
       <h1>User Profile</h1>
       {!editing ? (
         <>
-          <h2>Welcome {user.firstName} {user.lastName}</h2>
+          <h2>
+            Welcome {user.firstName} {user.lastName}
+          </h2>
           <p>Your Email: {user.email}</p>
           <p>Your Phone: {user.phone}</p>
           <p>Your Address: {user.address}</p>
@@ -77,11 +81,19 @@ const Profile = () => {
           <div className="grid">
             <label>
               First Name
-              <input name="firstName" value={form.firstName} onChange={onChange} />
+              <input
+                name="firstName"
+                value={form.firstName}
+                onChange={onChange}
+              />
             </label>
             <label>
               Last Name
-              <input name="lastName" value={form.lastName} onChange={onChange} />
+              <input
+                name="lastName"
+                value={form.lastName}
+                onChange={onChange}
+              />
             </label>
             <label>
               Phone
@@ -110,7 +122,13 @@ const Profile = () => {
           <button disabled={saving} onClick={onSave}>
             {saving ? "Saving..." : "Save Changes"}
           </button>
-          <button disabled={saving} onClick={() => { setEditing(false); setError(""); }}>
+          <button
+            disabled={saving}
+            onClick={() => {
+              setEditing(false);
+              setError("");
+            }}
+          >
             Cancel
           </button>
         </>
