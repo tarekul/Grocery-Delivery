@@ -24,7 +24,7 @@ export const UIProvider = ({ children }) => {
 
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("inventory")) {
@@ -58,8 +58,8 @@ export const UIProvider = ({ children }) => {
         setIsShoppersAvailable,
         isSearchBarActive,
         setIsSearchBarActive,
-        isDropdownOpen,
-        setIsDropdownOpen,
+        isCartOpen,
+        setIsCartOpen,
       }}
     >
       {children}

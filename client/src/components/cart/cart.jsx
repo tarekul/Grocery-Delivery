@@ -11,8 +11,8 @@ const Cart = () => {
 
   const { cart, setCart, cartEditor } = useCart();
   const {
-    isDropdownOpen,
-    setIsDropdownOpen,
+    isCartOpen,
+    setIsCartOpen,
     setActiveView,
     isSearchBarActive,
   } = useUI();
@@ -24,8 +24,8 @@ const Cart = () => {
 
   const hasItems = cart.length > 0 ? "has-items" : "";
 
-  const toggleDropdown = () => {
-    if (isDropdownOpen) {
+  const toggleCart = () => {
+    if (isCartOpen) {
       setIsClosing(true);
       if (window.innerWidth <= 768) {
         document.body.style.overflow = "unset";
@@ -33,10 +33,10 @@ const Cart = () => {
 
       setTimeout(() => {
         setIsClosing(false);
-        setIsDropdownOpen(false);
+        setIsCartOpen(false);
       }, 500);
     } else {
-      setIsDropdownOpen(true);
+      setIsCartOpen(true);
       if (window.innerWidth <= 768) {
         document.body.style.overflow = "hidden";
       }
@@ -45,7 +45,7 @@ const Cart = () => {
 
   const toggleCheckout = () => {
     setActiveView("checkout");
-    setIsDropdownOpen(false);
+    setIsCartOpen(false);
     if (window.innerWidth <= 768) {
       document.body.style.overflow = "unset";
     }
@@ -79,16 +79,16 @@ const Cart = () => {
     <div className="cart-container">
       <CartButton
         cart={cart}
-        toggleDropdown={toggleDropdown}
+        toggleDropdown={toggleCart}
         isSearchBarActive={isSearchBarActive}
       />
 
-      {isDropdownOpen && (
+      {isCartOpen && (
         <div
           className={`cart-dropdown ${isClosing ? "closing" : ""} ${hasItems}`}
         >
           <h2>Your Cart</h2>
-          <button className="close-button" onClick={toggleDropdown}>
+          <button className="close-button" onClick={toggleCart}>
             X
           </button>
           <p className="total-price">Total: ${totalPrice.toFixed(2)}</p>
