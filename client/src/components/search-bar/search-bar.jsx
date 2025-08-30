@@ -9,7 +9,7 @@ import "./search-bar.styles.css";
 const SearchBar = () => {
   const { inventory } = useUI();
   const { cart, cartEditor } = useCart();
-  const { isSearchBarActive, setIsSearchBarActive, isDropdownOpen } = useUI();
+  const { isSearchBarActive, setIsSearchBarActive, isCartOpen } = useUI();
 
   const [filteredInventory, setFilteredInventory] = useState([]);
   const inputRef = useRef(null);
@@ -72,7 +72,7 @@ const SearchBar = () => {
             name="search"
             onChange={handleSearchChange}
             autoComplete="off"
-            disabled={isDropdownOpen}
+            disabled={isCartOpen}
           />
         </div>
         <div

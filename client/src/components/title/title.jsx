@@ -3,11 +3,10 @@ import DarkMode from "../toggle-theme/toggle-theme";
 import "./title.styles.css";
 
 const Title = () => {
-  const { closeCheckout, setCategory, setActiveMenu } = useUI();
+  const { setCategory, setActiveView } = useUI();
   const handleTitleClick = () => {
-    closeCheckout();
     setCategory(null);
-    setActiveMenu(null);
+    setActiveView("home");
   };
   return (
     <div className="title-container">

@@ -9,13 +9,8 @@ import "./menu.styles.css";
 const Menu = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
-  const {
-    openCheckout,
-    closeCheckout,
-    isShoppersAvailable,
-    setIsShoppersAvailable,
-    setActiveMenu,
-  } = useUI();
+  const { isShoppersAvailable, setIsShoppersAvailable, setActiveView } =
+    useUI();
 
   const { setUserType } = useAuth();
 
@@ -29,27 +24,23 @@ const Menu = () => {
   };
 
   const handleCheckoutClick = () => {
-    openCheckout();
     handleMenuClick(false);
-    setActiveMenu("checkout");
+    setActiveView("checkout");
   };
 
   const handleCancelOrderClick = () => {
-    closeCheckout();
     handleMenuClick(false);
-    setActiveMenu("cancel-order");
+    setActiveView("cancelOrder");
   };
 
   const handleFaqClick = () => {
-    closeCheckout();
     handleMenuClick(false);
-    setActiveMenu("faq");
+    setActiveView("faq");
   };
 
   const handleProfileClick = () => {
-    closeCheckout();
     handleMenuClick(false);
-    setActiveMenu("profile");
+    setActiveView("profile");
   };
 
   useEffect(() => {
@@ -73,15 +64,13 @@ const Menu = () => {
     auth.signOut();
     setUserType(null);
     handleMenuClick(false);
-    closeCheckout();
-    setActiveMenu(null);
+    setActiveView("home");
   };
 
   const handleLoginClick = () => {
     setUserType(null);
     handleMenuClick(false);
-    closeCheckout();
-    setActiveMenu(null);
+    setActiveView("home");
   };
 
   return (
@@ -91,7 +80,10 @@ const Menu = () => {
           {isUserLoggedIn && (
             <li>
               <span className="tooltip-container">
-                <i className="fa-solid fa-user fa-xs" onClick={handleProfileClick}></i>
+                <i
+                  className="fa-solid fa-user fa-xs"
+                  onClick={handleProfileClick}
+                ></i>
                 <div className="tooltip">View your profile. Coming soon!</div>
               </span>
             </li>
