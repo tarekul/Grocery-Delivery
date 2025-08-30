@@ -132,7 +132,12 @@ app.put("/update-user", verifyUpdateUserRequest, async (req, res) => {
     }
 
     await updateDoc(docRef, updateData);
-    res.status(200).send("User updated successfully.");
+    const updatedUser = await getDoc(docRef);
+    if (updatedUser.exists()) {
+      res.status(200).send(updatedUser.data());
+    } else {
+      res.status(404).send("User not found.");
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send({
