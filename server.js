@@ -22,6 +22,7 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 const inventory = require("./inventory.js");
+const verifyUpdateUserRequest = require("./middleware/verifyUpdateUser.js");
 
 const allowedOrigins = [
   "http://localhost:3000", // Local development
