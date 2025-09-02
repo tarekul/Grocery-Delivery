@@ -1,20 +1,24 @@
 import React from "react";
 import "./zip-dropdown.styles.css";
+import { set } from "firebase/database";
 
-const ZipDropdown = ({ setZipcode, disabled }) => {
+const ZipDropdown = ({ zipcode, setZipcode, disabled }) => {
+  const [selected, setSelected] = React.useState(zipcode ? String(zipcode) : "11416");
   const handleChange = (e) => {
-    setZipcode(e.target.value);
+    console.log(e.target.value);
+    setSelected(String(e.target.value));
+    setZipcode(String(e.target.value));
   };
+  const zips = ["11416","11414","11418","11419","11421","11208"];
+  
 
   return (
     <div className="zip-dropdown">
-      <select onChange={handleChange} disabled={disabled}>
-        <option value="11416">11416</option>
-        <option value="11414">11414</option>
-        <option value="11418">11418</option>
-        <option value="11419">11419</option>
-        <option value="11421">11421</option>
-        <option value="11208">11208</option>
+      <select value={selected} onChange={handleChange} disabled={disabled}>
+        <option value="" disabled>Select zip</option>
+        {zips.map(z => (
+          <option key={z} value={z}>{z}</option>
+        ))}
       </select>
     </div>
   );
