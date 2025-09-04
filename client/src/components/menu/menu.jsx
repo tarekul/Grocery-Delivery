@@ -62,11 +62,16 @@ const Menu = () => {
           <li>
             <span className="tooltip-container">
               {isShoppersAvailable ? (
-                <UserCheck color="green" />
+                <>
+                  <UserCheck color="green" />
+                  <div className="tooltip">Shoppers Available</div>
+                </>
               ) : (
-                <UserX color="red" />
+                <>
+                  <UserX color="red" />
+                  <div className="tooltip">Shoppers Unavailable</div>
+                </>
               )}
-              <div className="tooltip">Shopper Availability</div>
             </span>
           </li>
           {isUserLoggedIn && (
