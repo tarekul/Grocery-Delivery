@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { submitOrder } from "../../functions/handleOrderSubmit";
 import validateEmail from "../../functions/validateEmail";
 import validatePhone from "../../functions/validatePhone";
@@ -6,15 +7,16 @@ import LoadingIcon from "../loading-icon/loading-icon.jsx";
 import OrderToast from "../toast/order-toast.jsx";
 import ZipDropdown from "../zip-dropdown/zip-dropdown.jsx";
 import "./checkout-form.styles.css";
+import { useCustomerId } from "../../functions/useCustomerId.js";
 
 const CheckoutForm = ({
-  setActiveView,
   cart,
   setCart,
   setZipcode,
   zipcode,
   isShoppersAvailable,
 }) => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -46,6 +48,8 @@ const CheckoutForm = ({
     );
   };
 
+  const customerId = useCustomerId();
+
   const disabled = cart.length === 0 || !areFieldsFilled();
 
   useEffect(() => {
@@ -58,7 +62,7 @@ const CheckoutForm = ({
     let timeoutId;
     if (isOrderComplete) {
       timeoutId = setTimeout(() => {
-        setActiveView("home");
+        navigate("/");
       }, 4000);
     }
     return () => {
@@ -66,7 +70,7 @@ const CheckoutForm = ({
         clearTimeout(timeoutId);
       }
     };
-  }, [isOrderComplete, setActiveView]);
+  }, [isOrderComplete, navigate]);
 
   const handleSubmitOrder = async (e) => {
     e.preventDefault();
@@ -90,7 +94,8 @@ const CheckoutForm = ({
           phone,
         },
         cart,
-        setCart
+        setCart,
+        customerId
       );
       setIsProcessingOrder(false);
       setIsOrderComplete(true);

@@ -37,6 +37,13 @@
   --light-search-input-border: #cfd8dc;
   --light-search-input-text: #424242;
   --light-ahref-link: #1976d2; /* Blue link */
+  --light-chat-button: #e6f0ff;
+  --light-chat-icon: #1976d2;
+  --light-chat-header: #ffffff;
+  --light-chat-messages: #ffffff;
+  --light-chat-composer: #f4f9ff;
+  --light-chat-border: #dcdcdc;
+  --light-menu-mobile: seashell;
 
   /* Dark Theme Colors (Same as before) */
   --dark-background-header: #1f2937; /* Deep indigo-gray */
@@ -54,10 +61,10 @@
   --dark-text-white: #ffffff;
   --dark-primary: #d08189; /* Muted rosy coral */
   --dark-primary-dark: #a05260; /* Warm earthy red */
-  --dark-remove-from-cart: #ef5350; /* Coral red */
-  --dark-remove-from-cart-hover: #f44336;
-  --dark-add-to-cart: #66bb6a; /* Fresh green */
-  --dark-add-to-cart-hover: #81c784;
+  --dark-remove-from-cart: #ff8a65; /* Coral red */
+  --dark-remove-from-cart-hover: #f57c00;
+  --dark-add-to-cart: #4db6ac; /* Fresh green */
+  --dark-add-to-cart-hover: #26a69a;
   --dark-card-badge: #384c67;
   --dark-card-badge-hover: #384c67;
   --dark-border: #444461; /* Dark gray border */
@@ -75,6 +82,13 @@
   --dark-search-input-border: #3c3f51;
   --dark-search-input-text: #e0e0e0;
   --dark-ahref-link: #64b5f6;
+  --dark-chat-button: #1a2037;
+  --dark-chat-icon: #3a97d4;
+  --dark-chat-header: #193948;
+  --dark-chat-messages: #193948;
+  --dark-chat-composer: #293855;
+  --dark-chat-border: black;
+  --dark-menu-mobile: #132541;
 
   /* Default theme variables */
   --background-header: var(--light-background-header);
@@ -119,6 +133,13 @@
   --search-input-border: var(--light-search-input-border);
   --search-input-text: var(--light-search-input-text);
   --ahref-link: var(--light-ahref-link);
+  --chat-button: var(--light-chat-button);
+  --chat-icon: var(--light-chat-icon);
+  --chat-header: var(--light-chat-header);
+  --chat-messages: var(--light-chat-messages);
+  --chat-composer: var(--light-chat-composer);
+  --chat-border: var(--light-chat-border);
+  --menu-mobile: var(--light-menu-mobile);
 }
 
 [data-theme="dark"] {
@@ -164,4 +185,11 @@
   --search-input-border: var(--dark-search-input-border);
   --search-input-text: var(--dark-search-input-text);
   --ahref-link: var(--dark-ahref-link);
+  --chat-button: var(--dark-chat-button);
+  --chat-icon: var(--dark-chat-icon);
+  --chat-header: var(--dark-chat-header);
+  --chat-messages: var(--dark-chat-messages);
+  --chat-composer: var(--dark-chat-composer);
+  --chat-border: var(--dark-chat-border);
+  --menu-mobile: var(--dark-menu-mobile);
 }

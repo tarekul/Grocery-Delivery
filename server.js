@@ -1,4 +1,7 @@
 const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const admin = require("./firebase-admin");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
@@ -12,6 +15,7 @@ const {
   query,
   where,
   updateDoc,
+  serverTimestamp,
   doc,
   setDoc,
 } = require("firebase/firestore");
@@ -95,6 +99,12 @@ app.post("/register", verifyInputRequest, async (req, res) => {
       state,
       phone,
     });
+
+    if (email == "rahin6810@gmail.com") {
+      await admin.auth().setCustomUserClaims(uid, { admin: true });
+      console.log(`Admin claim assigned to ${email}`);
+    }
+
     res.status(201).send("User registered successfully.");
   } catch (error) {
     console.log(error);
@@ -169,6 +179,7 @@ app.post("/order", verifyInputRequest, async (req, res) => {
     zipcode,
     items,
     totalPrice,
+    customerId,
   } = req.body;
 
   const name = `${firstName} ${lastName}`;
@@ -188,6 +199,7 @@ app.post("/order", verifyInputRequest, async (req, res) => {
       deleted_at: null,
       is_completed: false,
       num_items: items.length,
+      customer_id: customerId,
     });
 
     for (const itemData of items) {
@@ -214,6 +226,30 @@ app.post("/order", verifyInputRequest, async (req, res) => {
 
     res.status(500).send({
       message: "Failed to place order.",
+      error: error.message,
+    });
+  }
+});
+
+app.get("/order/in-progress", async (req, res) => {
+  const customerId = req.query.customerId;
+
+  try {
+    const acceptedOrdersDocRef = query(
+      collection(db, "accepted-orders"),
+      where("customer_id", "==", customerId)
+    );
+    const acceptedOrdersDoc = await getDocs(acceptedOrdersDocRef);
+
+    if (acceptedOrdersDoc.empty) {
+      return res.status(404).send("Order not found.");
+    }
+
+    const acceptedOrdersData = acceptedOrdersDoc.docs.map((doc) => doc.data());
+    res.status(200).send(acceptedOrdersData);
+  } catch (error) {
+    res.status(500).send({
+      message: "Failed to mark order as in progress.",
       error: error.message,
     });
   }
@@ -296,46 +332,109 @@ app.get("/order/:id", async (req, res) => {
   }
 });
 
-function sortByQuantity(items) {
-  return Object.entries(items)
-    .sort((a, b) => b[1][0] - a[1][0])
-    .map(([key, value]) => value[1]);
-}
+app.post("/chat-message", async (req, res) => {
+  const { customerId, message, from } = req.body;
+  if (!customerId || !message || !from) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
 
-app.get("/top-selling-items", async (req, res) => {
   try {
-    const q = query(collection(db, "order-items"));
-    const querySnapshot = await getDocs(q);
-
-    if (querySnapshot.empty) {
-      return res.status(404).send("No items found.");
-    }
-
-    const itemCount = {};
-
-    querySnapshot.forEach((doc) => {
-      const { item, quantity } = doc.data();
-      const itemKey = `${item.name}`;
-
-      if (itemCount[itemKey]) {
-        itemCount[itemKey][0] += quantity;
-      } else {
-        itemCount[itemKey] = [quantity, item];
-      }
+    const messagesRef = collection(db, "chats", customerId, "messages");
+    const docRef = await addDoc(messagesRef, {
+      message,
+      from,
+      timestamp: serverTimestamp(),
     });
 
-    const topSellingItems = sortByQuantity(itemCount).slice(0, 8);
-
-    res.status(200).send(topSellingItems);
+    return res.status(200).json({ success: true, messageId: docRef.id });
   } catch (error) {
-    res.status(500).send({
-      message: "Failed to fetch orders.",
-      error: error.message,
-    });
+    console.error("Error saving message:", error);
+    return res.status(500).json({ error: "Failed to save message" });
   }
 });
 
+app.get("/chat-messages/:customerId", async (req, res) => {
+  const customerId = req.params.customerId;
+
+  try {
+    const messagesRef = collection(db, "chats", customerId, "messages");
+    const querySnapshot = await getDocs(messagesRef);
+    const messages = querySnapshot.docs.map((doc) => doc.data());
+    return res.status(200).json(messages);
+  } catch (error) {
+    console.error("Error fetching messages:", error);
+    return res.status(500).json({ error: "Failed to fetch messages" });
+  }
+});
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: allowedOrigins,
+    methods: ["GET", "POST"],
+  },
+});
+
+const activeRooms = {};
+const shopperRooms = {};
+
+io.on("connection", (socket) => {
+  socket.on("join-room", ({ orderId, isShopper, userId }) => {
+    const roomName = `room-${orderId}`;
+    socket.join(roomName);
+
+    if (!isShopper) {
+      activeRooms[orderId] = activeRooms[orderId] || [];
+      if (!activeRooms[orderId].includes(socket.id)) {
+        activeRooms[orderId].push(socket.id);
+      }
+      console.log(
+        `Customer ${userId} joined ${roomName}`,
+        activeRooms[orderId]
+      );
+    } else {
+      shopperRooms[userId] = shopperRooms[userId] || [];
+      if (!shopperRooms[userId].includes(orderId)) {
+        shopperRooms[userId].push(orderId);
+      }
+      console.log(
+        `Shopper ${userId} connected for ${roomName}`,
+        shopperRooms[userId]
+      );
+    }
+  });
+
+  socket.on(
+    "chat-message",
+    ({ orderId, message, customerId, isShopper, socketId }) => {
+      const roomName = `room-${orderId}`;
+      io.to(roomName).emit("chat-message", {
+        customerId,
+        message,
+        from: isShopper ? "shopper" : "customer",
+        socketId,
+      });
+    }
+  );
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected", socket.id);
+
+    // Remove from activeRooms
+    for (const [orderId, sockets] of Object.entries(activeRooms)) {
+      activeRooms[orderId] = sockets.filter((id) => id !== socket.id);
+      if (activeRooms[orderId].length === 0) delete activeRooms[orderId];
+    }
+
+    // Remove from shopperRooms
+    for (const [userId, orders] of Object.entries(shopperRooms)) {
+      shopperRooms[userId] = orders.filter((id) => id !== socket.id);
+      if (shopperRooms[userId].length === 0) delete shopperRooms[userId];
+    }
+  });
+});
+
 // Start server
-app.listen(PORT, () =>
+server.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
 );

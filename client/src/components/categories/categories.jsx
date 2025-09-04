@@ -5,7 +5,7 @@ import {
   Carrot,
   Cookie,
   CookingPot,
-  Milk,
+  Refrigerator,
   Wheat,
 } from "lucide-react";
 import "./categories.styles.css";
@@ -16,46 +16,35 @@ const Categories = ({ setCategory }) => {
   };
 
   return (
-    <div>
-      <h2>Categories</h2>
-      <div className="categories">
-        <button
-          className="category-button"
-          title="Cold Products"
-          onClick={() => handleCategoryClick("Cold Products")}
-        >
-          <Milk />
-          Cold Products
-        </button>
-        <button className="category-button disabled" title="Coming soon">
-          <Carrot />
-          Fresh Produce
-        </button>
-        <button className="category-button disabled" title="Coming soon">
-          <Apple />
-          Fruits
-        </button>
-        <button className="category-button disabled" title="Coming soon">
-          <Wheat />
-          Grains
-        </button>
-        <button className="category-button disabled" title="Coming soon">
-          <Bean />
-          Lentils & Beans
-        </button>
-        <button className="category-button disabled" title="Coming soon">
-          <CookingPot />
-          Spices & Masalas
-        </button>
-        <button className="category-button disabled" title="Coming soon">
-          <Amphora />
-          Cooking Oils
-        </button>
-        <button className="category-button disabled" title="Coming soon">
-          <Cookie />
-          Snacks & Sweets
-        </button>
-      </div>
+    <div className="categories">
+      <button
+        className="category-button"
+        title="Cold Products"
+        onClick={() => handleCategoryClick("Cold Products")}
+      >
+        <Refrigerator size={50} />
+      </button>
+      <button className="category-button disabled" title="Coming soon">
+        <Carrot size={50} />
+      </button>
+      <button className="category-button disabled" title="Coming soon">
+        <Apple size={50} />
+      </button>
+      <button className="category-button disabled" title="Coming soon">
+        <Wheat size={50} />
+      </button>
+      <button className="category-button disabled" title="Coming soon">
+        <Bean size={50} />
+      </button>
+      <button className="category-button disabled" title="Coming soon">
+        <CookingPot size={50} />
+      </button>
+      <button className="category-button disabled" title="Coming soon">
+        <Amphora size={50} />
+      </button>
+      <button className="category-button disabled" title="Coming soon">
+        <Cookie size={50} />
+      </button>
     </div>
   );
 };

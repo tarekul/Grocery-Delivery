@@ -1,12 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import { useUI } from "../../contexts/UIContext";
 import DarkMode from "../toggle-theme/toggle-theme";
 import "./title.styles.css";
 
 const Title = () => {
-  const { setCategory, setActiveView } = useUI();
+  const navigate = useNavigate();
+  const { setCategory } = useUI();
+
   const handleTitleClick = () => {
+    navigate("/");
     setCategory(null);
-    setActiveView("home");
   };
   return (
     <div className="title-container">

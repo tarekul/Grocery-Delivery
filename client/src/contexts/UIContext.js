@@ -4,14 +4,6 @@ import { getInventory } from "../functions/getInventory";
 const UIContext = createContext();
 
 export const UIProvider = ({ children }) => {
-  const [activeView, setActiveView] = useState(
-    localStorage.getItem("activeView") || "home"
-  );
-
-  useEffect(() => {
-    localStorage.setItem("activeView", activeView);
-  }, [activeView]);
-
   const [category, setCategory] = useState(null);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -22,9 +14,30 @@ export const UIProvider = ({ children }) => {
 
   const [isShoppersAvailable, setIsShoppersAvailable] = useState(false);
 
-  const [isSearchBarActive, setIsSearchBarActive] = useState(false);
-
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const [isClosingSearch, setIsClosingSearch] = useState(false);
+
+  const toggleSearch = () => {
+    if (isSearchOpen) {
+      setIsClosingSearch(true);
+      if (window.innerWidth <= 768) {
+        document.body.style.overflow = "unset";
+      }
+
+      setTimeout(() => {
+        setIsClosingSearch(false);
+        setIsSearchOpen(false);
+      }, 500);
+    } else {
+      setIsSearchOpen(true);
+      if (window.innerWidth <= 768) {
+        document.body.style.overflow = "hidden";
+      }
+    }
+  };
 
   useEffect(() => {
     if (localStorage.getItem("inventory")) {
@@ -44,8 +57,6 @@ export const UIProvider = ({ children }) => {
   return (
     <UIContext.Provider
       value={{
-        activeView,
-        setActiveView,
         category,
         setCategory,
         isLoading,
@@ -56,10 +67,13 @@ export const UIProvider = ({ children }) => {
         setInventory,
         isShoppersAvailable,
         setIsShoppersAvailable,
-        isSearchBarActive,
-        setIsSearchBarActive,
         isCartOpen,
         setIsCartOpen,
+        isSearchOpen,
+        setIsSearchOpen,
+        isClosingSearch,
+        setIsClosingSearch,
+        toggleSearch,
       }}
     >
       {children}

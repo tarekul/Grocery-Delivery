@@ -9,7 +9,8 @@ import ServiceFee from "./serviceFee";
 export const submitOrder = (
   { firstName, lastName, address, city, state, zipcode, email, phone },
   cart,
-  setCart
+  setCart,
+  customerId
 ) => {
   const totalPrice =
     calculateCartTotal(cart) + distanceCalculator(zipcode) + ServiceFee;
@@ -27,6 +28,7 @@ export const submitOrder = (
       state,
       totalPrice,
       items: cart,
+      customerId,
     })
     .then((res) => {
       refreshCart();

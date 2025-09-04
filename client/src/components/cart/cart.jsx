@@ -5,15 +5,17 @@ import { saveCartToLocalStorage } from "../../functions/saveCart";
 import CartButton from "../cart-button/cart-button";
 import CartItem from "../cart-item/cart-item";
 import "./cart.styles.css";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [isClosing, setIsClosing] = useState(false);
+
+  const navigate = useNavigate();
 
   const { cart, setCart, cartEditor } = useCart();
   const {
     isCartOpen,
     setIsCartOpen,
-    setActiveView,
     isSearchBarActive,
   } = useUI();
 
@@ -44,7 +46,7 @@ const Cart = () => {
   };
 
   const toggleCheckout = () => {
-    setActiveView("checkout");
+    navigate("/checkout");
     setIsCartOpen(false);
     if (window.innerWidth <= 768) {
       document.body.style.overflow = "unset";

@@ -5,9 +5,9 @@ import { useUI } from "../../contexts/UIContext";
 import AuthGate from "../auth-gate/auth-gate";
 import Categories from "../categories/categories";
 import LoadingIcon from "../loading-icon/loading-icon";
-import SearchBar from "../search-bar/search-bar";
 import ShelfCarousel from "../shelf-carousel/shelf-carousel";
 import CartToast from "../toast/cart-toast";
+import "./home-view.styles.css";
 
 const HomeView = () => {
   const { firebaseUser, userType, isRegistering } = useAuth();
@@ -16,9 +16,7 @@ const HomeView = () => {
   const isUser = firebaseUser || userType === "guest";
 
   return (
-    <>
-      {isUser && <SearchBar />}
-
+    <div className="home-view">
       {isLoading ? (
         <div className="home-loading-icon">
           <LoadingIcon />
@@ -35,7 +33,7 @@ const HomeView = () => {
 
       {!firebaseUser && userType == null && <AuthGate />}
       {showToast && <CartToast />}
-    </>
+    </div>
   );
 };
 
