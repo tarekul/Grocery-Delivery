@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import apiUrl from "../../apiUrl";
 import { useAuth } from "../../contexts/authContext";
-import { searchFAQ } from "../../functions/faqSearch";
 import getInProgressOrder from "../../functions/getInProgressOrder";
 import "./chat.styles.css";
 
@@ -53,21 +52,14 @@ const Chat = () => {
   const sendMessage = () => {
     if (!message.trim()) return;
 
-    const faqAnswer = searchFAQ(message);
-    if (faqAnswer) {
-      setChat((prev) => [
-        ...prev,
-        {
-          from: socketRef.current?.id,
-          message,
-          customerId: firebaseUser.uid,
-        },
-        { from: "bot", message: faqAnswer },
-      ]);
-
-      setMessage("");
-      return;
-    }
+    setChat((prev) => [
+      ...prev,
+      {
+        from: socketRef.current?.id,
+        message,
+        customerId: firebaseUser.uid,
+      },
+    ]);
 
     socketRef.current.emit("chat-message", {
       customerId: firebaseUser.uid,
