@@ -49,7 +49,6 @@ const SearchBar = () => {
       document.body.style.overflow = "unset";
     }
     setFilteredInventory(filtered);
-    console.log(filtered);
   };
 
   const hasItems = filteredInventory.length > 0 ? "has-items" : "";
