@@ -1,7 +1,6 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
-const admin = require("./firebase-admin");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
@@ -99,11 +98,6 @@ app.post("/register", verifyInputRequest, async (req, res) => {
       state,
       phone,
     });
-
-    if (email == "rahin6810@gmail.com") {
-      await admin.auth().setCustomUserClaims(uid, { admin: true });
-      console.log(`Admin claim assigned to ${email}`);
-    }
 
     res.status(201).send("User registered successfully.");
   } catch (error) {
