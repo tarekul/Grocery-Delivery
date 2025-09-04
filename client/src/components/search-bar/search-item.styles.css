@@ -1,16 +1,20 @@
 .search-item {
   position: relative;
+  width: 315px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 15px;
+  align-items: center;
+  padding: 8px;
   margin: 6px;
   border-radius: 8px;
   background-color: var(--background-secondary);
-  border: 1.5px solid var(--border);
+  border: 1px solid var(--border);
   box-shadow: 0 2px 4px rgba(91, 107, 191, 0.1);
-  width: fit-content;
+}
+
+.search-item-details {
+  flex: 1;
+  min-width: 0;
+  padding-right: 8px;
 }
 
 .search-item h4 {
@@ -25,64 +29,107 @@
   line-height: 1.4;
 }
 
-.search-item-price {
-  position: absolute;
+.search-item p {
   font-size: 14px;
   margin: 0;
-  color: var(--text-price);
+  color: var(--text-secondary);
   font-weight: 600;
-  bottom: 76px;
-  right: 0px;
-  background-color: var(--background-price);
-  padding: 5px 10px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .search-item-quantity {
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-left: auto;
 }
 
-.search-item-quantity-button {
-  width: 35px;
-  height: 35px;
-  padding: 0;
+.search-item-quantity span {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 22px;
+  text-align: center;
+}
+
+.search-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 50%;
+}
+
+.search-button {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--light-primary);
-  color: var(--light-text-white);
   border: none;
-  border-radius: 4px;
+  border-radius: 50%;
+  color: var(--text-white);
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 25px;
+  transition: transform 0.2s ease;
 }
 
-.search-item-quantity-button.red {
+.search-button.red {
+  width: 28px;
+  height: 28px;
   background-color: var(--remove-from-cart);
+  opacity: 0.6;
 }
 
-.search-item-quantity-button.red.disabled {
-  opacity: 0.5;
-}
-
-.search-item-quantity-button.green {
+.search-button.green {
+  width: 32px;
+  height: 32px;
   background-color: var(--add-to-cart);
 }
 
-.search-item-quantity-button.red:hover {
+.search-button.red:hover {
+  width: 32px;
+  height: 32px;
   background-color: var(--remove-from-cart-hover);
+  opacity: 1;
 }
 
-.search-item-quantity-button.green:hover {
+.search-button.green:hover {
   background-color: var(--add-to-cart-hover);
 }
 
-.search-item-quantity-button:active {
+.search-button:active {
   transform: scale(1.1);
+}
+
+.search-quantity-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: red;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-quantity-badge {
+  animation: pop 0.25s ease;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.7);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @media screen and (max-width: 768px) {

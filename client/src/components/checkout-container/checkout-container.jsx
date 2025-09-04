@@ -8,7 +8,7 @@ import "./checkout-container.styles.css";
 const CheckoutContainer = () => {
   const [showPriceBreakdown, setShowPriceBreakdown] = useState(false);
   const { cart, setCart } = useCart();
-  const { setActiveView, isShoppersAvailable } = useUI();
+  const { isShoppersAvailable } = useUI();
   const [zipcode, setZipcode] = useState("11416");
 
   const isMobile = window.innerWidth <= 820;
@@ -17,7 +17,6 @@ const CheckoutContainer = () => {
     <div className="checkout-container">
       {(!isMobile || !showPriceBreakdown) && (
         <CheckoutForm
-          setActiveView={setActiveView}
           cart={cart}
           setCart={setCart}
           setZipcode={setZipcode}

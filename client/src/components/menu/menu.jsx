@@ -1,5 +1,16 @@
 import { onAuthStateChanged } from "firebase/auth";
+import {
+  CircleUserRound,
+  CreditCard,
+  LogIn,
+  LogOut,
+  Package2,
+  Search,
+  UserCheck,
+  UserX,
+} from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useUI } from "../../contexts/UIContext";
 import { useAuth } from "../../contexts/authContext";
 import { auth } from "../../firebase-config";
@@ -8,39 +19,12 @@ import "./menu.styles.css";
 
 const Menu = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-
-  const { isShoppersAvailable, setIsShoppersAvailable, setActiveView } =
-    useUI();
-
+  const { isShoppersAvailable, setIsShoppersAvailable, toggleSearch } = useUI();
   const { setUserType } = useAuth();
+  const navigate = useNavigate();
 
-  const handleMenuClick = (shouldShowMobileMenu) => {
-    const nav = document.querySelector("nav");
-    if (shouldShowMobileMenu) {
-      nav.classList.add("show");
-    } else {
-      nav.classList.remove("show");
-    }
-  };
-
-  const handleCheckoutClick = () => {
-    handleMenuClick(false);
-    setActiveView("checkout");
-  };
-
-  const handleCancelOrderClick = () => {
-    handleMenuClick(false);
-    setActiveView("cancelOrder");
-  };
-
-  const handleFaqClick = () => {
-    handleMenuClick(false);
-    setActiveView("faq");
-  };
-
-  const handleProfileClick = () => {
-    handleMenuClick(false);
-    setActiveView("profile");
+  const handleNavigation = (path) => {
+    navigate(path);
   };
 
   useEffect(() => {
@@ -51,85 +35,70 @@ const Menu = () => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsUserLoggedIn(true);
-      } else {
-        setIsUserLoggedIn(false);
-      }
+      setIsUserLoggedIn(!!user);
     });
     return () => unsubscribe();
   }, []);
 
-  const handleLogoutClick = () => {
-    auth.signOut();
-    setUserType(null);
-    handleMenuClick(false);
-    setActiveView("home");
+  const handleLogoutClick = async () => {
+    try {
+      await auth.signOut();
+      setUserType(null);
+      navigate("/");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
   };
 
   const handleLoginClick = () => {
     setUserType(null);
-    handleMenuClick(false);
-    setActiveView("home");
+    navigate("/");
   };
 
   return (
     <>
       <nav>
         <ul>
-          {isUserLoggedIn && (
-            <li>
-              <span className="tooltip-container">
-                <i
-                  className="fa-solid fa-user fa-xs"
-                  onClick={handleProfileClick}
-                ></i>
-                <div className="tooltip">View your profile. Coming soon!</div>
-              </span>
-            </li>
-          )}
           <li>
             <span className="tooltip-container">
-              Shoppers Available{" "}
-              <i
-                className="fa-solid fa-circle fa-xs"
-                style={{ color: isShoppersAvailable ? "#63E6BE" : "#f95858" }}
-              ></i>
-              <div className="tooltip">
-                Shows if shoppers are available to deliver your order
-              </div>
+              {isShoppersAvailable ? (
+                <UserCheck color="green" />
+              ) : (
+                <UserX color="red" />
+              )}
+              <div className="tooltip">Shopper Availability</div>
             </span>
           </li>
-          <li className="menu-item" onClick={handleCheckoutClick}>
-            Checkout
+          {isUserLoggedIn && (
+            <li>
+              <CircleUserRound onClick={() => handleNavigation("/profile")} />
+            </li>
+          )}
+          <li
+            className="menu-item"
+            onClick={() => handleNavigation("/checkout")}
+          >
+            <CreditCard />
           </li>
-          <li className="menu-item" onClick={handleCancelOrderClick}>
-            Cancel Order
+          <li className="menu-item" onClick={() => toggleSearch()}>
+            <Search />
           </li>
-          <li className="menu-item" onClick={handleFaqClick}>
-            FAQ
+          <li className="menu-item" onClick={() => handleNavigation("/orders")}>
+            <Package2 />
           </li>
+
           {isUserLoggedIn && (
             <li className="menu-item" onClick={handleLogoutClick}>
-              Logout
+              <LogOut />
             </li>
           )}
           {!isUserLoggedIn && (
             <li className="menu-item" onClick={handleLoginClick}>
-              Login
+              <LogIn />
             </li>
           )}
         </ul>
-        <button className="close-button" onClick={() => handleMenuClick(false)}>
-          X
-        </button>
       </nav>
-      <div className="menu-icon">
-        <i
-          className="fa-solid fa-bars fa-lg"
-          onClick={() => handleMenuClick(true)}
-        ></i>
-      </div>
     </>
   );
 };

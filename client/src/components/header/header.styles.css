@@ -1,0 +1,14 @@
+.header {
+  flex: 0 0 auto;
+}
+
+.menu-desktop {
+  margin-left: auto;
+  margin-right: 5%;
+}
+
+@media (max-width: 768px) {
+  .menu-desktop {
+    display: none;
+  }
+}
