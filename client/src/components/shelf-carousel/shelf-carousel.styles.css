@@ -2,7 +2,7 @@
   display: flex;
   scroll-behavior: smooth;
   gap: 20px;
-  margin: 0 -20px;
+  margin: -12px;
 }
 
 .shelf-carousel::-webkit-scrollbar {

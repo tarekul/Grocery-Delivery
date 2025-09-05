@@ -15,6 +15,14 @@ const CheckoutContainer = () => {
 
   return (
     <div className="checkout-container">
+      {cart.length > 0 && (
+        <button
+          className="mobile-price-button"
+          onClick={() => setShowPriceBreakdown(!showPriceBreakdown)}
+        >
+          {showPriceBreakdown ? "Back to Checkout" : "View Price Breakdown"}
+        </button>
+      )}
       {(!isMobile || !showPriceBreakdown) && (
         <CheckoutForm
           cart={cart}
@@ -24,14 +32,7 @@ const CheckoutContainer = () => {
           isShoppersAvailable={isShoppersAvailable}
         />
       )}
-      {cart.length > 0 && (
-        <button
-          className="mobile-price-button"
-          onClick={() => setShowPriceBreakdown(!showPriceBreakdown)}
-        >
-          {showPriceBreakdown ? "Back to Checkout" : "View Price Breakdown"}
-        </button>
-      )}
+
       {cart.length > 0 && (!isMobile || showPriceBreakdown) && (
         <PriceBreakdown cart={cart} zipcode={zipcode} />
       )}
