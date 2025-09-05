@@ -116,7 +116,7 @@
   }
 
   .has-items {
-    max-height: 100dvh;
+    height: 100dvh;
   }
 
   .search-input {

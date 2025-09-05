@@ -1,13 +1,11 @@
-import {
-  Amphora,
-  Apple,
-  Bean,
-  Carrot,
-  Cookie,
-  CookingPot,
-  Refrigerator,
-  Wheat,
-} from "lucide-react";
+import cold from "../../assets/categoryImages/cold.jpeg";
+import fruits from "../../assets/categoryImages/fruits.jpeg";
+import lentils from "../../assets/categoryImages/lentils.jpeg";
+import oils from "../../assets/categoryImages/oils.jpeg";
+import rice from "../../assets/categoryImages/rice.jpeg";
+import snacks from "../../assets/categoryImages/snacks.jpeg";
+import spices from "../../assets/categoryImages/spices.jpeg";
+import vegetables from "../../assets/categoryImages/vegetables.jpeg";
 import "./categories.styles.css";
 
 const Categories = ({ setCategory }) => {
@@ -17,34 +15,18 @@ const Categories = ({ setCategory }) => {
 
   return (
     <div className="categories">
-      <button
-        className="category-button"
-        title="Cold Products"
+      <img
+        src={cold}
+        alt=""
         onClick={() => handleCategoryClick("Cold Products")}
-      >
-        <Refrigerator size={50} />
-      </button>
-      <button className="category-button disabled" title="Coming soon">
-        <Carrot size={50} />
-      </button>
-      <button className="category-button disabled" title="Coming soon">
-        <Apple size={50} />
-      </button>
-      <button className="category-button disabled" title="Coming soon">
-        <Wheat size={50} />
-      </button>
-      <button className="category-button disabled" title="Coming soon">
-        <Bean size={50} />
-      </button>
-      <button className="category-button disabled" title="Coming soon">
-        <CookingPot size={50} />
-      </button>
-      <button className="category-button disabled" title="Coming soon">
-        <Amphora size={50} />
-      </button>
-      <button className="category-button disabled" title="Coming soon">
-        <Cookie size={50} />
-      </button>
+      />
+      <img src={fruits} alt="" />
+      <img src={lentils} alt="" />
+      <img src={oils} alt="" />
+      <img src={rice} alt="" />
+      <img src={vegetables} alt="" />
+      <img src={snacks} alt="" />
+      <img src={spices} alt="" />
     </div>
   );
 };
