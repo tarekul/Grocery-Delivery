@@ -6,6 +6,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [firebaseUser, setFirebaseUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
   const [userType, setUserType] = useState(null);
   const [isRegistering, setIsRegistering] = useState(false);
 
@@ -14,6 +15,7 @@ export const AuthProvider = ({ children }) => {
       if (!isRegistering) {
         setFirebaseUser(user);
         setUserType(user ? "authenticated" : null);
+        setAuthLoading(false);
       }
     });
     return () => unsubscribe();
@@ -27,6 +29,7 @@ export const AuthProvider = ({ children }) => {
         setUserType,
         isRegistering,
         setIsRegistering,
+        authLoading,
       }}
     >
       {children}
