@@ -35,11 +35,33 @@ const allowedOrigins = [
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
+    if (!origin) {
+      // allow non-browser requests (like Postman, curl)
+      return callback(null, true);
     }
+
+    // Allow if explicitly in the list
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    // Allow Netlify preview URLs (deploy-preview-* subdomains)
+    try {
+      const hostname = new URL(origin).hostname;
+      if (
+        hostname === "local-grocery-delivery.netlify.app" || // main site
+        /^deploy-preview-\d+--local-grocery-delivery\.netlify\.app$/.test(
+          hostname
+        )
+      ) {
+        return callback(null, true);
+      }
+    } catch (err) {
+      return callback(new Error("Invalid origin"));
+    }
+
+    // Otherwise block
+    return callback(new Error("Not allowed by CORS"));
   },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
@@ -47,6 +69,7 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
   optionsSuccessStatus: 204,
 };
+
 app.options("*", cors(corsOptions));
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
