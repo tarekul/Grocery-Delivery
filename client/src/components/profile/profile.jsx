@@ -24,19 +24,24 @@ const Profile = () => {
   useEffect(() => {
     (async () => {
       if (!firebaseUser) return;
-      const user = await getUser(firebaseUser.uid);
-      setUser(user);
-      setForm({
-        firstName: user.firstName || "",
-        lastName: user.lastName || "",
-        phone: user.phone || "",
-        address: user.address || "",
-        city: user.city || "",
-        state: "NY",
-        zipcode: user.zipcode || "",
-      });
+      try {
+        const user = await getUser(firebaseUser.uid);
+        if (!user) throw new Error("No user found");
+        setUser(user);
+        setForm({
+          firstName: user.firstName || "",
+          lastName: user.lastName || "",
+          phone: user.phone || "",
+          address: user.address || "",
+          city: user.city || "",
+          state: "NY",
+          zipcode: user.zipcode || "",
+        });
+      } catch (err) {
+        setError("Could not load profile");
+      }
     })();
-  }, []);
+  }, [firebaseUser]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
