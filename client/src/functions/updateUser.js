@@ -5,6 +5,7 @@ export const updateUser = async (
   uid,
   { firstName, lastName, address, zipcode, city, phone }
 ) => {
+  console.log(  { firstName, lastName, address, zipcode, city, phone })
   try {
     if (!uid) {
       throw new Error("UID is required to update a user");

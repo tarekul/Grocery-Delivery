@@ -2,51 +2,103 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/authContext";
 import { getUser } from "../../functions/getUser";
 import { updateUser } from "../../functions/updateUser";
+import { uploadAvatar } from "../../functions/uploadAvatar"; // new helper
 import "./profile.css";
+import ZipDropdown from "../zip-dropdown/zip-dropdown";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [editing, setEditing] = useState(false);
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    address: "",
-    city: "",
-    state: "NY",
-    zipcode: "",
-  });
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("NY");
+  const [zipcode, setZipcode] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
   const { firebaseUser } = useAuth();
 
   useEffect(() => {
-    (async () => {
-      if (!firebaseUser) return;
-      const user = await getUser(firebaseUser.uid);
-      setUser(user);
-      setForm({
-        firstName: user.firstName || "",
-        lastName: user.lastName || "",
-        phone: user.phone || "",
-        address: user.address || "",
-        city: user.city || "",
-        state: "NY",
-        zipcode: user.zipcode || "",
-      });
-    })();
-  }, []);
+  (async () => {
+    if (!firebaseUser) return;
+    try {
+      const u = await getUser(firebaseUser.uid);
+      setUser(u);
+      setFirstName(u.firstName || "");
+      setLastName(u.lastName || "");
+      setPhone(u.phone || "");
+      setAddress(u.address || "");
+      setCity(u.city || "");
+      setState(u.state || "NY");
+      setZipcode(u.zipcode || "");
+    } catch (err) {
+      console.error("Failed to fetch user:", err);
+      setUser({}); // optional: avoid infinite loading
+    }
+  })();
+}, [firebaseUser]);   // <-- IMPORTANT
+
+const [changes, setChanges] = useState({});
 
   const onChange = (e) => {
     const { name, value } = e.target;
-    setForm((f) => ({ ...f, [name]: value }));
+    switch (name) {
+      case "firstName":
+        setFirstName(value);
+        changes.firstName = value;
+        break;
+      case "lastName":
+        setLastName(value);
+        changes.lastName = value;
+        break;
+      case "phone":
+        setPhone(value);
+        changes.phone = value;
+        break;
+      case "address":
+        setAddress(value);
+        changes.address = value;
+        break;
+      case "city":
+        setCity(value);
+        changes.city = value;
+        break;
+      case "state":
+        setState(value);
+        break;
+      case "zipcode":
+        setZipcode(value);
+        changes.zipcode = value;
+        break;
+      default:
+        break;
+    }
+// track changes in state
+  setChanges((prev) => ({
+    ...prev,
+    [name]: value
+  }));
+
+  console.log("Field:", name, "Value:", value);
+  console.log("Changes:", changes);
   };
 
+
+  console.log(changes);
+ 
+
   const onSave = async () => {
-    const hasChanges = Object.keys(form).some(
-      (key) => form[key] !== (user[key] || "")
-    );
+    const hasChanges = [
+      firstName,
+      lastName,
+      phone,
+      address,
+      city,
+      zipcode,
+    ].some((field, index) => field !== (Object.values(user)[index] || ""));
 
     if (!hasChanges) {
       setEditing(false);
@@ -55,7 +107,11 @@ const Profile = () => {
     setSaving(true);
     setError("");
     try {
-      const updatedUser = await updateUser(firebaseUser.uid, form);
+        
+      const updatedUser = await updateUser(firebaseUser.uid, {
+        ...changes
+      });
+      console.log(updatedUser);
       setUser(updatedUser);
       setEditing(false);
     } catch (e) {
@@ -65,32 +121,93 @@ const Profile = () => {
     }
   };
 
+  const handleAvatarPick = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setSaving(true);
+    setError("");
+    try {
+      const updated = await uploadAvatar(firebaseUser.uid, file);
+      setUser(updated);
+    } catch (err) {
+      setError("Failed to update avatar.");
+    } finally {
+      setSaving(false);
+      e.target.value = "";
+    }
+  };
+
   if (!user) return <div>Loading...</div>;
 
   return (
     <div className="profile">
-      <h1>User Profile</h1>
-      {!editing ? (
-        <>
+      {/* --- Header --- */}
+      <header className="profile-header">
+        <img
+          className="avatar"
+          src={user.photoURL || "/shelf-images/user.png"}
+          alt="avatar"
+        />
+        <div>
           <h2>
-            Welcome {user.firstName} {user.lastName}
+            {user.firstName} {user.lastName}
           </h2>
-          <p>Your Email: {user.email}</p>
-          <p>Your Phone: {user.phone}</p>
-          <p>Your Address: {user.address}</p>
-          <p>Your City: {user.city}</p>
-          <p>Your Zipcode: {user.zipcode}</p>
+          <p className="muted">{user.email}</p>
+          <div className="actions">
+            {!editing && (
+              <button onClick={() => setEditing(true)}>Edit Profile</button>
+            )}
+            <label className="btn-primary">
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={handleAvatarPick}
+              />
+              Update Avatar
+            </label>
+          </div>
+          {saving && <p style={{ color: "crimson" }}>Saving...</p>}
+          {error && <p style={{ color: "crimson" }}>{error}</p>}
+        </div>
+      </header>
 
-          <button onClick={() => setEditing(true)}>Edit Profile</button>
-        </>
+      {/* --- Sections --- */}
+      {!editing ? (
+        <section className="card">
+          <h3>Contact</h3>
+          <div className="kv">
+            <div>
+              <dt>Phone</dt>
+              <dd>{user.phone}</dd>
+            </div>
+            <div>
+              <dt>Address</dt>
+              <dd>{user.address}</dd>
+            </div>
+            <div>
+              <dt>City</dt>
+              <dd>{user.city}</dd>
+            </div>
+            <div>
+              <dt>State</dt>
+              <dd>{user.state}</dd>
+            </div>
+            <div>
+              <dt>Zip</dt>
+              <dd>{user.zipcode}</dd>
+            </div>
+          </div>
+        </section>
       ) : (
-        <>
+        <section className="card form-grid">
+          <h3>Edit Profile</h3>
           <div className="grid">
             <label>
               First Name
               <input
                 name="firstName"
-                value={form.firstName}
+                value={firstName}
                 onChange={onChange}
               />
             </label>
@@ -98,29 +215,29 @@ const Profile = () => {
               Last Name
               <input
                 name="lastName"
-                value={form.lastName}
+                value={lastName}
                 onChange={onChange}
               />
             </label>
             <label>
               Phone
-              <input name="phone" value={form.phone} onChange={onChange} />
+              <input name="phone" value={phone} onChange={onChange} />
             </label>
             <label>
               Address
-              <input name="address" value={form.address} onChange={onChange} />
+              <input name="address" value={address} onChange={onChange} />
             </label>
             <label>
               City
-              <input name="city" value={form.city} onChange={onChange} />
+              <input name="city" value={city} onChange={onChange} />
             </label>
             <label>
               State
-              <p>{form.state}</p>
+              <p>{state}</p>
             </label>
             <label>
               Zip Code
-              <input name="zipcode" value={form.zipcode} onChange={onChange} />
+              <ZipDropdown setZipcode={setZipcode} />
             </label>
           </div>
 
@@ -138,7 +255,7 @@ const Profile = () => {
           >
             Cancel
           </button>
-        </>
+        </section>
       )}
     </div>
   );

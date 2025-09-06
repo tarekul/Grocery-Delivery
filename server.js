@@ -1,3 +1,5 @@
+const fs = require("fs");
+const multer = require("multer");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -48,7 +50,28 @@ app.options("*", cors(corsOptions));
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
+// --- Avatar uploads directory & static hosting ---
+const UPLOADS_DIR = path.join(__dirname, "uploads");
+if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR);
+app.use("/uploads", express.static(UPLOADS_DIR));
+
+// --- Multer config for avatar uploads ---
+const storage = multer.diskStorage({
+  destination: (_req, _file, cb) => cb(null, UPLOADS_DIR),
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname) || ".jpg,.png,.jpeg";
+    cb(null, `avatar_${req.params.uid}${ext}`);
+  },
+});
+const upload = multer({
+  storage,
+  limits: { fileSize: 3 * 1024 * 1024 }, // 3MB
+});
+
+
+
 // Routes
+// PUT /profile/:uid/avatar  -> form-data field: "avatar"
 app.get("/", (req, res) => {
   res.send("Welcome to the Grocery MVP App!");
 });
@@ -156,6 +179,29 @@ app.put("/update-user", verifyUpdateUserRequest, async (req, res) => {
     });
   }
 });
+
+// PUT /profile/:uid/avatar  -> form-data field: "avatar"
+app.put("/profile/:uid/avatar", upload.single("avatar"), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).send("No file uploaded.");
+
+    // Public URL to the uploaded file (set PUBLIC_API_URL in prod, e.g. https://your-api.com)
+    const base = process.env.PUBLIC_API_URL || "";
+    const photoURL = `${base}/uploads/${req.file.filename}`;
+
+    // Update Firestore user doc
+    const docRef = doc(db, "customers", req.params.uid);
+    await updateDoc(docRef, { photoURL });
+
+    const snap = await getDoc(docRef);
+    if (!snap.exists()) return res.status(404).send("User not found.");
+    return res.status(200).send(snap.data());
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ message: "Avatar upload failed", error: error.message });
+  }
+});
+
 
 app.post("/order", verifyInputRequest, async (req, res) => {
   const {
