@@ -1,13 +1,11 @@
-import {
-  Amphora,
-  Apple,
-  Bean,
-  Carrot,
-  Cookie,
-  CookingPot,
-  Milk,
-  Wheat,
-} from "lucide-react";
+import cold from "../../assets/categoryImages/cold.jpeg";
+import fruits from "../../assets/categoryImages/fruits.jpeg";
+import lentils from "../../assets/categoryImages/lentils.jpeg";
+import oils from "../../assets/categoryImages/oils.jpeg";
+import rice from "../../assets/categoryImages/rice.jpeg";
+import snacks from "../../assets/categoryImages/snacks.jpeg";
+import spices from "../../assets/categoryImages/spices.jpeg";
+import vegetables from "../../assets/categoryImages/vegetables.jpeg";
 import "./categories.styles.css";
 
 const Categories = ({ setCategory }) => {
@@ -16,46 +14,19 @@ const Categories = ({ setCategory }) => {
   };
 
   return (
-    <div>
-      <h2>Categories</h2>
-      <div className="categories">
-        <button
-          className="category-button"
-          title="Cold Products"
-          onClick={() => handleCategoryClick("Cold Products")}
-        >
-          <Milk />
-          Cold Products
-        </button>
-        <button className="category-button disabled" title="Coming soon">
-          <Carrot />
-          Fresh Produce
-        </button>
-        <button className="category-button disabled" title="Coming soon">
-          <Apple />
-          Fruits
-        </button>
-        <button className="category-button disabled" title="Coming soon">
-          <Wheat />
-          Grains
-        </button>
-        <button className="category-button disabled" title="Coming soon">
-          <Bean />
-          Lentils & Beans
-        </button>
-        <button className="category-button disabled" title="Coming soon">
-          <CookingPot />
-          Spices & Masalas
-        </button>
-        <button className="category-button disabled" title="Coming soon">
-          <Amphora />
-          Cooking Oils
-        </button>
-        <button className="category-button disabled" title="Coming soon">
-          <Cookie />
-          Snacks & Sweets
-        </button>
-      </div>
+    <div className="categories">
+      <img
+        src={cold}
+        alt=""
+        onClick={() => handleCategoryClick("Cold Products")}
+      />
+      <img src={fruits} alt="" />
+      <img src={lentils} alt="" />
+      <img src={oils} alt="" />
+      <img src={rice} alt="" />
+      <img src={vegetables} alt="" />
+      <img src={snacks} alt="" />
+      <img src={spices} alt="" />
     </div>
   );
 };

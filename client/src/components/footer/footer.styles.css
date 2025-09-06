@@ -1,11 +1,16 @@
 .footer {
   display: flex;
+  padding: 10px 40px;
+  background-color: var(--background-header);
+  flex: 0 0 auto;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  color: var(--text-primary);
-  padding: 20px 40px;
-  margin-top: auto;
-  background-color: var(--background-header);
+  width: 100%;
 }
 
 .footer-links {
@@ -15,6 +20,7 @@
 
 .footer-links p {
   cursor: pointer;
+  font-size: 0.8rem;
 }
 
 .footer-links p:hover {
@@ -22,9 +28,30 @@
   color: var(--primary);
 }
 
+.footer-copyright {
+  color: var(--text-secondary);
+  font-size: 0.5rem;
+  margin-top: 0;
+}
+
+.menu-mobile {
+  display: none;
+}
+
 @media screen and (max-width: 768px) {
   .footer {
     flex-direction: column;
     padding: 0;
+  }
+
+  .footer-content {
+    flex-direction: column;
+  }
+
+  .menu-mobile {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    background: var(--menu-mobile);
   }
 }

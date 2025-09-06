@@ -11,14 +11,6 @@
   box-shadow: 0 2px 4px rgba(91, 107, 191, 0.1);
 }
 
-.cart-item img {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-right: 8px;
-}
-
 .cart-item-details {
   flex: 1;
   min-width: 0;

@@ -8,23 +8,13 @@ import "./checkout-container.styles.css";
 const CheckoutContainer = () => {
   const [showPriceBreakdown, setShowPriceBreakdown] = useState(false);
   const { cart, setCart } = useCart();
-  const { setActiveView, isShoppersAvailable } = useUI();
+  const { isShoppersAvailable } = useUI();
   const [zipcode, setZipcode] = useState("11416");
 
   const isMobile = window.innerWidth <= 820;
 
   return (
     <div className="checkout-container">
-      {(!isMobile || !showPriceBreakdown) && (
-        <CheckoutForm
-          setActiveView={setActiveView}
-          cart={cart}
-          setCart={setCart}
-          setZipcode={setZipcode}
-          zipcode={zipcode}
-          isShoppersAvailable={isShoppersAvailable}
-        />
-      )}
       {cart.length > 0 && (
         <button
           className="mobile-price-button"
@@ -33,6 +23,16 @@ const CheckoutContainer = () => {
           {showPriceBreakdown ? "Back to Checkout" : "View Price Breakdown"}
         </button>
       )}
+      {(!isMobile || !showPriceBreakdown) && (
+        <CheckoutForm
+          cart={cart}
+          setCart={setCart}
+          setZipcode={setZipcode}
+          zipcode={zipcode}
+          isShoppersAvailable={isShoppersAvailable}
+        />
+      )}
+
       {cart.length > 0 && (!isMobile || showPriceBreakdown) && (
         <PriceBreakdown cart={cart} zipcode={zipcode} />
       )}
