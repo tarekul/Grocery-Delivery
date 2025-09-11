@@ -1,0 +1,37 @@
+.order-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--background-secondary);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.order-card:hover {
+  transform: translateY(-2px);
+}
+
+.order-card.pending {
+  border-left: 5px solid gray;
+}
+
+.order-card.in-progress {
+  border-left: 5px solid orange;
+}
+
+.order-card.completed {
+  border-left: 5px solid green;
+}
+
+.order-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.order-info p {
+  margin: 0;
+  font-size: 0.95rem;
+}
