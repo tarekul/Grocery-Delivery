@@ -214,7 +214,7 @@ app.post("/order", verifyInputRequest, async (req, res) => {
       total_price,
       created_at: new Date(),
       deleted_at: null,
-      is_completed: false,
+      status: "Pending",
       num_items: items.length,
       customer_id: customerId,
     });
@@ -243,30 +243,6 @@ app.post("/order", verifyInputRequest, async (req, res) => {
 
     res.status(500).send({
       message: "Failed to place order.",
-      error: error.message,
-    });
-  }
-});
-
-app.get("/order/in-progress", async (req, res) => {
-  const customerId = req.query.customerId;
-
-  try {
-    const acceptedOrdersDocRef = query(
-      collection(db, "accepted-orders"),
-      where("customer_id", "==", customerId)
-    );
-    const acceptedOrdersDoc = await getDocs(acceptedOrdersDocRef);
-
-    if (acceptedOrdersDoc.empty) {
-      return res.status(404).send("Order not found.");
-    }
-
-    const acceptedOrdersData = acceptedOrdersDoc.docs.map((doc) => doc.data());
-    res.status(200).send(acceptedOrdersData);
-  } catch (error) {
-    res.status(500).send({
-      message: "Failed to mark order as in progress.",
       error: error.message,
     });
   }
@@ -344,6 +320,57 @@ app.get("/order/:id", async (req, res) => {
   } catch (error) {
     res.status(500).send({
       message: "Failed to fetch order.",
+      error: error.message,
+    });
+  }
+});
+
+app.get("/orders/:customerId", async (req, res) => {
+  try {
+    const customerId = req.params.customerId;
+
+    const ordersDocRef = query(
+      collection(db, "orders"),
+      where("customer_id", "==", customerId),
+      where("status", "in", ["Pending", "In Progress"])
+    );
+    const ordersDoc = await getDocs(ordersDocRef);
+
+    if (ordersDoc.empty) {
+      return res.status(200).send([]);
+    }
+
+    const ordersData = ordersDoc.docs.map((doc) => doc.data());
+    res.status(200).send(ordersData);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Failed to fetch active orders.",
+      error: error.message,
+    });
+  }
+});
+
+app.get("/past-orders/:customerId", async (req, res) => {
+  try {
+    const customerId = req.params.customerId;
+
+    const pastOrdersDocRef = query(
+      collection(db, "orders"),
+      where("customer_id", "==", customerId),
+      where("status", "==", "Completed")
+    );
+    const pastOrdersDoc = await getDocs(pastOrdersDocRef);
+
+    if (pastOrdersDoc.empty) {
+      return res.status(200).send([]);
+    }
+
+    const pastOrdersData = pastOrdersDoc.docs.map((doc) => doc.data());
+    res.status(200).send(pastOrdersData);
+  } catch (error) {
+    res.status(500).send({
+      message: "Failed to fetch active orders.",
       error: error.message,
     });
   }
