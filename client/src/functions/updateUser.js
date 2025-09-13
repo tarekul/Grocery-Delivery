@@ -3,9 +3,8 @@ import apiUrl from "../apiUrl";
 
 export const updateUser = async (
   uid,
-  { firstName, lastName, address, zipcode, city, phone }
+  { firstName, lastName, address, zipcode, city, phone, photoURL }
 ) => {
-  console.log(  { firstName, lastName, address, zipcode, city, phone })
   try {
     if (!uid) {
       throw new Error("UID is required to update a user");
@@ -18,6 +17,8 @@ export const updateUser = async (
     if (zipcode !== undefined) body.zipcode = zipcode;
     if (city !== undefined) body.city = city;
     if (phone !== undefined) body.phone = phone;
+    if (photoURL !== undefined) body.photoURL = photoURL;
+
 
     const response = await axios.put(`${apiUrl}/update-user`, body);
     return response.data;

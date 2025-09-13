@@ -82,12 +82,7 @@ const [changes, setChanges] = useState({});
     [name]: value
   }));
 
-  console.log("Field:", name, "Value:", value);
-  console.log("Changes:", changes);
   };
-
-
-  console.log(changes);
  
 
   const onSave = async () => {
@@ -111,7 +106,6 @@ const [changes, setChanges] = useState({});
       const updatedUser = await updateUser(firebaseUser.uid, {
         ...changes
       });
-      console.log(updatedUser);
       setUser(updatedUser);
       setEditing(false);
     } catch (e) {
@@ -122,20 +116,25 @@ const [changes, setChanges] = useState({});
   };
 
   const handleAvatarPick = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setSaving(true);
-    setError("");
-    try {
-      const updated = await uploadAvatar(firebaseUser.uid, file);
-      setUser(updated);
-    } catch (err) {
-      setError("Failed to update avatar.");
-    } finally {
-      setSaving(false);
-      e.target.value = "";
-    }
-  };
+  const file = e.target.files?.[0];
+  if (!file) return;
+  setSaving(true); setError("");
+
+  try {
+    const url = await uploadAvatar(firebaseUser.uid, file, {
+      onProgress: (p) => console.log("upload", p, "%")
+    });
+    // Save the URL to your backend/Firestore (so profile has photoURL)
+    const updated = await updateUser(firebaseUser.uid, { photoURL: url });
+    setUser(updated);
+  } catch (err) {
+    console.error(err);
+    setError("Failed to update avatar.");
+  } finally {
+    setSaving(false);
+    e.target.value = "";
+  }
+};
 
   if (!user) return <div>Loading...</div>;
 

@@ -1,21 +1,37 @@
 import axios from "axios";
-import apiUrl from "../apiUrl";
 
-/**
- * Upload a new avatar for the given Firebase uid.
- * Returns the UPDATED user object from the server (with photoURL).
- */
-export const uploadAvatar = async (uid, file) => {
+const CLOUD_NAME    = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+const UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+
+const publicIdFor = (uid) => `avatars/${uid}`;
+
+export const uploadAvatar = async (uid, file, { onProgress } = {}) => {
+  if (!CLOUD_NAME || !UPLOAD_PRESET) {
+    throw new Error("Cloudinary env vars missing");
+  }
+
+  const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
   const fd = new FormData();
-  fd.append("avatar", file);
+  fd.append("file", file);
+  fd.append("upload_preset", UPLOAD_PRESET);
+  fd.append("folder", "grocerygo/avatars");     // allowed for unsigned
+  fd.append("public_id", publicIdFor(uid));     // allowed for unsigned
+  // DO NOT send overwrite for unsigned
+  // DO NOT send 'transformation' here for unsigned; set it in the preset if needed
 
-  const { data } = await axios.put(
-    `${apiUrl}/profile/${uid}/avatar`,
-    fd,
-    {
-      withCredentials: true, // keep if you use cookie/session auth
-      // do NOT set Content-Type; the browser adds the multipart boundary
-    }
-  );
-  return data;
+  try {
+    const { data } = await axios.post(url, fd, {
+      onUploadProgress: (evt) => {
+        if (onProgress && evt.total) {
+          onProgress(Math.round((evt.loaded * 100) / evt.total));
+        }
+      },
+    });
+    return data.secure_url; // contains versioned URL (v###)
+  } catch (err) {
+    // bubble the Cloudinary message so you can show a friendly toast
+    const msg = err?.response?.data?.error?.message || err.message;
+    throw new Error(`Cloudinary upload failed: ${msg}`);
+  }
 };
+
