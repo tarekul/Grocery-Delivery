@@ -12,9 +12,11 @@ export const submitOrder = (
   setCart,
   customerId
 ) => {
-  const totalPrice =
-    calculateCartTotal(cart) + distanceCalculator(zipcode) + ServiceFee;
-  console.log(cart);
+  const subTotal = calculateCartTotal(cart);
+  const tax = 0;
+  const serviceFee = ServiceFee;
+  const deliveryFee = distanceCalculator(zipcode);
+  const totalPrice = subTotal + tax + serviceFee + deliveryFee;
 
   return axios
     .post(`${apiUrl}/order`, {
@@ -26,6 +28,10 @@ export const submitOrder = (
       address,
       city,
       state,
+      subTotal,
+      tax,
+      serviceFee,
+      deliveryFee,
       totalPrice,
       items: cart,
       customerId,
@@ -33,7 +39,6 @@ export const submitOrder = (
     .then((res) => {
       refreshCart();
       setCart([]);
-      console.log("Order placed successfully:", res.data);
       return res.data;
     })
     .catch((err) => {
