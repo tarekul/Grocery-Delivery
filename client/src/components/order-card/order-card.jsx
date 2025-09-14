@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import "./order-card.styles.css";
 
 const OrderCard = ({ order }) => {
+  const navigate = useNavigate();
   const formattedDate = new Date(
     order.created_at.seconds * 1000
   ).toLocaleDateString();
@@ -14,6 +16,7 @@ const OrderCard = ({ order }) => {
           ? "in-progress"
           : "pending"
       }`}
+      onClick={() => navigate(`/order-details/${order.id}`)}
     >
       <div className="order-header">
         <h3>Order Summary</h3>

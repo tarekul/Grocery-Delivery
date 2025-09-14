@@ -1,13 +1,9 @@
 import axios from "axios";
 import apiUrl from "../apiUrl";
 
-export const cancelOrder = (orderId, token) => {
+const getOrder = async (orderId) => {
   return axios
-    .post(
-      `${apiUrl}/order/cancel`,
-      { orderId },
-      { headers: { Authorization: `Bearer ${token}` } }
-    )
+    .get(`${apiUrl}/order/${orderId}`)
     .then((res) => {
       return res.data;
     })
@@ -15,3 +11,5 @@ export const cancelOrder = (orderId, token) => {
       throw err;
     });
 };
+
+export default getOrder;
