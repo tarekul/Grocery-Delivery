@@ -21,11 +21,12 @@ const {
 } = require("firebase/firestore");
 const orderConfirmationEmail = require("./mailjet.js");
 const db = require("./firebase-config.js");
-const serviceAccount = require("./serviceAccount.json");
 
 const app = express();
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(
+    JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
+  ),
   databaseURL: "https://grocery-go-backend-default-rtdb.firebaseio.com",
 });
 const PORT = process.env.PORT || 5001;
