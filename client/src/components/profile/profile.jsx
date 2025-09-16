@@ -173,33 +173,33 @@ const [changes, setChanges] = useState({});
 
       {/* --- Sections --- */}
       {!editing ? (
-        <section className="card">
-          <h3>Contact</h3>
-          <div className="kv">
-            <div>
-              <dt>Phone</dt>
-              <dd>{user.phone}</dd>
-            </div>
-            <div>
-              <dt>Address</dt>
-              <dd>{user.address}</dd>
-            </div>
-            <div>
-              <dt>City</dt>
-              <dd>{user.city}</dd>
-            </div>
-            <div>
-              <dt>State</dt>
-              <dd>{user.state}</dd>
-            </div>
-            <div>
-              <dt>Zip</dt>
-              <dd>{user.zipcode}</dd>
-            </div>
-          </div>
-        </section>
+  <section className="profile-card">
+  <h3>Contact</h3>
+  <div className="kv">
+    <div className="kv-row">
+      <span className="kv-k">Phone</span>
+      <span className="kv-v">{user.phone || "—"}</span>
+    </div>
+    <div className="kv-row">
+      <span className="kv-k">Address</span>
+      <span className="kv-v">{user.address || "—"}</span>
+    </div>
+    <div className="kv-row">
+      <span className="kv-k">City</span>
+      <span className="kv-v">{user.city || "—"}</span>
+    </div>
+    <div className="kv-row">
+      <span className="kv-k">State</span>
+      <span className="kv-v">{user.state || "—"}</span>
+    </div>
+    <div className="kv-row">
+      <span className="kv-k">Zip</span>
+      <span className="kv-v">{user.zipcode || "—"}</span>
+    </div>
+  </div>
+</section>
       ) : (
-        <section className="card form-grid">
+        <section className="profile-card profile-form">
           <h3>Edit Profile</h3>
           <div className="grid">
             <label>
