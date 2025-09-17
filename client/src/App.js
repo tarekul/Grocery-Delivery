@@ -12,6 +12,7 @@ import Mission from "./components/mission/mission";
 import Profile from "./components/profile/profile.jsx";
 
 import Header from "./components/header/header.jsx";
+import OrderDetails from "./components/order-details/order-details.jsx";
 import Orders from "./components/orders/orders.jsx";
 import SearchBar from "./components/search-bar/search-bar.jsx";
 import { useAuth } from "./contexts/authContext";
@@ -93,6 +94,14 @@ function App() {
           element={
             <UserLayout>
               <Orders />
+            </UserLayout>
+          }
+        />
+        <Route
+          path="/order-details/:id"
+          element={
+            <UserLayout>
+              <OrderDetails />
             </UserLayout>
           }
         />

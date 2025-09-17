@@ -10,28 +10,32 @@ import CartToast from "../toast/cart-toast";
 import "./home-view.styles.css";
 
 const HomeView = () => {
-  const { firebaseUser, userType, isRegistering } = useAuth();
+  const { firebaseUser, userType, isRegistering, authLoading } = useAuth();
   const { showToast } = useCart();
   const { isLoading, category, setCategory } = useUI();
+
   const isUser = firebaseUser || userType === "guest";
+  const needsAuth = !firebaseUser && userType == null && !authLoading;
+  const shouldShowShelf = category && !isLoading;
 
   return (
     <div className="home-view">
-      {isLoading ? (
+      {authLoading && (
         <div className="home-loading-icon">
           <LoadingIcon />
         </div>
-      ) : (
+      )}
+
+      {!authLoading &&
         isUser &&
         !isRegistering &&
-        (category ? (
+        (shouldShowShelf ? (
           <ShelfCarousel category={category} />
         ) : (
           <Categories setCategory={setCategory} />
-        ))
-      )}
+        ))}
 
-      {!firebaseUser && userType == null && <AuthGate />}
+      {needsAuth && <AuthGate />}
       {showToast && <CartToast />}
     </div>
   );

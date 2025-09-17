@@ -12,7 +12,11 @@ const verifyInputRequest = async (req, res, next) => {
     state,
     zipcode,
     items,
+    subTotal,
     totalPrice,
+    tax,
+    serviceFee,
+    deliveryFee,
   } = req.body;
 
   // Check for required fields and respond with specific error messages
@@ -47,11 +51,24 @@ const verifyInputRequest = async (req, res, next) => {
     if (!totalPrice) {
       return res.status(400).send("Total price is required.");
     }
+    if (!subTotal) {
+      return res.status(400).send("Sub total is required.");
+    }
 
     // Validate total price
     const total_price = parseFloat(totalPrice);
     if (isNaN(total_price)) {
       return res.status(400).send("Invalid total price.");
+    }
+
+    if (tax === undefined) {
+      return res.status(400).send("Tax is required.");
+    }
+    if (serviceFee === undefined) {
+      return res.status(400).send("Service fee is required.");
+    }
+    if (deliveryFee === undefined) {
+      return res.status(400).send("Delivery fee is required.");
     }
   }
 

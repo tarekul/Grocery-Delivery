@@ -39,7 +39,7 @@ const Profile = () => {
       setUser({}); // optional: avoid infinite loading
     }
   })();
-}, [firebaseUser]);   // <-- IMPORTANT
+}, [firebaseUser]);
 
 const [changes, setChanges] = useState({});
 
