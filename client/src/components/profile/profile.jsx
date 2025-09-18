@@ -74,6 +74,8 @@ const Profile = () => {
       default:
         break;
     }
+
+    //Tracks only modified user form fields
     setChanges((prev) => {
       if (value === (user?.[name] || "")) {
         const { [name]: _, ...rest } = prev;
