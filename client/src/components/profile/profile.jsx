@@ -175,26 +175,26 @@ const [changes, setChanges] = useState({});
       {!editing ? (
   <section className="profile-card">
   <h3>Contact</h3>
-  <div className="kv">
-    <div className="kv-row">
-      <span className="kv-k">Phone</span>
-      <span className="kv-v">{user.phone || "—"}</span>
+  <div className="profile-box">
+    <div className="profile-row">
+      <span className="profile-label">Phone</span>
+      <span className="profile-value">{user.phone || "—"}</span>
     </div>
-    <div className="kv-row">
-      <span className="kv-k">Address</span>
-      <span className="kv-v">{user.address || "—"}</span>
+    <div className="profile-row">
+      <span className="profile-label">Address</span>
+      <span className="profile-value">{user.address || "—"}</span>
     </div>
-    <div className="kv-row">
-      <span className="kv-k">City</span>
-      <span className="kv-v">{user.city || "—"}</span>
+    <div className="profile-row">
+      <span className="profile-label">City</span>
+      <span className="profile-value">{user.city || "—"}</span>
     </div>
-    <div className="kv-row">
-      <span className="kv-k">State</span>
-      <span className="kv-v">{user.state || "—"}</span>
+    <div className="profile-row">
+      <span className="profile-label">State</span>
+      <span className="profile-value">{user.state || "—"}</span>
     </div>
-    <div className="kv-row">
-      <span className="kv-k">Zip</span>
-      <span className="kv-v">{user.zipcode || "—"}</span>
+    <div className="profile-row">
+      <span className="profile-label">Zip</span>
+      <span className="profile-value">{user.zipcode || "—"}</span>
     </div>
   </div>
 </section>
