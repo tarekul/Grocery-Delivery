@@ -1,5 +1,3 @@
-const fs = require("fs");
-const multer = require("multer");
 const express = require("express");
 const http = require("http");
 const admin = require("firebase-admin");
@@ -82,7 +80,6 @@ const corsOptions = {
 app.options("*", cors(corsOptions));
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
-
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Grocery MVP App!");
@@ -192,8 +189,6 @@ app.put("/update-user", verifyUpdateUserRequest, async (req, res) => {
     });
   }
 });
-
-
 
 app.post("/order", verifyInputRequest, async (req, res) => {
   const {

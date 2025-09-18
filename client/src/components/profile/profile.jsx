@@ -3,8 +3,9 @@ import { useAuth } from "../../contexts/authContext";
 import { getUser } from "../../functions/getUser";
 import { updateUser } from "../../functions/updateUser";
 import { uploadAvatar } from "../../functions/uploadAvatar"; // new helper
-import "./profile.css";
 import ZipDropdown from "../zip-dropdown/zip-dropdown";
+import "./profile.css";
+import defaultProfileImg from "./profile.jpg";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -22,26 +23,30 @@ const Profile = () => {
   const { firebaseUser } = useAuth();
 
   useEffect(() => {
-  (async () => {
-    if (!firebaseUser) return;
-    try {
-      const u = await getUser(firebaseUser.uid);
-      setUser(u);
-      setFirstName(u.firstName || "");
-      setLastName(u.lastName || "");
-      setPhone(u.phone || "");
-      setAddress(u.address || "");
-      setCity(u.city || "");
-      setState(u.state || "NY");
-      setZipcode(u.zipcode || "");
-    } catch (err) {
-      console.error("Failed to fetch user:", err);
-      setUser({}); // optional: avoid infinite loading
-    }
-  })();
-}, [firebaseUser]);
+    (async () => {
+      if (!firebaseUser) return;
+      try {
+        const u = await getUser(firebaseUser.uid);
+        setUser(u);
+        setFirstName(u.firstName || "");
+        setLastName(u.lastName || "");
+        setPhone(u.phone || "");
+        setAddress(u.address || "");
+        setCity(u.city || "");
+        setState(u.state || "NY");
+        setZipcode(u.zipcode || "");
+      } catch (err) {
+        console.error("Failed to fetch user:", err);
+        setUser({}); // optional: avoid infinite loading
+      }
+    })();
+  }, [firebaseUser]);
 
-const [changes, setChanges] = useState({});
+  const [changes, setChanges] = useState({});
+
+  useEffect(() => {
+    changes.zipcode = zipcode;
+  }, [zipcode]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -66,24 +71,15 @@ const [changes, setChanges] = useState({});
         setCity(value);
         changes.city = value;
         break;
-      case "state":
-        setState(value);
-        break;
-      case "zipcode":
-        setZipcode(value);
-        changes.zipcode = value;
-        break;
       default:
         break;
     }
-// track changes in state
-  setChanges((prev) => ({
-    ...prev,
-    [name]: value
-  }));
-
+    // track changes in state
+    setChanges((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
- 
 
   const onSave = async () => {
     const hasChanges = [
@@ -93,8 +89,11 @@ const [changes, setChanges] = useState({});
       address,
       city,
       zipcode,
-    ].some((field, index) => field !== (Object.values(user)[index] || ""));
+    ].some((field, index) => {
+      return field !== (Object.values(user)[index] || "");
+    });
 
+    console.log(hasChanges);
     if (!hasChanges) {
       setEditing(false);
       return;
@@ -102,9 +101,8 @@ const [changes, setChanges] = useState({});
     setSaving(true);
     setError("");
     try {
-        
       const updatedUser = await updateUser(firebaseUser.uid, {
-        ...changes
+        ...changes,
       });
       setUser(updatedUser);
       setEditing(false);
@@ -116,25 +114,26 @@ const [changes, setChanges] = useState({});
   };
 
   const handleAvatarPick = async (e) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
-  setSaving(true); setError("");
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setSaving(true);
+    setError("");
 
-  try {
-    const url = await uploadAvatar(firebaseUser.uid, file, {
-      onProgress: (p) => console.log("upload", p, "%")
-    });
-    // Save the URL to your backend/Firestore (so profile has photoURL)
-    const updated = await updateUser(firebaseUser.uid, { photoURL: url });
-    setUser(updated);
-  } catch (err) {
-    console.error(err);
-    setError("Failed to update avatar.");
-  } finally {
-    setSaving(false);
-    e.target.value = "";
-  }
-};
+    try {
+      const url = await uploadAvatar(firebaseUser.uid, file, {
+        onProgress: (p) => console.log("upload", p, "%"),
+      });
+      // Save the URL to your backend/Firestore (so profile has photoURL)
+      const updated = await updateUser(firebaseUser.uid, { photoURL: url });
+      setUser(updated);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to update avatar.");
+    } finally {
+      setSaving(false);
+      e.target.value = "";
+    }
+  };
 
   if (!user) return <div>Loading...</div>;
 
@@ -144,7 +143,7 @@ const [changes, setChanges] = useState({});
       <header className="profile-header">
         <img
           className="avatar"
-          src={user.photoURL || "/shelf-images/user.png"}
+          src={user.photoURL || defaultProfileImg}
           alt="avatar"
         />
         <div>
@@ -173,50 +172,42 @@ const [changes, setChanges] = useState({});
 
       {/* --- Sections --- */}
       {!editing ? (
-  <section className="profile-card">
-  <h3>Contact</h3>
-  <div className="profile-box">
-    <div className="profile-row">
-      <span className="profile-label">Phone</span>
-      <span className="profile-value">{user.phone || "—"}</span>
-    </div>
-    <div className="profile-row">
-      <span className="profile-label">Address</span>
-      <span className="profile-value">{user.address || "—"}</span>
-    </div>
-    <div className="profile-row">
-      <span className="profile-label">City</span>
-      <span className="profile-value">{user.city || "—"}</span>
-    </div>
-    <div className="profile-row">
-      <span className="profile-label">State</span>
-      <span className="profile-value">{user.state || "—"}</span>
-    </div>
-    <div className="profile-row">
-      <span className="profile-label">Zip</span>
-      <span className="profile-value">{user.zipcode || "—"}</span>
-    </div>
-  </div>
-</section>
+        <section className="profile-card">
+          <h3>Contact</h3>
+          <div className="profile-box">
+            <div className="profile-row">
+              <span className="profile-label">Phone</span>
+              <span className="profile-value">{user.phone || "—"}</span>
+            </div>
+            <div className="profile-row">
+              <span className="profile-label">Address</span>
+              <span className="profile-value">{user.address || "—"}</span>
+            </div>
+            <div className="profile-row">
+              <span className="profile-label">City</span>
+              <span className="profile-value">{user.city || "—"}</span>
+            </div>
+            <div className="profile-row">
+              <span className="profile-label">State</span>
+              <span className="profile-value">{user.state || "—"}</span>
+            </div>
+            <div className="profile-row">
+              <span className="profile-label">Zip</span>
+              <span className="profile-value">{user.zipcode || "—"}</span>
+            </div>
+          </div>
+        </section>
       ) : (
         <section className="profile-card profile-form">
           <h3>Edit Profile</h3>
           <div className="grid">
             <label>
               First Name
-              <input
-                name="firstName"
-                value={firstName}
-                onChange={onChange}
-              />
+              <input name="firstName" value={firstName} onChange={onChange} />
             </label>
             <label>
               Last Name
-              <input
-                name="lastName"
-                value={lastName}
-                onChange={onChange}
-              />
+              <input name="lastName" value={lastName} onChange={onChange} />
             </label>
             <label>
               Phone
