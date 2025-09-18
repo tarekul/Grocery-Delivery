@@ -15,6 +15,7 @@ const Profile = () => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
+  const [changes, setChanges] = useState({});
   const [state, setState] = useState("NY");
   const [zipcode, setZipcode] = useState("");
   const [saving, setSaving] = useState(false);
@@ -42,58 +43,55 @@ const Profile = () => {
     })();
   }, [firebaseUser]);
 
-  const [changes, setChanges] = useState({});
-
   useEffect(() => {
-    changes.zipcode = zipcode;
-  }, [zipcode]);
+    setChanges((prev) => {
+      if (zipcode === (user?.zipcode || "")) {
+        const { zipcode: _, ...rest } = prev;
+        return rest;
+      }
+      return { ...prev, zipcode };
+    });
+  }, [zipcode, user]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
     switch (name) {
       case "firstName":
         setFirstName(value);
-        changes.firstName = value;
         break;
       case "lastName":
         setLastName(value);
-        changes.lastName = value;
         break;
       case "phone":
         setPhone(value);
-        changes.phone = value;
         break;
       case "address":
         setAddress(value);
-        changes.address = value;
         break;
       case "city":
         setCity(value);
-        changes.city = value;
         break;
       default:
         break;
     }
-    // track changes in state
-    setChanges((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setChanges((prev) => {
+      if (value === (user?.[name] || "")) {
+        const { [name]: _, ...rest } = prev;
+        return rest;
+      }
+      return { ...prev, [name]: value };
+    });
   };
 
   const onSave = async () => {
-    const hasChanges = [
-      firstName,
-      lastName,
-      phone,
-      address,
-      city,
-      zipcode,
-    ].some((field, index) => {
-      return field !== (Object.values(user)[index] || "");
-    });
+    const hasChanges =
+      firstName !== (user.firstName || "") ||
+      lastName !== (user.lastName || "") ||
+      phone !== (user.phone || "") ||
+      address !== (user.address || "") ||
+      city !== (user.city || "") ||
+      zipcode !== (user.zipcode || "");
 
-    console.log(hasChanges);
     if (!hasChanges) {
       setEditing(false);
       return;
@@ -227,7 +225,7 @@ const Profile = () => {
             </label>
             <label>
               Zip Code
-              <ZipDropdown setZipcode={setZipcode} />
+              <ZipDropdown zipcode={zipcode} setZipcode={setZipcode} />
             </label>
           </div>
 
