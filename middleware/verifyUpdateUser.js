@@ -12,6 +12,7 @@ const verifyUpdateUserRequest = async (req, res, next) => {
     zipcode: "string",
     city: "string",
     phone: "string",
+    photoURL: "string",
   };
 
   for (const [key, value] of Object.entries(rest)) {

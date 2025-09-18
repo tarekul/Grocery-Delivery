@@ -81,7 +81,6 @@ app.options("*", cors(corsOptions));
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-// Routes
 app.get("/", (req, res) => {
   res.send("Welcome to the Grocery MVP App!");
 });
