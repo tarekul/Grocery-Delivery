@@ -120,11 +120,14 @@ const Profile = () => {
     setError("");
 
     try {
-      const url = await uploadAvatar(firebaseUser.uid, file, {
-        onProgress: (p) => console.log("upload", p, "%"),
+      const url  = await uploadAvatar(file, {
+      onProgress: (p) => console.log("upload", p, "%"),
       });
+      console.log("Uploaded avatar URL:", url);
       // Save the URL to your backend/Firestore (so profile has photoURL)
-      const updated = await updateUser(firebaseUser.uid, { photoURL: url });
+      const updated = await updateUser(firebaseUser.uid, {
+      photoURL: url,
+      });
       setUser(updated);
     } catch (err) {
       console.error(err);

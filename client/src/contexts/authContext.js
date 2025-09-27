@@ -8,18 +8,16 @@ export const AuthProvider = ({ children }) => {
   const [firebaseUser, setFirebaseUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [userType, setUserType] = useState(null);
-  const [isRegistering, setIsRegistering] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!isRegistering) {
+    
         setFirebaseUser(user);
         setUserType(user ? "authenticated" : null);
         setAuthLoading(false);
-      }
     });
     return () => unsubscribe();
-  }, [isRegistering]);
+  }, []);
 
   return (
     <AuthContext.Provider
@@ -27,8 +25,6 @@ export const AuthProvider = ({ children }) => {
         firebaseUser,
         userType,
         setUserType,
-        isRegistering,
-        setIsRegistering,
         authLoading,
       }}
     >

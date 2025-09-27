@@ -7,7 +7,7 @@ import validatePhone from "../../functions/validatePhone";
 import ZipDropdown from "../zip-dropdown/zip-dropdown.jsx";
 import "./register.styles.css";
 
-const Register = ({ setShowAuthForm, setIsRegistering }) => {
+const Register = ({ setShowAuthForm}) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -22,6 +22,7 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isInvalidPhone, setIsInvalidPhone] = useState(false);
+  const [emailTaken, setEmailTaken] = useState(false);
 
   const areFieldsFilled =
     firstName &&
@@ -42,8 +43,6 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
       return;
     }
 
-    setIsRegistering(true);
-
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -62,62 +61,44 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
         state,
         zipcode,
       });
-    } catch (error) {
-      console.error("Registration error:", error?.message);
-      if (error?.message === "Firebase: Error (auth/email-already-in-use).") {
-        setErrorMsg("Email already in use");
-        return;
-      }
-
-      if (error?.message === "Firebase: Error (auth/invalid-email).") {
-        setErrorMsg("Invalid email");
-        return;
-      }
-
-      if (error?.message === "Firebase: Error (auth/weak-password).") {
-        setErrorMsg("Weak password");
-        return;
-      }
-
-      if (
-        error?.message ===
-        "Firebase: Password should be at least 6 characters (auth/weak-password)."
-      ) {
-        setErrorMsg("Password should be at least 6 characters");
-        return;
-      }
-
-      // Rollback if Firestore write failed after user was created
-      if (auth.currentUser) {
-        try {
-          await auth.currentUser.delete();
-          setErrorMsg("Registration failed. Please try again.");
-          console.log(
-            "Rolled back user creation due to failure in registerUser"
-          );
-        } catch (deleteError) {
-          console.error(
-            "Failed to delete user after registration failure:",
-            deleteError
-          );
-        } finally {
-          setIsRegistering(false);
-        }
-      }
-    } finally {
-      setIsRegistering(false);
-    }
+    } catch (err) {
+  console.error("Registration error:", err?.code);
+  
+  const code = err?.code || ""; // <-- use Firebase error code
+  // Map codes to user-facing messages
+  const friendly = {
+    "auth/email-already-in-use": "An account with this email already exists.",
+    "auth/invalid-email": "Please enter a valid email address.",
+    "auth/weak-password": "Password should be at least 6 characters.",
+    "auth/network-request-failed": "Network error. Please try again.",
   };
+  console.log(friendly[code])
+  setErrorMsg(friendly[code] || "Registration failed. Please try again.");
+  setEmailTaken(code === "auth/email-already-in-use");
+  // Optional: rollback only if a user was actually created
+  if (auth.currentUser && code !== "auth/email-already-in-use") {
+    try {
+      await auth.currentUser.delete();
+      console.log("Rolled back user creation due to failure in registerUser");
+    } catch (deleteError) {
+      console.error("Failed to delete user after registration failure:", deleteError);
+    }
+  }
+}
+};
 
   return (
-    <div className="register-form">
-      <h1>Register</h1>
-      {/* Error message block */}
-      {errorMsg && (
-        <p style={{ color: "red", fontSize: "0.9rem", marginBottom: "10px" }}>
-          {errorMsg}
-        </p>
-      )}
+   <div className="register-form">
+  <h1>Register</h1>
+
+  {/* Top banner that always takes space */}
+  <div
+    className="form-banner"
+    role="alert"
+    aria-live="polite"
+  >
+    {errorMsg || "\u00A0" /* non-breaking space keeps height when empty */}
+  </div>
       <div className="name-container">
         <input
           className="first-name"
@@ -155,27 +136,33 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
         <span className="state-display">{state}</span>
       </div>
 
-      <div className="email-container">
-        <input
-          className={`email ${
-            isInvalidEmail ? "invalid" : email.trim() === "" ? "" : "valid"
-          }`}
-          type="email"
-          value={email}
-          placeholder="email"
-          onChange={(e) => {
-            const newEmail = e.target.value;
-            setEmail(newEmail);
-            setIsInvalidEmail(!validateEmail(newEmail));
-          }}
-        />
-        <small
-          className={isInvalidEmail && email !== "" ? "" : "hidden"}
-          style={{ color: "red" }}
-        >
-          Invalid email address
-        </small>
-      </div>
+<div className="email-container">
+  <input
+    className={`email ${
+      emailTaken || isInvalidEmail ? "invalid" : email.trim() === "" ? "" : "valid"
+    }`}
+    type="email"
+    autoComplete="email"
+    aria-invalid={emailTaken || isInvalidEmail}
+    aria-describedby="email-help"
+    value={email}
+    placeholder="email"
+    onChange={(e) => {
+      const newEmail = e.target.value;
+      setEmail(newEmail);
+      setIsInvalidEmail(!validateEmail(newEmail));
+      setEmailTaken(false);     
+      if (errorMsg) setErrorMsg("");    
+}}
+  />
+  <small
+    id="email-help"
+    className={emailTaken ? "" : isInvalidEmail && email !== "" ? "" : "hidden"}
+    style={{ color: "red" }}
+  >
+    {emailTaken ? "An account with this email already exists." : "Invalid email address"}
+  </small>
+</div>
 
       <div className="phone-container">
         <div className="phone-input-container">

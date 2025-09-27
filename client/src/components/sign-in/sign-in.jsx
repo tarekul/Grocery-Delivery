@@ -7,17 +7,36 @@ import { auth } from "../../firebase-config";
 import "./sign-in.styles.css";
 
 const SignIn = ({ setUserType, setShowAuthForm }) => {
+  const [errorMsg, setErrorMsg] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password).catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
-  };
+const handleLogin = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setErrorMsg("");
+
+  try {
+    await signInWithEmailAndPassword(auth, email.trim(), password);
+  } catch (err) {
+    const code = err?.code || "";
+    const friendly = {
+      "auth/invalid-credential": "Incorrect email or password.", // new common code
+      "auth/wrong-password": "Incorrect email or password.",
+      "auth/user-not-found": "No user found with this email.",
+      "auth/invalid-email": "Please enter a valid email address.",
+      "auth/too-many-requests":
+        "Too many attempts. Try again later or reset your password.",
+      "auth/network-request-failed":
+        "Network error. Check your connection and try again.",
+    };
+    setErrorMsg(friendly[code] || "Couldn’t sign in. Please try again.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   const handleForgotPassword = () => {
     if (!email) {
@@ -39,23 +58,34 @@ const SignIn = ({ setUserType, setShowAuthForm }) => {
     <div className="sign-in">
       <div className="login-container">
         <h1>Log In</h1>
+        {errorMsg && (
+    <p role="alert" aria-live="polite" style={{color:"red", marginBottom:12}}>
+      {errorMsg}
+    </p>
+  )}
         <form className="login-form" onSubmit={handleLogin}>
           <input
             className="login-input"
             type="email"
             placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => { 
+              setEmail(e.target.value); 
+              if (errorMsg) setErrorMsg("");
+            }}
           />
           <input
             className="login-input"
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (errorMsg) setErrorMsg("");
+            }}
           />
           <button className="login-button" type="submit">
-            Log In
+            {isSubmitting ? "Logging in…" : "Log In"}
           </button>
         </form>
         <p>
