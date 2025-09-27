@@ -9,6 +9,13 @@
   padding: 20px;
 }
 
+.form-banner {
+  min-height: 22px;      /* reserve space for one line */
+  color: #c62828;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
 .register-form input {
   font-size: 1.2rem;
   padding: 10px;

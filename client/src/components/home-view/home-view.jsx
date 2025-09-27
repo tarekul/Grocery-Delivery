@@ -10,12 +10,12 @@ import CartToast from "../toast/cart-toast";
 import "./home-view.styles.css";
 
 const HomeView = () => {
-  const { firebaseUser, userType, isRegistering, authLoading } = useAuth();
+  const { firebaseUser, userType, authLoading } = useAuth();
   const { showToast } = useCart();
   const { isLoading, category, setCategory } = useUI();
 
   const isUser = firebaseUser || userType === "guest";
-  const needsAuth = !firebaseUser && userType == null && !authLoading;
+  const needsAuth = !firebaseUser && userType == null;
   const shouldShowShelf = category && !isLoading;
 
   return (
@@ -28,7 +28,6 @@ const HomeView = () => {
 
       {!authLoading &&
         isUser &&
-        !isRegistering &&
         (shouldShowShelf ? (
           <ShelfCarousel category={category} />
         ) : (
