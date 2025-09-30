@@ -1,9 +1,18 @@
+import {
+  collection,
+  doc,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
+import { firestoreDB } from "../../firebase-config";
 import { cancelOrder } from "../../functions/cancelOrder";
-import getOrder from "../../functions/getOrder";
 import { reOrder } from "../../functions/reOrder";
+import Chat from "../chat/chat";
 import "./order-details.styles.css";
 
 const OrderDetails = () => {
@@ -11,6 +20,7 @@ const OrderDetails = () => {
   const [orderDetails, setOrderDetails] = useState(null);
   const [cancelling, setCancelling] = useState(false);
   const [reOrdering, setReOrdering] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
   const { firebaseUser } = useAuth();
 
   const formattedDate = orderDetails?.created_at?.seconds
@@ -18,11 +28,27 @@ const OrderDetails = () => {
     : "N/A";
 
   useEffect(() => {
-    const fetchOrderDetails = async () => {
-      const orderDetails = await getOrder(id);
-      setOrderDetails(orderDetails);
-    };
-    fetchOrderDetails();
+    if (!id) return;
+
+    const unsubscribe = onSnapshot(
+      doc(firestoreDB, "orders", id),
+      async (docSnap) => {
+        if (docSnap.exists()) {
+          const orderItems = await getDocs(
+            query(
+              collection(firestoreDB, "order-items"),
+              where("order_id", "==", id)
+            )
+          );
+          const items = orderItems.docs.map((doc) => {
+            return { id: doc.id, ...doc.data() };
+          });
+          setOrderDetails({ id: docSnap.id, ...docSnap.data(), items });
+        }
+      }
+    );
+
+    return () => unsubscribe();
   }, [id]);
 
   const handleCancelOrder = async () => {
@@ -164,10 +190,17 @@ const OrderDetails = () => {
       </section>
 
       {/* Help Section */}
-      <footer className="order-help">
-        <p>Need help with your order?</p>
-        <button>Contact Support</button>
-      </footer>
+      {orderDetails.status === "In Progress" && (
+        <>
+          <footer className="order-help">
+            <p>Need help with your order?</p>
+            <button onClick={() => setChatOpen(!chatOpen)}>
+              Contact Support
+            </button>
+          </footer>
+          {chatOpen && <Chat orderDetails={orderDetails} />}
+        </>
+      )}
     </div>
   );
 };

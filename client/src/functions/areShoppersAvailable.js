@@ -1,8 +1,8 @@
 import { onValue, ref } from "firebase/database";
-import { db } from "../firebase-config";
+import { realtimeDB } from "../firebase-config";
 
 const areShoppersAvailable = async (callback) => {
-  const shoppersRef = ref(db, "grocery-shopper");
+  const shoppersRef = ref(realtimeDB, "grocery-shopper");
 
   onValue(
     shoppersRef,
