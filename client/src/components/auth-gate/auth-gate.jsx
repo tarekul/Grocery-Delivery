@@ -6,7 +6,7 @@ import SignIn from "../sign-in/sign-in";
 import "./auth-gate.styles.css";
 
 const AuthGate = () => {
-  const { userType, setUserType, setIsRegistering } = useAuth();
+  const { userType, setUserType } = useAuth();
 
   const { showAuthForm, setShowAuthForm } = useUI();
   if (userType !== null) return null;
@@ -25,7 +25,6 @@ const AuthGate = () => {
       <div className="auth-gate">
         <Register
           setShowAuthForm={setShowAuthForm}
-          setIsRegistering={setIsRegistering}
         />
         <BrandWelcome />
       </div>
