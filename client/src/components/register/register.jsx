@@ -1,6 +1,10 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  getAdditionalUserInfo,
+} from "firebase/auth";
 import { useState } from "react";
-import { auth } from "../../firebase-config";
+import { auth, googleProvider } from "../../firebase-config";
 import { registerUser } from "../../functions/registerUser";
 import validateEmail from "../../functions/validateEmail.js";
 import validatePhone from "../../functions/validatePhone";
@@ -36,12 +40,14 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
     isPhoneVerified &&
     password;
 
+  // -------- Email / Password registration ----------
   const handleRegister = async (e) => {
     e.preventDefault();
     if (!areFieldsFilled) {
       return;
     }
 
+    setErrorMsg("");
     setIsRegistering(true);
 
     try {
@@ -51,6 +57,7 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
         password
       );
       const user = userCredential.user;
+
       await registerUser({
         uid: user.uid,
         email,
@@ -62,8 +69,12 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
         state,
         zipcode,
       });
+
+      // you could optionally close the form here:
+      // setShowAuthForm(null);
     } catch (error) {
       console.error("Registration error:", error?.message);
+
       if (error?.message === "Firebase: Error (auth/email-already-in-use).") {
         setErrorMsg("Email already in use");
         return;
@@ -109,15 +120,73 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
     }
   };
 
+  // -------- Google registration / login ----------
+  const handleGoogleRegister = async (e) => {
+    e.preventDefault();
+    setErrorMsg("");
+    setIsRegistering(true);
+
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      const additional = getAdditionalUserInfo(result);
+
+      console.log("Google user:", user);
+
+      // If this is the first time this Google account is used, create the user doc
+      if (additional?.isNewUser) {
+        const displayName = user.displayName || "";
+        const [googleFirstName = "", ...restName] = displayName.split(" ");
+        const googleLastName = restName.join(" ");
+
+        await registerUser({
+          uid: user.uid,
+          email: user.email,
+          firstName: firstName || googleFirstName,
+          lastName: lastName || googleLastName,
+          phone,
+          address,
+          city,
+          state,
+          zipcode,
+        });
+      }
+
+      // optionally close auth form / redirect
+      // setShowAuthForm(null);
+    } catch (error) {
+      console.error("Google register error:", error);
+
+      // Common Google popup errors
+      if (error?.code === "auth/popup-closed-by-user") {
+        setErrorMsg("Google sign-in was closed before finishing.");
+        return;
+      }
+
+      if (error?.code === "auth/account-exists-with-different-credential") {
+        setErrorMsg(
+          "An account already exists with the same email. Log in with email/password, then link Google from your profile."
+        );
+        return;
+      }
+
+      setErrorMsg("Google sign-in failed. Please try again.");
+    } finally {
+      setIsRegistering(false);
+    }
+  };
+
   return (
     <div className="register-form">
       <h1>Register</h1>
+
       {/* Error message block */}
       {errorMsg && (
         <p style={{ color: "red", fontSize: "0.9rem", marginBottom: "10px" }}>
           {errorMsg}
         </p>
       )}
+
       <div className="name-container">
         <input
           className="first-name"
@@ -134,6 +203,7 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
           onChange={(e) => setLastName(e.target.value)}
         />
       </div>
+
       <div className="address-container">
         <input
           className="address"
@@ -150,6 +220,7 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
           onChange={(e) => setCity(e.target.value)}
         />
       </div>
+
       <div className="zip-state-container">
         <ZipDropdown setZipcode={setZipcode} />
         <span className="state-display">{state}</span>
@@ -243,12 +314,27 @@ const Register = ({ setShowAuthForm, setIsRegistering }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
+
+      {/* Email/password register button */}
       <button
         className="register-button"
         onClick={handleRegister}
         disabled={!areFieldsFilled}
       >
         Register
+      </button>
+
+      {/* Divider & Google button */}
+      <div className="divider">
+        <span>or</span>
+      </div>
+
+      <button
+        type="button"
+        className="google-button"
+        onClick={handleGoogleRegister}
+      >
+        Continue with Google
       </button>
 
       <p>

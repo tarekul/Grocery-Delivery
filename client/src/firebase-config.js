@@ -1,7 +1,11 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import { getFirestore } from "firebase/firestore";
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -17,9 +21,17 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// ✅ Exports
+// Databases
 const realtimeDB = getDatabase(app);
 const firestoreDB = getFirestore(app);
+
+// Auth
 const auth = getAuth(app);
 
-export { app, auth, firestoreDB, realtimeDB };
+// ✅ Google provider
+const googleProvider = new GoogleAuthProvider();
+// always show account chooser
+googleProvider.setCustomParameters({ prompt: "select_account" });
+
+// Exports
+export { app, auth, firestoreDB, realtimeDB, googleProvider };

@@ -1,22 +1,55 @@
 import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
 import { useState } from "react";
-import { auth } from "../../firebase-config";
+import { auth, googleProvider } from "../../firebase-config";
 import "./sign-in.styles.css";
 
 const SignIn = ({ setUserType, setShowAuthForm }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
+    setErrorMsg("");
+
     signInWithEmailAndPassword(auth, email, password).catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
+      setErrorMsg("Invalid email or password.");
     });
+  };
+
+  const handleGoogleLogin = async (e) => {
+    e.preventDefault();
+    setErrorMsg("");
+
+    try {
+      await signInWithPopup(auth, googleProvider);
+      // Optionally set user type or close auth form here:
+      // setUserType("customer");
+      // setShowAuthForm(null);
+    } catch (error) {
+      console.error("Google login error:", error);
+
+      if (error?.code === "auth/popup-closed-by-user") {
+        setErrorMsg("Google sign-in popup was closed before finishing.");
+        return;
+      }
+
+      if (error?.code === "auth/account-exists-with-different-credential") {
+        setErrorMsg(
+          "An account already exists with the same email. Log in with email/password first, then link Google from your profile."
+        );
+        return;
+      }
+
+      setErrorMsg("Google sign-in failed. Please try again.");
+    }
   };
 
   const handleForgotPassword = () => {
@@ -39,6 +72,13 @@ const SignIn = ({ setUserType, setShowAuthForm }) => {
     <div className="sign-in">
       <div className="login-container">
         <h1>Log In</h1>
+
+        {errorMsg && (
+          <p style={{ color: "red", fontSize: "0.9rem", marginBottom: "10px" }}>
+            {errorMsg}
+          </p>
+        )}
+
         <form className="login-form" onSubmit={handleLogin}>
           <input
             className="login-input"
@@ -58,6 +98,20 @@ const SignIn = ({ setUserType, setShowAuthForm }) => {
             Log In
           </button>
         </form>
+
+        {/* Divider & Google button */}
+        <div className="divider">
+          <span>or</span>
+        </div>
+
+        <button
+          type="button"
+          className="google-button"
+          onClick={handleGoogleLogin}
+        >
+          Continue with Google
+        </button>
+
         <p>
           Don't have an account?{" "}
           <button onClick={() => setShowAuthForm("register")}>Register</button>

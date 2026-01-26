@@ -6,6 +6,7 @@ import { uploadAvatar } from "../../functions/uploadAvatar"; // new helper
 import ZipDropdown from "../zip-dropdown/zip-dropdown";
 import "./profile.css";
 import defaultProfileImg from "./profile.jpg";
+import LinkGoogleButton from "../link_google-button/link-google-button.jsx";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -151,6 +152,8 @@ const Profile = () => {
             {user.firstName} {user.lastName}
           </h2>
           <p className="muted">{user.email}</p>
+          <p className="muted">Google linked: {user.googleId ? "Yes" : "No"}</p>
+          
           <div className="actions">
             {!editing && (
               <button onClick={() => setEditing(true)}>Edit Profile</button>
@@ -165,8 +168,12 @@ const Profile = () => {
               Update Avatar
             </label>
           </div>
-          {saving && <p style={{ color: "crimson" }}>Saving...</p>}
-          {error && <p style={{ color: "crimson" }}>{error}</p>}
+          {/*  Link Google button */}
+    <div style={{ marginTop: "10px" }}>
+      <link-google-button />
+     </div>
+      {saving && <p style={{ color: "crimson" }}>Saving...</p>}
+      {error && <p style={{ color: "crimson" }}>{error}</p>}
         </div>
       </header>
 
